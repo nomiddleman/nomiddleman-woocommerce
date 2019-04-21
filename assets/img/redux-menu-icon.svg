@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<svg width="34" height="34" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <g class="layer">
+  <title>Layer 1</title>
+  <circle cx="17" cy="17" fill="none" id="svg_3" r="14" stroke="#56b6ff" stroke-linecap="null" stroke-linejoin="null"/>
+  <circle cx="17" cy="17" fill="#56b6ff" id="svg_1" r="12" stroke="#56b6ff" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="2"/>
+  <text fill="#ffffff" font-family="Serif" font-size="8" font-style="normal" font-weight="bold" id="svg_5" stroke="#56b6ff" stroke-dasharray="null" stroke-linecap="null" stroke-linejoin="null" stroke-width="0" text-anchor="middle" x="17" xml:space="preserve" y="20">NMM</text>
+ </g>
+</svg>

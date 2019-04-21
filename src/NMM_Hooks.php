@@ -1,0 +1,173 @@
+<?php
+
+function NMM_change_cancelled_email_note_subject_line($subject, $order) {
+
+	$subject = 'Order ' . $order->get_id() . ' has been cancelled due to non-payment';
+
+	return $subject;
+
+}
+
+function NMM_change_cancelled_email_heading($heading, $order) {
+	$heading = "Your order has been cancelled. Do not send any cryptocurrency to the payment address.";
+
+	return $heading;
+}
+
+function NMM_change_partial_email_note_subject_line($subject, $order) {
+
+	$subject = 'Partial payment received for Order ' . $order->get_id();
+
+	return $subject;
+
+}
+
+function NMM_change_partial_email_heading($heading, $order) {
+	$heading = 'Partial payment received for Order ' . $order->get_id();
+
+	return $heading;
+}
+
+function NMM_update_database_when_admin_changes_order_status( $orderId, $postData ) {
+	
+	$oldOrderStatus = sanitize_text_field($postData->post_status);
+
+	if (!isset($_POST)) {
+		return;
+	}
+
+	$newOrderStatus = sanitize_text_field($_POST['order_status']);
+
+	$paymentAmount = 0.0;	
+	
+	$paymentAmount = get_post_meta($orderId, 'crypto_amount', true);
+
+	// this order was not made by us
+	if (!$paymentAmount) {		
+		return;
+	}
+
+	$paymentRepo = new NMM_Payment_Repo();
+
+	// If admin updates from needs-payment to has-payment, stop looking for matching transactions
+	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-processing') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+	}
+	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-completed') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+	}
+	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-processing') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+	}
+	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-completed') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+	}
+
+	// If admin updates from has-payment to needs-payment, start looking for matching transactions
+	if ($oldOrderStatus === 'wc-processing' && $newOrderStatus === 'wc-pending') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+	}
+	if ($oldOrderStatus === 'wc-processing' && $newOrderStatus === 'wc-on-hold') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+	}
+	if ($oldOrderStatus === 'wc-completed' && $newOrderStatus === 'wc-pending') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+	}
+	if ($oldOrderStatus === 'wc-completed' && $newOrderStatus === 'wc-on-hold') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+	}
+
+	// If admin updates from needs-payment to cancelled, stop looking for matching transactions
+	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-cancelled') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+	}
+	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-failed') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+	}
+	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-cancelled') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+	}
+	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-failed') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+	}
+
+	// If admin updates from cancelled to needs-payment, start looking for matching transactions
+	if ($oldOrderStatus === 'wc-cancelled' && $newOrderStatus === 'wc-on-hold') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+	}
+	if ($oldOrderStatus === 'wc-cancelled' && $newOrderStatus === 'wc-pending') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+	}
+	if ($oldOrderStatus === 'wc-failed' && $newOrderStatus === 'wc-on-hold') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+	}
+	if ($oldOrderStatus === 'wc-failed' && $newOrderStatus === 'wc-pending') {
+		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+	}
+}
+
+function NMM_add_flash_notice($notice = "", $type = "error", $dismissible = true) {
+    // Here we return the notices saved on our option, if there are not notices, then an empty array is returned
+    $notices = get_option( "my_flash_notices", array() );
+ 
+    $dismissible_text = ( $dismissible ) ? "is-dismissible" : "";
+ 
+    // We add our new notice.
+    array_push( $notices, array( 
+            "notice" => $notice, 
+            "type" => $type, 
+            "dismissible" => $dismissible_text
+        ) );
+ 
+    // Then we update the option with our notices array
+    update_option("my_flash_notices", $notices );
+}
+ 
+/**
+ * Function executed when the 'admin_notices' action is called, here we check if there are notices on
+ * our database and display them, after that, we remove the option to prevent notices being displayed forever.
+ * @return void
+ */ 
+function NMM_display_flash_notices() {
+    $notices = get_option( "my_flash_notices", array() );
+     
+    // Iterate through our notices to be displayed and print them.
+    foreach ( $notices as $notice ) {
+        printf('<div class="notice notice-%1$s %2$s"><p>%3$s</p></div>',
+            $notice['type'],
+            $notice['dismissible'],
+            $notice['notice']
+        );
+    }
+ 
+    // Now we reset our options to prevent notices being displayed forever.
+    if( ! empty( $notices ) ) {
+        delete_option( "my_flash_notices", array() );
+    }
+}
+
+function NMM_load_redux_css($stuff) {    
+    $cssPath = NMM_PLUGIN_DIR . '/assets/css/nmm-redux-settings.css';    
+    wp_enqueue_style('nmm-styles', $cssPath);
+}
+
+function NMM_filter_gateways($gateways){
+    global $woocommerce;
+
+    $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
+
+    foreach (NMM_Cryptocurrencies::get() as $crypto) {
+        if ($nmmSettings->crypto_selected_and_valid($crypto->get_id())) {
+            return $gateways;
+        }
+    }
+
+    unset($gateways['NMM_Gateway']);
+    return $gateways;
+}
+
+?>

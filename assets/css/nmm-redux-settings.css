@@ -1,0 +1,19 @@
+.crypto-subsection > a {
+	background-color: rgba(255,255,255, 0.8)!important;
+	color: black!important;
+}
+
+.crypto-subsection.invalid-crypto > a {
+	background-color: rgba(255,25,25, 0.8)!important;
+	color: black!important;
+}
+.crypto-subsection.valid-crypto > a {
+	background-color: rgba(25,255,25, 0.8)!important;
+	color: black!important;
+}
+
+.crypto-subsection.active {
+	background-image: linear-gradient(to right, white, white 37px, rgba(155,155,155, 1) 37px, rgba(155,155,155, 1))!important;
+	background-position: center!important;
+	color: black!important;
+}
