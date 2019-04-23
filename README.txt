@@ -1,11 +1,11 @@
 ﻿=== Nomiddleman Crypto Payments for WooCommerce ===
 Contributors: nomiddleman
-Tags: bitcoin, cryptocurrency, woocommerce, open source, ecommerce, e-commerce, payments, monero, ethereum, dogecoin
+Tags: bitcoin, cryptocurrency, woocommerce, open source, ecommerce, e-commerce, payments, monero, ethereum, dogecoin, pay with, crypto, woo
 Requires at least: 3.0.1
 Tested up to: 5.1.1
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.2.0
+Stable Tag: 2.2.1
 
 Avoid the middleman when accepting cryptocurrency payments with Woocommerce. Complete admin control.
 
@@ -46,6 +46,9 @@ Avoid the middleman when accepting cryptocurrency payments with Woocommerce. Com
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.2.1 =
+* Improved the way we handle enabling/disabling of Woocommerce gateway
 
 = 2.2.0 =
 * Added Privacy Mode support for DASH

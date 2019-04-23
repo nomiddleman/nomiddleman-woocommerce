@@ -8,7 +8,7 @@ Description: WooCommerce cryptocurrency payments without a middleman
 Author: nomiddleman
 Author URI: https://nmm-crypto.com
 
-Version: 2.2.0
+Version: 2.2.1
 Copyright: © 2019 Nomiddleman Crypto (email : support@nmm-crypto.com)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
