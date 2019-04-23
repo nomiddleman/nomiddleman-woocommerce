@@ -6,12 +6,11 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
     public function __construct() {
         $cryptoArray = NMM_Cryptocurrencies::get();
-        add_filter('woocommerce_payment_gateways', 'NMM_filter_gateways');
+
         $this->cryptos = $cryptoArray;
         $this->gapLimit = 2;
 
-        $this->id = 'nmmpro_gateway';
-        //$this->icon = AGILE_CASH_PLUGIN_DIR . '/assets/img/dogecoin_logo_small.png';
+        $this->id = 'nmmpro_gateway';        
         $this->title = 'Pay with cryptocurrency';
         $this->has_fields = true;
         $this->method_title = 'Nomiddleman Crypto Payments';
@@ -27,7 +26,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         
         ?>
         <h2>Nomiddleman Crypto Payments</h2>
-        <div class="agc-options">
+        <div class="nmm-options">
             <table class="form-table">
                 <?php $this->generate_settings_html(); ?>
             </table><!--/.form-table-->
@@ -51,7 +50,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
                 'type' => 'checkbox',
                 'label' => 'Enable cryptocurrency payments', 'woocommerce',
                 'default' => 'yes',
-                'class' => 'agc-setting',
+                'class' => 'nmm-setting',
             ),
         );
         
