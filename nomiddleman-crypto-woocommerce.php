@@ -275,10 +275,13 @@ function NMM_create_carousel_table() {
 }
 
 function NMM_Register_Extensions() {
+    return;
     $extensionsDir = NMM_ABS_PATH . '/src/extensions/';
     $extensions = scandir($extensionsDir);
     $extensionsToLoad = [];
-
+    if (!is_array($extensions)) {
+        return;
+    }
     foreach ($extensions as $extension) {
         if ( $extension === '.' || $extension === '..' || ! is_dir( $extensionsDir . $extension ) || substr( $extension, 0, 1 ) === '.' || substr( $extension, 0, 1 ) === '@' ) {
             continue;
@@ -291,6 +294,6 @@ function NMM_Register_Extensions() {
     update_option(NMM_EXTENSION_KEY, $extensionsToLoad);
 }
 
-add_filter('woocommerce_payment_gateways', 'NMM_add_gateways');
+add_filter('woocommerce_payment_gateways', 'NMM_filter_gateways');
 
 ?>

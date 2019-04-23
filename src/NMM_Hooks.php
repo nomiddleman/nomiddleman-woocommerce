@@ -153,15 +153,16 @@ function NMM_load_redux_css($stuff) {
 
 function NMM_filter_gateways($gateways){
     global $woocommerce;
-
+    error_log('get here');
     $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
 
     foreach (NMM_Cryptocurrencies::get() as $crypto) {
         if ($nmmSettings->crypto_selected_and_valid($crypto->get_id())) {
+        	$gateways[] = 'NMM_Gateway';
             return $gateways;
         }
     }
-
+    error_log('unsetting gateway');
     unset($gateways['NMM_Gateway']);
     return $gateways;
 }

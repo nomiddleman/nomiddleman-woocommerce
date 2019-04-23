@@ -6,7 +6,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
     public function __construct() {
         $cryptoArray = NMM_Cryptocurrencies::get();
-
+        add_filter('woocommerce_payment_gateways', 'NMM_filter_gateways');
         $this->cryptos = $cryptoArray;
         $this->gapLimit = 2;
 
@@ -57,27 +57,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         
         $this->form_fields = $generalSettings;
     }
-
-    // This is called whenever the user saves the woocommerce admin settings, server side validation based around the enable/disable plugin field
-    public function validate_enabled_field($key, $value) {
-        
-        // if the gateway is not enabled do not do any validation
-        if (! $value) {
-            return 'no';
-        }
-
-        $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));        
-        
-        // TODO: test this
-        foreach (NMM_Cryptocurrencies::get() as $crypto) {
-            if ($nmmSettings->crypto_selected_and_valid($crypto->get_id())) {
-                return 'yes';
-            }
-        }
-        WC_Admin_Settings::add_error('No cryptos are enabled. Please enable one crypto with valid settings before you enable this plug-in.');
-        return 'no';
-    }
-
+    
     // This runs when the user hits the checkout page
     // We load our crypto select with valid crypto currencies
     public function payment_fields() {
