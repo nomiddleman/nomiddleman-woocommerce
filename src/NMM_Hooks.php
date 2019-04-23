@@ -1,7 +1,6 @@
 <?php
 
 function NMM_change_cancelled_email_note_subject_line($subject, $order) {
-
 	$subject = 'Order ' . $order->get_id() . ' has been cancelled due to non-payment';
 
 	return $subject;
@@ -15,11 +14,9 @@ function NMM_change_cancelled_email_heading($heading, $order) {
 }
 
 function NMM_change_partial_email_note_subject_line($subject, $order) {
-
 	$subject = 'Partial payment received for Order ' . $order->get_id();
 
 	return $subject;
-
 }
 
 function NMM_change_partial_email_heading($heading, $order) {
@@ -28,8 +25,7 @@ function NMM_change_partial_email_heading($heading, $order) {
 	return $heading;
 }
 
-function NMM_update_database_when_admin_changes_order_status( $orderId, $postData ) {
-	
+function NMM_update_database_when_admin_changes_order_status( $orderId, $postData ) {	
 	$oldOrderStatus = sanitize_text_field($postData->post_status);
 
 	if (!isset($_POST)) {

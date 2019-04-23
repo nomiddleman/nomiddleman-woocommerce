@@ -49,8 +49,6 @@ class NMM_Hd_Repo {
 	}
 
 	// Returns the largest index of an address that has received payment, to establish the start of the gap
-	
-
 	public function get_next_index() {
 		global $wpdb;
 		
@@ -142,7 +140,6 @@ class NMM_Hd_Repo {
 		$query = "UPDATE `$this->tableName` SET `order_id` = '$orderId' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId'";
 		$wpdb->query($query);
 	}
-
 }
 
 ?>

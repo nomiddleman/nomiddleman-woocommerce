@@ -118,7 +118,6 @@ $nmm_redux_args = array(
 
 Redux::setArgs(NMM_REDUX_ID, $nmm_redux_args);
 
-
 function NMM_get_crypto_select_values() {
     $cryptoSelect = [];
     $cryptos = NMM_Cryptocurrencies::get_alpha();
@@ -278,9 +277,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
             'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '1'),
             'desc' => 'This is the amount of time in hours that has to elapse before an order is cancelled automatically. (1.5 = 1 hour 30 minutes)',
         );
-    }
-    
-	
+    }	
 
     $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
 
@@ -317,5 +314,4 @@ $nmm_section = array(
 );
 
 Redux::setSection(NMM_REDUX_ID, $nmm_section);
-
 ?>

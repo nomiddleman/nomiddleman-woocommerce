@@ -165,8 +165,6 @@ class NMM_Hd {
 			return $secondaryResult['total_received'];
 		}
 
-
-
 		throw new \Exception("Unable to get LTC HD address information from external sources.");
 	}
 
@@ -198,9 +196,7 @@ class NMM_Hd {
 		}		
 
 		throw new \Exception("Unable to get DOGE HD address information from external sources.");
-	}
-
-	
+	}	
 
 	public static function cancel_expired_addresses($cryptoId, $mpk, $orderCancellationTimeSec) {
 		global $woocommerce;
@@ -254,10 +250,8 @@ class NMM_Hd {
 		}
 		if ($cryptoId === 'DOGE') {
 			return self::is_dirty_doge_address($address);	
-		}
-	
+		}	
 	}
-
 
 	private static function is_dirty_btc_address($address) {
 		$primaryResult = NMM_Blockchain::get_blockchaininfo_total_received_for_btc_address($address, 0);
@@ -400,16 +394,19 @@ class NMM_Hd {
 		$validMpk = strlen($mpk) > 55 && strlen($mpk) < 150 && $mpkStart === 'xpub6';
 		return $validMpk;
 	}
+
 	public static function is_valid_ypub($mpk) {
 		$mpkStart = substr($mpk, 0, 5);
 		$validMpk = strlen($mpk) > 55 && strlen($mpk) < 150 && $mpkStart === 'ypub6';
 		return $validMpk;
 	}
+
 	public static function is_valid_zpub($mpk) {
 		$mpkStart = substr($mpk, 0, 5);
 		$validMpk = strlen($mpk) > 55 && strlen($mpk) < 150 && $mpkStart === 'zpub6';
 		return $validMpk;
 	}
+
 	public static function is_valid_mpk($cryptoId, $mpk) {
 		if ($cryptoId == 'BTC') {
 			return self::is_valid_xpub($mpk) || self::is_valid_ypub($mpk) || self::is_valid_zpub($mpk);
@@ -426,9 +423,6 @@ class NMM_Hd {
 		if ($cryptoId === 'DOGE') {
 			return self::is_valid_xpub($mpk);
 		}
-		
-
-
 	}
 }
 
