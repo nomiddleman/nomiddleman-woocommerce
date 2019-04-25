@@ -151,6 +151,32 @@ function NMM_load_redux_css($stuff) {
     wp_enqueue_style('nmm-styles', $cssPath);
 }
 
+function NMM_load_js($stuff) {
+	$jsPath = NMM_PLUGIN_DIR . '/assets/js/nmm.js';    
+	wp_enqueue_script('nmm-scripts', $jsPath);	
+}
+function NMM_first_mpk_address_ajax() {
+		$mpk = $_POST['mpk'];
+		$cryptoId = $_POST['cryptoId'];
+		
+		if (!NMM_Util::extension_registered('segwit') && (NMM_Hd::is_valid_ypub($mpk) || NMM_Hd::is_valid_zpub($mpk))) {
+			$message = 'You have entered a valid Segwit MPK.';
+			$message2 = '<a href="https://nmm-crypto.com/extensions/segwit" target="_blank">We have an extension that supports Segwit MPKs.</a>';
+
+			echo json_encode([$message, $message2, '']);
+			wp_die();
+		}
+		else {
+			$firstAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 0);
+			$secondAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 1);
+			$thirdAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 2);
+
+			echo json_encode([$firstAddress, $secondAddress, $thirdAddress]);
+
+			wp_die();
+		}
+}
+
 function NMM_filter_gateways($gateways){
     global $woocommerce;
     

@@ -113,6 +113,9 @@ function NMM_init_gateways(){
     add_action( 'admin_notices', 'NMM_display_flash_notices', 12 );
     add_filter('woocommerce_available_payment_gateways','NMM_filter_gateways',1);
 
+    add_action( 'admin_enqueue_scripts', 'NMM_load_js' );
+    add_action( 'wp_ajax_firstmpkaddress', 'NMM_first_mpk_address_ajax');
+
     NMM_Register_Extensions();
 
     if (!wp_next_scheduled('NMM_cron_hook')) {
@@ -274,8 +277,7 @@ function NMM_create_carousel_table() {
     }
 }
 
-function NMM_Register_Extensions() {
-    return;
+function NMM_Register_Extensions() {    
     $extensionsDir = NMM_ABS_PATH . '/src/extensions/';
     $extensions = scandir($extensionsDir);
     $extensionsToLoad = [];

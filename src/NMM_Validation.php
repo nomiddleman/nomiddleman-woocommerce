@@ -2,6 +2,9 @@
 
 class NMM_Validation {
 
+
+	
+
 	public static function validate_redux_options($newValues, $oldValues) {
 		$oldSettings = new NMM_Settings($oldValues);
 		$newSettings = new NMM_Settings($newValues);		
@@ -40,8 +43,7 @@ class NMM_Validation {
 				$mpk = $newSettings->get_mpk($cryptoId);
 
 				if (NMM_Util::extension_registered('segwit')) {					
-					if (!NMM_Hd::is_valid_mpk($cryptoId, $mpk)) {
-						error_log('mpk invalid: ' . $mpk);
+					if (!NMM_Hd::is_valid_mpk($cryptoId, $mpk)) {						
 						$invalidCryptoSettings = true;
 						$atLeastOneInvalidCrypto = true;
 						$errorMessages[] = $cryptoName . ' has an invalid HD MPK. Disabling ' . $cryptoName . '.';					
@@ -83,7 +85,12 @@ class NMM_Validation {
                 }
 			}
 			foreach ($invalidAddressKeys as $k) {
-				unset($newValues[$cryptoId . '_addresses'][$k]);
+				if ($k > 0) {
+					unset($newValues[$cryptoId . '_addresses'][$k]);
+				}
+				else {
+					$newValues[$cryptoId . '_addresses'][$k] = '';
+				}
 			}
 
 			if (NMM_Util::extension_registered('segwit')) {

@@ -386,24 +386,24 @@ class NMM_Hd {
 		}
 		catch (\Exception $e) {
 			throw new \Exception('Invalid MPK for ' . $cryptoId . '. ' . $e->getTraceAsString());
-		}
+		}		
 	}
 
 	public static function is_valid_xpub($mpk) {
 		$mpkStart = substr($mpk, 0, 5);
-		$validMpk = strlen($mpk) > 55 && strlen($mpk) < 150 && $mpkStart === 'xpub6';
+		$validMpk = strlen($mpk) == 111 && $mpkStart === 'xpub6';
 		return $validMpk;
 	}
 
 	public static function is_valid_ypub($mpk) {
 		$mpkStart = substr($mpk, 0, 5);
-		$validMpk = strlen($mpk) > 55 && strlen($mpk) < 150 && $mpkStart === 'ypub6';
+		$validMpk = strlen($mpk) == 111 && $mpkStart === 'ypub6';
 		return $validMpk;
 	}
 
 	public static function is_valid_zpub($mpk) {
 		$mpkStart = substr($mpk, 0, 5);
-		$validMpk = strlen($mpk) > 55 && strlen($mpk) < 150 && $mpkStart === 'zpub6';
+		$validMpk = strlen($mpk) == 111 && $mpkStart === 'zpub6';
 		return $validMpk;
 	}
 

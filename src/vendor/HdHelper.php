@@ -941,7 +941,7 @@ class HdHelper
 
     public static function deserialize_mpk($mpk) {
         $mpk = self::base58_decode_check($mpk);
-
+        
         if (strlen($mpk) != 78) {
             throw new \ErrorException("Invalid MPK length for " . $mpk);
         }

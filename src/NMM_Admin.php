@@ -197,6 +197,16 @@ foreach ($nmm_cryptos as $nmm_crypto) {
             'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '2'),            
             'desc' => 'Your Privacy Mode master public key. (Legacy seed-type only)',
         );
+        
+        $nmm_section['fields'][] = array(
+            'id'       => $nmm_crypto->get_id() . '_hd_mpk_sample_addresses',
+            'type'     => 'multi_text',
+            'title'    => 'Privacy Mode Sample Addresses',                  
+            'default'  => [' ',' ',' '],
+            'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '2'),            
+            'subtitle' => 'Please send test transactions to these addresses to make sure you own them before saving!',
+            'desc' => 'The addresses will be generated when you enter a valid MPK',
+        );
 
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_hd_percent_to_process',
@@ -314,4 +324,6 @@ $nmm_section = array(
 );
 
 Redux::setSection(NMM_REDUX_ID, $nmm_section);
+
+
 ?>

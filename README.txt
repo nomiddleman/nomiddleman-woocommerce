@@ -5,7 +5,7 @@ Requires at least: 3.0.1
 Tested up to: 5.1.1
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.2.1
+Stable Tag: 2.2.2
 
 Avoid the middleman when accepting cryptocurrency payments with Woocommerce. Complete admin control.
 
@@ -46,6 +46,10 @@ Avoid the middleman when accepting cryptocurrency payments with Woocommerce. Com
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.2.2 =
+* MPK Validation is more strict
+* Added example addresses to settings page to confirm you have control of Privacy Mode addresses
 
 = 2.2.1 =
 * Improved the way we handle enabling/disabling of Woocommerce gateway
