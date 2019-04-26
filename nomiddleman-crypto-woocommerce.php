@@ -1,14 +1,14 @@
 <?php
 /*
 WC requires at least: 3.0.0
-WC tested up to: 3.6.1
+WC tested up to: 3.6.2
 Plugin Name: Nomiddleman Crypto Payments for WooCommerce
 Plugin URI:  http://wordpress.org/plugins/nomiddleman-crypto-payments-for-woocommerce
 Description: WooCommerce cryptocurrency payments without a middleman
 Author: nomiddleman
 Author URI: https://nmm-crypto.com
 
-Version: 2.2.2
+Version: 2.3.0
 Copyright: © 2019 Nomiddleman Crypto (email : support@nmm-crypto.com)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -40,7 +40,7 @@ function NMM_init_gateways(){
     define('NMM_PLUGIN_BASENAME', plugin_basename(NMM_PLUGIN_FILE));
 
     define('NMM_CRON_JOB_URL', plugins_url('', __FILE__) . '/src/NMM_Cron.php');
-    define('NMM_VERSION', '2.2.2');
+    define('NMM_VERSION', '2.3.0');
     
     define('NMM_REDUX_SLUG', 'nmmpro_options');
 
@@ -113,8 +113,10 @@ function NMM_init_gateways(){
     add_action( 'admin_notices', 'NMM_display_flash_notices', 12 );
     add_filter('woocommerce_available_payment_gateways','NMM_filter_gateways',1);
 
-    add_action( 'admin_enqueue_scripts', 'NMM_load_js' );
-    add_action( 'wp_ajax_firstmpkaddress', 'NMM_first_mpk_address_ajax');
+    if (is_admin()) {
+        add_action( 'admin_enqueue_scripts', 'NMM_load_js' );
+        add_action( 'wp_ajax_firstmpkaddress', 'NMM_first_mpk_address_ajax');
+    }    
 
     NMM_Register_Extensions();
 

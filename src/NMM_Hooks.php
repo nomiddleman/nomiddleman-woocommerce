@@ -148,16 +148,34 @@ function NMM_display_flash_notices() {
 
 function NMM_load_redux_css($stuff) {    
     $cssPath = NMM_PLUGIN_DIR . '/assets/css/nmm-redux-settings.css';    
-    wp_enqueue_style('nmm-styles', $cssPath);
+    wp_enqueue_style('nmm-styles', $cssPath, array(), NMM_VERSION);
 }
 
 function NMM_load_js($stuff) {
-	$jsPath = NMM_PLUGIN_DIR . '/assets/js/nmm.js';    
-	wp_enqueue_script('nmm-scripts', $jsPath);	
+	if (!is_array($_GET)) {
+		return;
+	}
+	if (!array_key_exists('page', $_GET)) {
+		return;
+	}
+		
+	$page = $_GET['page'];	
+	
+	if ($page === 'nmmpro_options') {
+		$jsPath = NMM_PLUGIN_DIR . '/assets/js/nmm.js';    
+		wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery' ), NMM_VERSION);	
+	}
 }
 function NMM_first_mpk_address_ajax() {
-		$mpk = $_POST['mpk'];
-		$cryptoId = $_POST['cryptoId'];
+		if (!isset($_POST) || !is_array($_POST) || !array_key_exists('mpk', $_POST) || !array_key_exists('cryptoId', $_POST)) {
+			return;
+		}
+		$mpk = sanitize_text_field($_POST['mpk']);
+		$cryptoId = sanitize_text_field($_POST['cryptoId']);
+
+		if (!NMM_Hd::is_valid_mpk($cryptoId, $mpk)) {
+			return;
+		}
 		
 		if (!NMM_Util::extension_registered('segwit') && (NMM_Hd::is_valid_ypub($mpk) || NMM_Hd::is_valid_zpub($mpk))) {
 			$message = 'You have entered a valid Segwit MPK.';

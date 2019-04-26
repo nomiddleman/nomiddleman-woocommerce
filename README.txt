@@ -1,17 +1,17 @@
 ﻿=== Nomiddleman Crypto Payments for WooCommerce ===
 Contributors: nomiddleman
-Tags: bitcoin, cryptocurrency, woocommerce, open source, ecommerce, e-commerce, payments, monero, ethereum, dogecoin, pay with, crypto, woo
+Tags: bitcoin, cryptocurrency, woocommerce, open source, ecommerce, e-commerce, payments, monero, ethereum, dogecoin, pay with crypto, crypto, woo, cryptos
 Requires at least: 3.0.1
 Tested up to: 5.1.1
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.2.2
+Stable Tag: 2.3.0
 
-Avoid the middleman when accepting cryptocurrency payments with Woocommerce. Complete admin control.
+Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrency Gateway that truly takes out the middleman.
 
 <blockquote>
 = Documentation =
-<a target="_blank" href="https://nmm-crypto.com/docs/nomiddleman-crypto/getting-started/">View Docs</a>
+<a target="_blank" href="https://nmm-crypto.com/docs/nomiddleman-crypto/getting-started/">Getting Started</a>
 </blockquote>
 
 == Installation ==
@@ -27,15 +27,16 @@ Avoid the middleman when accepting cryptocurrency payments with Woocommerce. Com
 
 * 43 supported cryptocurrencies
 * Simple setup via plugin settings – no website registration necessary
-* Start accepting payments immediately
 * You control your wallets
-* Absolutely none of your data stored on our servers
-* No API keys required
+* We don’t use servers running closed source code
+* No plugin API key required
+* No middleman fees
 * Real-time crypto valuation
 * Unique address for every order\*
 * Auto update of order to complete upon payment\*
 * Customer QR code on checkout
 * Supports all Woocommerce fiat currencies
+* All this for free!
 
 \* varies by cryptocurrency
 
@@ -47,9 +48,10 @@ Avoid the middleman when accepting cryptocurrency payments with Woocommerce. Com
 
 == Changelog ==
 
-= 2.2.2 =
+= 2.3.0 =
+* Added first three generated HD Addresses to settings page via AJAX
 * MPK Validation is more strict
-* Added example addresses to settings page to confirm you have control of Privacy Mode addresses
+
 
 = 2.2.1 =
 * Improved the way we handle enabling/disabling of Woocommerce gateway

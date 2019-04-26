@@ -106,7 +106,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         // if the currently selected gateway is this gateway we set transients related to conversions and if something goes wrong we prevent the customer from hitting the thank you page  by throwing the WooCommerce Error Notice.
         if (WC()->session->get('chosen_payment_method') === $this->id) {
             try {
-                $chosenCryptoId = $_POST['nmm_currency_id'];
+                $chosenCryptoId = sanitize_text_field($_POST['nmm_currency_id']);
                 $crypto = $this->cryptos[$chosenCryptoId];
                 $curr = get_woocommerce_currency();
                 $cryptoPerUsd = $this->get_crypto_value_in_usd($crypto->get_id(), $crypto->get_update_interval());
@@ -125,7 +125,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
     public function process_payment($order_id) {
         $order = new WC_Order($order_id);
 
-        $selectedCryptoId = $_POST['nmm_currency_id'];
+        $selectedCryptoId = sanitize_text_field($_POST['nmm_currency_id']);
         WC()->session->set('chosen_crypto_id', $selectedCryptoId);
 
         return array(
