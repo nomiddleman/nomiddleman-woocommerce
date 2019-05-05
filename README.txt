@@ -5,7 +5,7 @@ Requires at least: 3.0.1
 Tested up to: 5.1.1
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.3.0
+Stable Tag: 2.3.1
 
 Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrency Gateway that truly takes out the middleman.
 
@@ -47,6 +47,9 @@ Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrenc
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.3.1 =
+* Fiat exchange rate upgrades
 
 = 2.3.0 =
 * Added first three generated HD Addresses to settings page via AJAX
