@@ -9,14 +9,14 @@ class NMM_Exchange {
             return $total;
         }
 
-        $transientKey = $curr . '_to_USD';
+        $transientKey = $fromCurr . '_to_USD';
         $conversionRate = get_transient( $transientKey );
 
         if ($conversionRate !== false) {
             return $total * $conversionRate;
         }
 
-        $response = wp_remote_get('https://free.currencyconverterapi.com/api/v5/convert?q=' . $curr . '_' . 'USD');
+        $response = wp_remote_get('https://free.currencyconverterapi.com/api/v5/convert?q=' . $fromCurr . '_' . 'USD&apiKey=102d2815703663a36de6');
 
         if ( is_wp_error( $response ) || $response['response']['code'] !== 200) {
             throw new \Exception( 'Could not reach the currency conversion service. Please try again.' );      
@@ -24,9 +24,9 @@ class NMM_Exchange {
 
         $body = json_decode($response['body']);
 
-        $conversionRate = $body->{'results'}->{$curr . '_USD'}->{'val'};      
+        $conversionRate = $body->{'results'}->{$fromCurr . '_USD'}->{'val'};      
 
-        set_transient($transientKey, $conversionRate, 3600);
+        set_transient($transientKey, $conversionRate, 600);
         $priceInUsd = $total * $conversionRate;
 
         return $priceInUsd;
