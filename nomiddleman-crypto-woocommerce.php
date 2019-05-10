@@ -3,13 +3,13 @@
 WC requires at least: 3.0.0
 WC tested up to: 3.6.2
 Plugin Name: Nomiddleman Crypto Payments for WooCommerce
-Plugin URI:  http://wordpress.org/plugins/nomiddleman-crypto-payments-for-woocommerce
+Plugin URI:  https://nomiddlemancrypto.io
 Description: WooCommerce cryptocurrency payments without a middleman
 Author: nomiddleman
-Author URI: https://nmm-crypto.com
+Author URI: https://nomiddlemancrypto.io
 
 Version: 2.3.2
-Copyright: © 2019 Nomiddleman Crypto (email : support@nmm-crypto.com)
+Copyright: © 2019 Nomiddleman Crypto (email : support@nomiddlemancrypto.io)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 

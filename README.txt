@@ -10,8 +10,8 @@ Stable Tag: 2.3.2
 Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrency Gateway that truly takes out the middleman.
 
 <blockquote>
-= Documentation =
-<a target="_blank" href="https://nmm-crypto.com/docs/nomiddleman-crypto/getting-started/">Getting Started</a>
+= Information =
+<a target="_blank" href="https://nomiddlemancrypto.io/">Getting Started</a>
 </blockquote>
 
 == Installation ==
@@ -36,7 +36,6 @@ Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrenc
 * Auto update of order to complete upon payment\*
 * Customer QR code on checkout
 * Supports all Woocommerce fiat currencies
-* All this for free!
 
 \* varies by cryptocurrency
 
@@ -57,7 +56,6 @@ Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrenc
 = 2.3.0 =
 * Added first three generated HD Addresses to settings page via AJAX
 * MPK Validation is more strict
-
 
 = 2.2.1 =
 * Improved the way we handle enabling/disabling of Woocommerce gateway
