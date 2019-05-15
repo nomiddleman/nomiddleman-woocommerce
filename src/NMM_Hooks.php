@@ -179,7 +179,7 @@ function NMM_first_mpk_address_ajax() {
 		
 		if (!NMM_Util::extension_registered('segwit') && (NMM_Hd::is_valid_ypub($mpk) || NMM_Hd::is_valid_zpub($mpk))) {
 			$message = 'You have entered a valid Segwit MPK.';
-			$message2 = '<a href="https://nmm-crypto.com/extensions/segwit" target="_blank">We have an extension that supports Segwit MPKs.</a>';
+			$message2 = '<a href="https://nomiddlemancrypto.io/extensions/segwit" target="_blank">We have an extension that supports Segwit MPKs.</a>';
 
 			echo json_encode([$message, $message2, '']);
 			wp_die();
