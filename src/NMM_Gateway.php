@@ -7,11 +7,13 @@ class NMM_Gateway extends WC_Payment_Gateway {
     public function __construct() {
         $cryptoArray = NMM_Cryptocurrencies::get();
 
+        $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));  
+
         $this->cryptos = $cryptoArray;
         $this->gapLimit = 2;
 
         $this->id = 'nmmpro_gateway';        
-        $this->title = 'Pay with cryptocurrency';
+        $this->title = $nmmSettings->get_customer_gateway_message();
         $this->has_fields = true;
         $this->method_title = 'Nomiddleman Crypto Payments';
         $this->method_description = 'Allow customers to pay using cryptocurrency';
@@ -60,8 +62,6 @@ class NMM_Gateway extends WC_Payment_Gateway {
     // This runs when the user hits the checkout page
     // We load our crypto select with valid crypto currencies
     public function payment_fields() {
-        
-
         $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
 
         $validCryptos = $nmmSettings->get_valid_selected_cryptos();

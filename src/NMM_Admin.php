@@ -8,11 +8,11 @@ $nmm_redux_args = array(
     // TYPICAL -> Change these values as you need/desire
     'opt_name'             => NMM_REDUX_ID,
     // This is where your data is stored in the database and also becomes your global variable name.
-    'display_name'         => 'No Middleman Crypto Payments for Woocommerce Settings',
+    'display_name'         => 'Nomiddleman Crypto Payments for Woocommerce Settings',
     'display_version'      => NMM_VERSION,
     'hide_reset'           => true,
     'disable_tracking'     => true,
-    'intro_text'           => 'Welcome to the No Middleman settings page!',
+    'intro_text'           => 'Welcome to the Nomiddleman Settings Page',
     'system_info'          => true,
     'hide_expand'          => true,
     'show_options_object'  => false,
@@ -23,8 +23,8 @@ $nmm_redux_args = array(
     //Specify if the admin menu should appear or not. Options: menu or submenu (Under appearance only)
     'allow_sub_menu'       => true,
     // Show the sections below the admin menu item or not
-    'menu_title'           => 'No Middleman Crypto Payments',
-    'page_title'           => 'No Middleman Crypto Settings',
+    'menu_title'           => 'Nomiddleman Crypto Payments',
+    'page_title'           => 'Nomiddleman Crypto Settings',
     // You will need to generate a Google API key to use this feature.
     // Please visit: https://developers.google.com/fonts/docs/developer_api#Auth
     'google_api_key'       => '',
@@ -42,7 +42,7 @@ $nmm_redux_args = array(
     // Choose an priority for the admin bar menu
     'global_variable'      => '',
     // Set a different name for your global variable other than the opt_name
-    'dev_mode'             => true,
+    'dev_mode'             => false,
     // Show the time the page took to load, etc
     'update_notice'        => true,
     // If dev_mode is enabled, will notify developer of updated versions available in the GitHub Repo
@@ -71,7 +71,7 @@ $nmm_redux_args = array(
     // If true, shows the default value next to each field that is not the default value.
     'default_mark'         => '',
     // What to print by the field's title if the value shown is default. Suggested: *
-    'show_import_export'   => false,
+    'show_import_export'   => true,
     // Shows the Import/Export panel when not used as a field.
     // CAREFUL -> These options are for advanced use only
     'transient_time'       => 60 * MINUTE_IN_SECONDS,
@@ -128,6 +128,22 @@ function NMM_get_crypto_select_values() {
 
     return $cryptoSelect;   
 }
+
+$nmm_section = array(
+    'title'  => 'General Settings',
+    'id'     => 'general_settings',
+    'desc'   => '',
+    'fields'   => array(
+        array(
+            'id' => 'payment_label',
+            'type' => 'text',            
+            'default' => 'Pay with cryptocurrency',
+            'title' => 'Payment Label',            
+        ),
+    ),
+);
+
+Redux::setSection(NMM_REDUX_ID, $nmm_section);
 
 $nmm_section = array(
     'title'  => 'Select Cryptocurrencies',
@@ -211,7 +227,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_hd_percent_to_process',
             'type'     => 'slider',
-            'default'  => 0.970,
+            'default'  => 0.99,
             'min'      => 0.800,
             'max'      => 1.000,
             'step'     => 0.001,
@@ -252,8 +268,8 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_autopayment_percent_to_process',
             'type'     => 'slider',
-            'default'  => 0.995,
-            'min'      => 0.95,
+            'default'  => 0.997,
+            'min'      => 0.985,
             'max'      => 1.000,
             'step'     => 0.001,
             'resolution' => 0.001,

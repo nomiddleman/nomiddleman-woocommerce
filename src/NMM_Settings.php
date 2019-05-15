@@ -39,6 +39,8 @@ class NMM_Settings {
 		return $this->crypto_selected($cryptoId) && $modeEnabled;
 	}
 
+
+
 	public function get_valid_selected_cryptos() {
 		$validSelectedCryptos = [];
 
@@ -71,6 +73,17 @@ class NMM_Settings {
 		}
 		
 		return [];		
+	}
+
+	public function get_customer_gateway_message() {
+		$customerGatewayKey = 'payment_label';
+		if (is_array($this->settings)) {
+			if (array_key_exists($customerGatewayKey, $this->settings)) {
+				return $this->settings[$customerGatewayKey];
+			}
+		}
+
+		return 'Pay with cryptocurrency';
 	}
 
 	public function get_next_carousel_address($cryptoId) {
@@ -116,7 +129,7 @@ class NMM_Settings {
 
 	public function get_autopay_processing_percent($cryptoId) {
 		if (!is_array($this->settings)) {
-			return '1.0';
+			return '0.999';
 		}
 		return $this->settings[$cryptoId . '_autopayment_percent_to_process'];
 	}

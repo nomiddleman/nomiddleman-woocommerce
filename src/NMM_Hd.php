@@ -82,7 +82,7 @@ class NMM_Hd {
 							'New payment was received but is still under order total. Received payment of %s %s.<br>Remaining payment required: %s<br>Wallet Address: %s',
 							NMM_Cryptocurrencies::get_price_string($cryptoId, $newPaymentAmount),
 							$cryptoId,
-							NMM_Cryptocurrencies::get_price_string($cryptoId, $amountToVerify - $blockchainTotalReceived),
+							NMM_Cryptocurrencies::get_price_string($cryptoId, ((float) $orderAmount) - $blockchainTotalReceived),
 							$address);
 
 						add_filter('woocommerce_email_subject_customer_note', 'NMM_change_partial_email_note_subject_line', 1, 2);
