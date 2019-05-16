@@ -3,12 +3,12 @@
 WC requires at least: 3.0.0
 WC tested up to: 3.6.2
 Plugin Name: Nomiddleman Crypto Payments for WooCommerce
-Plugin URI:  https://nomiddlemancrypto.io
+Plugin URI:  https://wordpress.org/plugins/nomiddleman-crypto-payments-for-woocommerce/
 Description: WooCommerce cryptocurrency payments without a middleman
 Author: nomiddleman
 Author URI: https://nomiddlemancrypto.io
 
-Version: 2.3.3
+Version: 2.3.4
 Copyright: © 2019 Nomiddleman Crypto (email : support@nomiddlemancrypto.io)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -40,7 +40,7 @@ function NMM_init_gateways(){
     define('NMM_PLUGIN_BASENAME', plugin_basename(NMM_PLUGIN_FILE));
 
     define('NMM_CRON_JOB_URL', plugins_url('', __FILE__) . '/src/NMM_Cron.php');
-    define('NMM_VERSION', '2.3.3');
+    define('NMM_VERSION', '2.3.4');
     
     define('NMM_REDUX_SLUG', 'nmmpro_options');
 
@@ -108,10 +108,9 @@ function NMM_init_gateways(){
     add_action( 'woocommerce_process_shop_order_meta', 'NMM_update_database_when_admin_changes_order_status', 10, 2 );     
     
     add_action('redux/page/' . NMM_REDUX_ID . '/load', 'NMM_load_redux_css');
-    add_filter('redux/validate/' . NMM_REDUX_ID . '/before_validation', array('NMM_Validation', 'validate_redux_options'), 10, 2);
+    add_filter('redux/validate/' . NMM_REDUX_ID . '/before_validation', array('NMM_Validation', 'validate_redux_options'), 10, 2);    
     
-    add_action( 'admin_notices', 'NMM_display_flash_notices', 12 );
-    add_filter('woocommerce_available_payment_gateways','NMM_filter_gateways',1);
+    add_action( 'admin_notices', 'NMM_display_flash_notices', 12 );    
 
     if (is_admin()) {
         add_action( 'admin_enqueue_scripts', 'NMM_load_js' );
@@ -153,12 +152,6 @@ function NMM_uninstall() {
     NMM_drop_mpk_address_table();
     NMM_drop_payment_table();
     NMM_drop_carousel_table();
-}
-
-function NMM_add_gateways($methods) {
-    $methods[] = 'NMM_Gateway';
-
-    return $methods;
 }
 
 function NMM_drop_mpk_address_table() {

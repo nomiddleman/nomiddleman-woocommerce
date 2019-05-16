@@ -1,13 +1,13 @@
 ﻿=== Nomiddleman Crypto Payments for WooCommerce ===
 Contributors: nomiddleman
-Tags: bitcoin, cryptocurrency, woocommerce, e-commerce, crypto, ecommerce, payments, monero, ethereum, dogecoin, pay with crypto, crypto, woo, woo crypto, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway
+Tags: bitcoin, cryptocurrency, woocommerce, e-commerce, crypto, ecommerce, payments, monero, ethereum, dogecoin, pay with crypto, crypto, woo, woo crypto, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress
 Requires at least: 3.0.1
 Tested up to: 5.2.0
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.3.3
+Stable Tag: 2.3.4
 
-Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrency Gateway that truly takes out the middleman.
+Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman.
 
 <blockquote>
 = Information =
@@ -46,6 +46,9 @@ Utilizing the power of blockchain, we provide the only Woocommerce Cryptocurrenc
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.3.4 =
+* Gateway will always show up in WooCommerce settings even if no valid cryptos exists
 
 = 2.3.3 =
 * Added setting to change the Checkout Payment Gateway Label

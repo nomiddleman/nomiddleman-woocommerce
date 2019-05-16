@@ -195,8 +195,10 @@ function NMM_first_mpk_address_ajax() {
 		}
 }
 
-function NMM_filter_gateways($gateways){
+function NMM_filter_gateways($gateways){	
     global $woocommerce;
+
+
     
     $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
 
@@ -207,7 +209,12 @@ function NMM_filter_gateways($gateways){
         }
     }
     
-    unset($gateways['NMM_Gateway']);
+    if (is_checkout()) {
+	    unset($gateways['NMM_Gateway']);
+	}
+	else {
+		$gateways[] = 'NMM_Gateway';
+	}
     return $gateways;
 }
 ?>

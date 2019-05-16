@@ -5,6 +5,8 @@ class NMM_Gateway extends WC_Payment_Gateway {
     private $gapLimit;
 
     public function __construct() {
+        
+        
         $cryptoArray = NMM_Cryptocurrencies::get();
 
         $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));  
@@ -62,6 +64,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
     // This runs when the user hits the checkout page
     // We load our crypto select with valid crypto currencies
     public function payment_fields() {
+
         $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
 
         $validCryptos = $nmmSettings->get_valid_selected_cryptos();
