@@ -4,23 +4,23 @@ class NMM_Util {
 
 	public static function log($fileName, $lineNumber, $message) {
 		
-		// $logFileName = dirname(__DIR__) . '/' . NMM_LOGFILE_NAME;
+		$logFileName = dirname(__DIR__) . '/' . NMM_LOGFILE_NAME;
 		
-		// if (file_exists($logFileName)) {
-		// 	$file = fopen($logFileName, 'r+');
-		// 	if ($file) {
-		// 		fseek($file, 0, SEEK_END);
-		// 	}
-		// }
-		// else
-		// {
-		// 	$file = fopen($logFileName, 'w');
-		// }
+		if (file_exists($logFileName)) {
+			$file = fopen($logFileName, 'r+');
+			if ($file) {
+				fseek($file, 0, SEEK_END);
+			}
+		}
+		else
+		{
+			$file = fopen($logFileName, 'w');
+		}
 
-		// if ($file) {
-		// 	fwrite($file, "\r\n" . date("m-d-Y, G:i:s T") . "$fileName - $lineNumber: " . $message);
-		// 	fclose($file);
-		// }
+		if ($file) {
+			fwrite($file, "\r\n" . date("m-d-Y, G:i:s T") . "$fileName - $lineNumber: " . $message);
+			fclose($file);
+		}
 	}
 
 	public static function extension_registered($extensionName) {
@@ -40,7 +40,7 @@ class NMM_Util {
 	}
 
 	// credit: http://www.php.net/manual/en/function.mysql-real-escape-string.php#100854
-	private static function safe_string_escape ($str)
+	private static function safe_string_escape($str)
 	{
 	   $len=strlen($str);
 	   $escapeCount=0;

@@ -171,10 +171,26 @@ class NMM_Gateway extends WC_Payment_Gateway {
             // handle different woocommerce currencies and get the order total in USD
             $curr = get_woocommerce_currency();
             $usdTotal = NMM_Exchange::get_order_total_in_usd($order->get_total(), $curr);
-            
-            // order total in cryptocurrency
-            $cryptoTotal = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
+            $cryptoMarkupPercent = $nmmSettings->get_markup($cryptoId);
 
+            if (!is_numeric($cryptoMarkupPercent)) {
+                error_log('markup percent not set');
+                $cryptoMarkupPercent = 0.0;
+            }
+
+            error_log('markup percent is: ' . $cryptoMarkupPercent);
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;
+            error_log('markup is: ' . $cryptoMarkup);
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;
+            error_log('crypto price ration is: ' . $cryptoMarkup);
+
+
+
+            // order total in cryptocurrency
+            $cryptoTotalPreMarkup = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
+            error_log('crypto total is: ' . $cryptoTotalPreMarkup);
+            $cryptoTotal = $cryptoTotalPreMarkup * $cryptoPriceRatio;
+            error_log('crypto final amount is: ' . $cryptoTotal);
             // format the crypto amount based on crypto
             $formattedCryptoTotal = NMM_Cryptocurrencies::get_price_string($cryptoId, $cryptoTotal);
 

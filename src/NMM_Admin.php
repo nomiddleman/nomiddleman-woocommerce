@@ -193,7 +193,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
                 'max'      => 100,
                 'step'     => 0.1,
                 'default'  => 0.0,
-                'desc' => 'This will increase the amount of cryptocurrency the customer will owe for the order.<br> (5 = 5% markup, -3 = 3% markdown)',
+                'desc' => 'This will increase/decrease the amount of cryptocurrency the customer will owe for the order.<br>(4.8 = 4.8% markup, -10.0 = 10% markdown)',
             ),
     	    array(
                 'id'       => $nmm_crypto->get_id() . '_mode',
