@@ -185,7 +185,16 @@ foreach ($nmm_cryptos as $nmm_crypto) {
 	    'class' => 'crypto-subsection',
 	    'icon'   => $nmm_crypto->get_logo_file_path(),
 	    'fields'     => array(
-	    
+	       array(
+                'id'       => $nmm_crypto->get_id() . '_markup',
+                'type'     => 'spinner',
+                'title'    => 'Markup/Markdown %',                
+                'min'      => -100,
+                'max'      => 100,
+                'step'     => 0.1,
+                'default'  => 0.0,
+                'desc' => 'This will increase the amount of cryptocurrency the customer will owe for the order.<br> (5 = 5% markup, -3 = 3% markdown)',
+            ),
     	    array(
                 'id'       => $nmm_crypto->get_id() . '_mode',
                 'type'     => 'radio',

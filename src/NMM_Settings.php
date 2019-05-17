@@ -103,6 +103,17 @@ class NMM_Settings {
 		return '';		
 	}
 
+	public function get_markup($cryptoId) {
+		$markupKey = $cryptoId . '_markup';
+		if (is_array($this->settings)) {
+			if (array_key_exists($markupKey, $this->settings)) {
+				return trim($this->settings[$markupKey]);
+			}
+		}
+
+		return 0;
+	}
+
 	public function get_hd_processing_percent($cryptoId) {
 		if (!is_array($this->settings)) {
 			return '0.995';
