@@ -34,7 +34,7 @@ function NMM_update_database_when_admin_changes_order_status( $orderId, $postDat
 
 	$newOrderStatus = sanitize_text_field($_POST['order_status']);
 
-	$paymentAmount = 0.0;	
+	$paymentAmount = 0.0;
 	
 	$paymentAmount = get_post_meta($orderId, 'crypto_amount', true);
 
@@ -166,6 +166,7 @@ function NMM_load_js($stuff) {
 		wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery' ), NMM_VERSION);	
 	}
 }
+
 function NMM_first_mpk_address_ajax() {
 		if (!isset($_POST) || !is_array($_POST) || !array_key_exists('mpk', $_POST) || !array_key_exists('cryptoId', $_POST)) {
 			return;
@@ -197,8 +198,6 @@ function NMM_first_mpk_address_ajax() {
 
 function NMM_filter_gateways($gateways){	
     global $woocommerce;
-
-
     
     $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
 
@@ -215,6 +214,7 @@ function NMM_filter_gateways($gateways){
 	else {
 		$gateways[] = 'NMM_Gateway';
 	}
+
     return $gateways;
 }
 ?>

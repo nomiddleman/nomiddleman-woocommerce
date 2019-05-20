@@ -164,7 +164,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             $crypto = $this->cryptos[$chosenCryptoId];
             $cryptoId = $crypto->get_id();
 
-            update_post_meta($order_id, 'crypto_type_id', $cryptoId);            
+            update_post_meta($order_id, 'crypto_type_id', $cryptoId);
             // get current price of crypto
             $cryptoPerUsd = $this->get_crypto_value_in_usd($cryptoId, $crypto->get_update_interval());
             
@@ -173,8 +173,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             $usdTotal = NMM_Exchange::get_order_total_in_usd($order->get_total(), $curr);
             $cryptoMarkupPercent = $nmmSettings->get_markup($cryptoId);
 
-            if (!is_numeric($cryptoMarkupPercent)) {
-                error_log('markup percent not set');
+            if (!is_numeric($cryptoMarkupPercent)) {                
                 $cryptoMarkupPercent = 0.0;
             }
 
@@ -183,8 +182,6 @@ class NMM_Gateway extends WC_Payment_Gateway {
             error_log('markup is: ' . $cryptoMarkup);
             $cryptoPriceRatio = 1.0 + $cryptoMarkup;
             error_log('crypto price ratio is: ' . $cryptoPriceRatio);
-
-
 
             // order total in cryptocurrency
             $cryptoTotalPreMarkup = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
@@ -196,7 +193,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
             update_post_meta($order_id, 'crypto_amount', $formattedCryptoTotal);
 
-            NMM_Util::log(__FILE__, __LINE__, 'Crypto total: ' . $cryptoTotal . ' Formatted Total: ' . $formattedCryptoTotal);            
+            NMM_Util::log(__FILE__, __LINE__, 'Crypto total: ' . $cryptoTotal . ' Formatted Total: ' . $formattedCryptoTotal);
 
             // if hd is enabled we have stuff to do
             if ($nmmSettings->hd_enabled($cryptoId)) {
@@ -219,7 +216,6 @@ class NMM_Gateway extends WC_Payment_Gateway {
                     }
                 }
 
-                // TODO: test emails to see if we need this
                 // set hd wallet address to get later
                 WC()->session->set('hd_wallet_address', $orderWalletAddress);
 
@@ -256,8 +252,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             // For email
             WC()->session->set($cryptoId . '_amount', $formattedCryptoTotal);
 
-            // For customer reference and to handle refresh of thank you page
-            
+            // For customer reference and to handle refresh of thank you page            
             update_post_meta($order_id, 'wallet_address', $orderWalletAddress);
             
 
@@ -344,9 +339,9 @@ class NMM_Gateway extends WC_Payment_Gateway {
         return $endpoint . $qrData;
     }
 
-    private function output_thank_you_html($crypto, $orderWalletAddress, $cryptoTotal) {
-        
+    private function output_thank_you_html($crypto, $orderWalletAddress, $cryptoTotal) {        
         $formattedPrice = NMM_Cryptocurrencies::get_price_string($crypto->get_id(), $cryptoTotal);
+        
         $qrCode = $this->get_qr_code($crypto->get_name(), $orderWalletAddress, $formattedPrice);
 
         ?>
