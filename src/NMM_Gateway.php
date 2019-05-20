@@ -182,7 +182,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             $cryptoMarkup = $cryptoMarkupPercent / 100.0;
             error_log('markup is: ' . $cryptoMarkup);
             $cryptoPriceRatio = 1.0 + $cryptoMarkup;
-            error_log('crypto price ration is: ' . $cryptoMarkup);
+            error_log('crypto price ratio is: ' . $cryptoPriceRatio);
 
 
 

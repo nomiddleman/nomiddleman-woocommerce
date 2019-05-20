@@ -111,67 +111,90 @@ class NMM_Settings {
 			}
 		}
 
-		return 0;
+		return '0.0';
 	}
 
 	public function get_hd_processing_percent($cryptoId) {
-		if (!is_array($this->settings)) {
-			return '0.995';
+		$hdPercentKey = $cryptoId . '_hd_percent_to_process';
+
+		if (is_array($this->settings)) {
+			if (array_key_exists($hdPercentKey, $this->settings)) {
+				return $this->settings[$hdPercentKey];
+			}
 		}
-		return $this->settings[$cryptoId . '_hd_percent_to_process'];
+		
+		return '0.99';
 	}
 
 	public function get_hd_required_confirmations($cryptoId) {
-		if (!is_array($this->settings)) {
-			return '2';
-		}
-		if (!array_key_exists($cryptoId . '_hd_required_confirmations', $this->settings)) {
-			return '2';
-		}
-		return round($this->settings[$cryptoId . '_hd_required_confirmations']);
+		$hdConfirmationsKey = $cryptoId . '_hd_required_confirmations';
+		
+		if (is_array($this->settings)) {
+			if (array_key_exists($hdConfirmationsKey, $this->settings)) {
+				return round($this->settings[$hdConfirmationsKey]);
+			}			
+		}		
+
+		return '2';		
 	}
 
 	public function get_hd_cancellation_time($cryptoId) {
-		if (!is_array($this->settings)) {
-			return '24';
+		$hdCancellationKey = $cryptoId . '_hd_order_cancellation_time_hr';
+
+		if (is_array($this->settings)) {
+			if (array_key_exists($hdCancellationKey, $this->settings)) {
+				return $this->settings[$hdCancellationKey];
+			}			
 		}
-		return $this->settings[$cryptoId . '_hd_order_cancellation_time_hr'];
+
+		return '24';		
 	}
 
 	public function get_autopay_processing_percent($cryptoId) {
-		if (!is_array($this->settings)) {
-			return '0.999';
+		$autopayPercentKey = $cryptoId . '_autopayment_percent_to_process';
+
+		if (is_array($this->settings)) {
+			if (array_key_exists($autopayPercentKey, $this->settings)) {
+				return $this->settings[$autopayPercentKey];
+			}	
 		}
-		return $this->settings[$cryptoId . '_autopayment_percent_to_process'];
+
+		return '0.999';		
 	}
 
 	public function get_autopay_required_confirmations($cryptoId) {
-		if (!is_array($this->settings)) {
-			return '2';
+		$autopayConfirmationsKey = $cryptoId . '_autopayment_required_confirmations';
+
+		if (is_array($this->settings)) {
+			if (array_key_exists($autopayConfirmationsKey, $this->settings)) {
+				return round($this->settings[$autopayConfirmationsKey]);
+			}
 		}
-		if (!array_key_exists($cryptoId . '_autopayment_required_confirmations', $this->settings)) {
-			return '2';
-		}
-		return round($this->settings[$cryptoId . '_autopayment_required_confirmations']);
+		
+		return '2';
 	}
 
 	public function get_autopay_cancellation_time($cryptoId) {
-		if (!is_array($this->settings)) {
-			return '24';
+		$autopayCancellationKey = $cryptoId . '_autopayment_order_cancellation_time_hr';
+
+		if (is_array($this->settings)) {
+			if (array_key_exists($autopayCancellationKey, $this->settings)) {
+				return $this->settings[$autopayCancellationKey];
+			}			
 		}
-		return $this->settings[$cryptoId . '_autopayment_order_cancellation_time_hr'];
+
+		return '24';
 	}
 	
 	public function price_api_selected() {
 		$priceApiKey = 'selected_price_apis';
-		if (!is_array($this->settings)) {
-			return false;
-		}
-
-		if (array_key_exists($priceApiKey, $this->settings)) {
-			if (is_array($this->settings[$priceApiKey])) {
-				if (count($this->settings[$priceApiKey]) > 0) {
-					return true;
+		
+		if (is_array($this->settings)) {
+			if (array_key_exists($priceApiKey, $this->settings)) {
+				if (is_array($this->settings[$priceApiKey])) {
+					if (count($this->settings[$priceApiKey]) > 0) {
+						return true;
+					}
 				}
 			}
 		}
@@ -181,11 +204,11 @@ class NMM_Settings {
 
 	public function _get_mode($cryptoId) {
 		$modeKey = $cryptoId . '_mode';
-		if (!is_array($this->settings)) {
-			return '';
-		}
-		if (array_key_exists($modeKey, $this->settings)) {
-			return $this->settings[$modeKey];
+
+		if (is_array($this->settings)) {		
+			if (array_key_exists($modeKey, $this->settings)) {
+				return $this->settings[$modeKey];
+			}
 		}
 		
 		return '';
@@ -193,8 +216,10 @@ class NMM_Settings {
 
 	public function add_consumed_tx($cryptoId, $address, $txHash) {
 		$settingsKey = 'nmmpro_' . $cryptoId . '_transactions_consumed_for_' . $address;
+
 		$consumedTxs = get_option($settingsKey, array());
 		$consumedTxs[] = $txHash;
+		
 		update_option($settingsKey, $consumedTxs, false);
 	}
 

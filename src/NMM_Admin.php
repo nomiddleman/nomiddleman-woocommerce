@@ -44,7 +44,7 @@ $nmm_redux_args = array(
     // Set a different name for your global variable other than the opt_name
     'dev_mode'             => false,
     // Show the time the page took to load, etc
-    'update_notice'        => true,
+    'update_notice'        => false,
     // If dev_mode is enabled, will notify developer of updated versions available in the GitHub Repo
     'customizer'           => false,
     // Enable basic customizer support
@@ -189,10 +189,11 @@ foreach ($nmm_cryptos as $nmm_crypto) {
                 'id'       => $nmm_crypto->get_id() . '_markup',
                 'type'     => 'spinner',
                 'title'    => 'Markup/Markdown %',                
-                'min'      => -100,
+                'min'      => -99.9,
                 'max'      => 100,
                 'step'     => 0.1,
                 'default'  => 0.0,
+                'subtitle' => 'This only increases the crypto amount owed, the original fiat value will still be displayed to the customer.',
                 'desc' => 'This will increase/decrease the amount of cryptocurrency the customer will owe for the order.<br>(4.8 = 4.8% markup, -10.0 = 10% markdown)',
             ),
     	    array(
@@ -220,7 +221,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
             'title'    => 'Privacy Mode MPK',
             'default'  => '',
             'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '2'),            
-            'desc' => 'Your Privacy Mode master public key. (Legacy seed-type only)',
+            'desc' => 'Your HD Wallet Master Public Key. We highly recommend using a brand new MPK for each store you run. You run the risk of address reuse and incorrectly processed orders if you use your MPK for multiple stores and/or purposes (such as donations on another platform).',
         );
         
         $nmm_section['fields'][] = array(
@@ -277,7 +278,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_autopayment_percent_to_process',
             'type'     => 'slider',
-            'default'  => 0.997,
+            'default'  => 0.999,
             'min'      => 0.985,
             'max'      => 1.000,
             'step'     => 0.001,
