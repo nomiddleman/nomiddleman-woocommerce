@@ -5,7 +5,7 @@ Requires at least: 3.0.1
 Tested up to: 5.2.0
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.3.4
+Stable Tag: 2.3.5
 
 Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman.
 
@@ -35,6 +35,7 @@ Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrenc
 * Unique address for every order\*
 * Auto update of order to complete upon payment\*
 * Customer QR code on checkout
+* Markup/Markdown customer orders when paying with crypto (Crypto specific values)
 * Supports all Woocommerce fiat currencies
 
 \* varies by cryptocurrency
@@ -46,6 +47,9 @@ Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrenc
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.3.5 =
+* Added markup/markdown settings for each crypto
 
 = 2.3.4 =
 * Gateway will always show up in WooCommerce settings even if no valid cryptos exists
