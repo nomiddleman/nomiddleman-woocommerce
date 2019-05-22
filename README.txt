@@ -1,13 +1,17 @@
 ﻿=== Nomiddleman Crypto Payments for WooCommerce ===
 Contributors: nomiddleman
-Tags: bitcoin, cryptocurrency, woocommerce, e-commerce, crypto, ecommerce, payments, monero, ethereum, dogecoin, pay with crypto, crypto, woo, woo crypto, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress
+Tags: bitcoin, cryptocurrency, woocommerce, payments, crypto, btc, ethereum, ether, e-commerce, ecommerce, monero, dogecoin, pay with crypto, pay with bitcoin, bitcoin payments, woo, accept, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress, electrum, mpk, master public key, hd wallet, address, zcash, bitcoin cash, bitcoin gold, blackcoin, dash, deeponion, ethereum classic, ripple, vericoin, eos, bitcoin sv, vechain, tron, stellar, rep, bch, btg, blk, dash, onion, doge, eth, etc, ltc, xmr, xrp, vrc, zec, eos, bsv, vet, trx, xlm, no fees, no middleman, freedom, nomiddleman, no fees, free, for free, free crypto plugin, plugin, plug-in, no middleman, binance coin, bnb, iota, miota, maker, mkr, nem, xem, waves, ontology, ont, omisego, omg, holo, hot, chainlink, link, decred, dcr, basic attention token, bat, 0x, zrx, lisk, lsk, bytecoin, bcn, bitcoin diamond, bcd, digibyte, dgb, gemini dollar, gusd, potcoin, pot, token, coin, mineable, er20 token, er20
 Requires at least: 3.0.1
 Tested up to: 5.2.0
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.3.5
+Stable Tag: 2.3.6
 
-Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman.
+No usernames. No passwords. No API keys. No middleman. Absolutely the easiest setup in the industry.
+
+Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman. Empowering you to accept all major cryptocurrencies directly to your own wallets for free. No middleman fees and completely open source on <a target="_blank" href="https://github.com/nomiddleman/nomiddleman-woocommerce">github</a>.
+
+We support customer payments with bitcoin, ethereum, litecoin, bitcoin cash, and 40 other top cryptocurrencies.
 
 <blockquote>
 = Information =
@@ -25,17 +29,18 @@ Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrenc
 
 == Features ==
 
-* 43 supported cryptocurrencies
-* Simple setup via plugin settings – no website registration necessary
-* You control your wallets
-* We don’t use servers running closed source code
+* 43 supported cryptocurrencies (BTC, ETH, LTC, XRP, BCH and more)
+* Absolute easiest and quickest setup in the industry
+* You control your wallets, you control your keys, you control your crypto
+* No third party punchouts
+* No website registration
 * No plugin API key required
 * No middleman fees
+* MPK Support - Unique address for every order\*
+* Automatic order processing\*
 * Real-time crypto valuation
-* Unique address for every order\*
-* Auto update of order to complete upon payment\*
-* Customer QR code on checkout
-* Markup/Markdown customer orders when paying with crypto (Crypto specific values)
+* Customer QR code on checkout - Amount Included
+* Markup/Markdown customer orders when paying with crypto
 * Supports all Woocommerce fiat currencies
 
 \* varies by cryptocurrency
@@ -47,6 +52,9 @@ Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrenc
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.3.6 =
+* Added order line item for markup/markdown
 
 = 2.3.5 =
 * Added markup/markdown settings for each crypto

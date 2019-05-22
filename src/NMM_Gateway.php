@@ -386,7 +386,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $qrCode = $this->get_qr_code($crypto->get_name(), $orderWalletAddress, $formattedPrice);
 
         ?>
-        <p>Once you have paid, please check your email for payment confirmation.<br /> We apologize for the inconvienience but to keep this transaction private we choose not to punch out to a third party.</p>
+        <!-- <p>Once you have paid, please check your email for payment confirmation.<br /> We apologize for the inconvienience but to keep this transaction private we choose not to punch out to a third party.</p> -->
         <p>Here are your cryptocurrency payment details.</p>
         <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
             <li class="woocommerce-order-overview__qr-code">
