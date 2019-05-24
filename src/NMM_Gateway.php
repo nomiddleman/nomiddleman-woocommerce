@@ -170,14 +170,9 @@ class NMM_Gateway extends WC_Payment_Gateway {
             $cryptoPerUsd = $this->get_crypto_value_in_usd($cryptoId, $crypto->get_update_interval());
             
             // handle different woocommerce currencies and get the order total in USD
-            $curr = get_woocommerce_currency();
-            $orderTotal = $order->get_total();
-            $usdTotal = NMM_Exchange::get_order_total_in_usd($orderTotal, $curr);
-            $cryptoPreTotal = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
-            error_log('crypto pre total: ' . $cryptoPreTotal);
-            $orderSubTotal = $order->get_subtotal();
-            
-            error_log('subtotal: ' . $orderSubTotal);
+            $curr = get_woocommerce_currency(); 
+
+            $usdTotal = NMM_Exchange::get_order_total_in_usd($order->get_total(), $curr);            
             
             $cryptoMarkupPercent = $nmmSettings->get_markup($cryptoId);
 
@@ -185,50 +180,20 @@ class NMM_Gateway extends WC_Payment_Gateway {
                 $cryptoMarkupPercent = 0.0;
             }
 
-            $markup = $cryptoMarkupPercent / 100.0;
+            // error_log('markup percent is: ' . $cryptoMarkupPercent);
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;
+            // error_log('markup is: ' . $cryptoMarkup);
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;
+            // error_log('crypto price ratio is: ' . $cryptoPriceRatio);
             
-            $difference = $orderTotal * $markup;
-            $lineItem = new WC_Order_Item_Fee();
-            $lineItem->set_amount($difference);
-            $lineItem->set_total($difference);
-
-            if ($difference > 0.0) {                
-                $title = ucwords($cryptoId) . ' Premium'; 
-                $lineItem->set_name($title);
-            }
-            else if ($difference < 0.0) {
-                $title = ucwords($cryptoId) . ' Discount'; 
-                $lineItem->set_name($title);   
-            }
-
-            $lineItem->save();
-            $order->add_item($lineItem);
-            $order->calculate_totals();
-            $order->save();
-            
+            $cryptoTotalPreMarkup = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
+            // error_log('crypto total is: ' . $cryptoTotalPreMarkup);
+            $cryptoTotal = $cryptoTotalPreMarkup * $cryptoPriceRatio;
+            // error_log('crypto final amount is: ' . $cryptoTotal);           
             
             $updatedOrderTotal = $order->get_total();
             $updatedUsdTotal = NMM_Exchange::get_order_total_in_usd($updatedOrderTotal, $curr);
-
-
-            $cryptoTotal = round($updatedUsdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
-            error_log('crypto total: ' . $cryptoTotal);
-            // error_log('markup percent is: ' . $cryptoMarkupPercent);
-            // $cryptoMarkup = $cryptoMarkupPercent / 100.0;
-            // error_log('markup is: ' . $cryptoMarkup);
-            // $cryptoPriceRatio = 1.0 + $cryptoMarkup;
-            // error_log('crypto price ratio is: ' . $cryptoPriceRatio);
-
-            // // order total in cryptocurrency
-            // $cryptoTotalPreMarkup = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
-            // error_log('crypto total is: ' . $cryptoTotalPreMarkup);
-            // $cryptoTotal = $cryptoTotalPreMarkup * $cryptoPriceRatio;
-            // error_log('crypto final amount is: ' . $cryptoTotal);
-
             
-
-            // error_log('order data: ' . print_r($order, true));
-
             // format the crypto amount based on crypto
             $formattedCryptoTotal = NMM_Cryptocurrencies::get_price_string($cryptoId, $cryptoTotal);
 
