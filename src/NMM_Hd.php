@@ -220,8 +220,8 @@ class NMM_Hd {
 
 				$order = new WC_Order($orderId);
 				$orderNote = sprintf(
-					'Your order was <strong>cancelled</strong> because you were unable to pay for %s minute(s). Please do not send any funds to the payment address.',
-					round($orderCancellationTimeSec/60, 1),
+					'Your ' . $cryptoId . ' order was <strong>cancelled</strong> because you were unable to pay for %s hour(s). Please do not send any funds to the payment address.',
+					round($orderCancellationTimeSec/3600, 1),
 					$address);
 
 				add_filter('woocommerce_email_subject_customer_note', 'NMM_change_cancelled_email_note_subject_line', 1, 2);
