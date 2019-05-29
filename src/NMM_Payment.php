@@ -255,7 +255,7 @@ class NMM_Payment {
 				$order = new WC_Order($orderId);
 
 				$orderNote = sprintf(
-					'Your ' . $cryptoId . ' order was <strong>cancelled</strong> because you were unable to pay for %s hours(s). Please do not send any funds to the payment address.',
+					'Your ' . $cryptoId . ' order was <strong>cancelled</strong> because you were unable to pay for %s hour(s). Please do not send any funds to the payment address.',
 					round($paymentCancellationTimeSec/3600, 1),
 					$address);
 

@@ -1,18 +1,18 @@
-﻿=== Nomiddleman Crypto Payments for WooCommerce ===
+﻿=== Nomiddleman Bitcoin and Crypto Payments for WooCommerce ===
 Contributors: nomiddleman
-Tags: bitcoin, cryptocurrency, woocommerce, payments, crypto, btc, ethereum, ether, e-commerce, ecommerce, monero, dogecoin, pay with crypto, pay with bitcoin, bitcoin payments, woo, accept, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress, electrum, mpk, master public key, hd wallet, address, zcash, bitcoin cash, bitcoin gold, blackcoin, dash, deeponion, ethereum classic, ripple, vericoin, eos, bitcoin sv, vechain, tron, stellar, rep, bch, btg, blk, dash, onion, doge, eth, etc, ltc, xmr, xrp, vrc, zec, eos, bsv, vet, trx, xlm, no fees, no middleman, freedom, nomiddleman, no fees, free, for free, free crypto plugin, plugin, plug-in, no middleman, binance coin, bnb, iota, miota, maker, mkr, nem, xem, waves, ontology, ont, omisego, omg, holo, hot, chainlink, link, decred, dcr, basic attention token, bat, 0x, zrx, lisk, lsk, bytecoin, bcn, bitcoin diamond, bcd, digibyte, dgb, gemini dollar, gusd, potcoin, pot, token, coin, mineable, er20 token, er20
+Tags: bitcoin, cryptocurrency, woocommerce, payments, crypto, btc, ethereum, ether, ethereum token, token, gas, e-commerce, ecommerce, monero, dogecoin, pay with crypto, pay with bitcoin, bitcoin payments, woo, accept, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress, electrum, mpk, master public key, hd wallet, address, zcash, bitcoin cash, bitcoin gold, blackcoin, dash, deeponion, ethereum classic, ripple, vericoin, eos, bitcoin sv, vechain, tron, stellar, rep, bch, btg, blk, dash, onion, doge, eth, etc, ltc, xmr, xrp, vrc, zec, eos, bsv, vet, trx, xlm, no fees, no middleman, freedom, nomiddleman, no fees, free, for free, free crypto plugin, plugin, plug-in, no middleman, binance coin, bnb, iota, miota, maker, mkr, nem, xem, waves, ontology, ont, omisego, omg, holo, hot, chainlink, link, decred, dcr, basic attention token, bat, 0x, zrx, lisk, lsk, bytecoin, bcn, bitcoin diamond, bcd, digibyte, dgb, gemini dollar, gusd, potcoin, pot, risk, high-risk, coin, mineable, erc20 token, erc20, KYC, No KYC, No registration, No login
 Requires at least: 3.0.1
 Tested up to: 5.2.1
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.3.6
+Stable Tag: 2.3.7
 
 Absolutely the easiest setup in the industry. No usernames. No passwords. No API keys. No middleman. Accept bitcoin, ethereum, litecoin, and more.
 
 == Description ==
 Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman. Empowering you to accept all major cryptocurrencies directly to your own wallets for free. No middleman fees and completely open source on <a target="_blank" href="https://github.com/nomiddleman/nomiddleman-woocommerce">github</a>.
 
-We support customer payments with bitcoin, ethereum, litecoin, XRP, bitcoin cash and over 30 other top cryptocurrencies.
+Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and over 30 other top cryptocurrencies.
 
 <blockquote>
 = Information =
@@ -20,49 +20,49 @@ We support customer payments with bitcoin, ethereum, litecoin, XRP, bitcoin cash
 </blockquote>
 
 == Supported Cryptocurrencies ==
-* Bitcoin
-* Ethereum
-* XRP
-* Monero
-* Dogecoin
-* Litecoin
-* Bitcoin Cash
-* Dash
-* Basic Attention Token
-* Bitcoin Diamond
-* Bytecoin
-* Blackcoin
-* Binance Coin
-* Bitcoin SV
-* Bitcoin Gold
-* Cardano
-* Decred
-* Digibyte
-* Eos
-* Ethereum Classic
-* Gnosis
-* Gemini Dollar
-* Holochain
-* Chainlink
-* Lisk
-* Iota
-* Maker
-* Melon
-* OmiseGO
-* DeepOnion
-* Ontology
-* Potcoin
-* Qtum
-* Augur
-* Tron
-* VeChain
-* Vericoin
-* Waves
-* NEM
-* Stellar
-* Tezos
-* Zcash
-* 0x
+* Bitcoin - BTC
+* Ethereum - ETH
+* XRP - XRP
+* Monero - XMR
+* Dogecoin - DOGE
+* Litecoin - LTC
+* Bitcoin Cash - BCH
+* Dash - DASH
+* Basic Attention Token - BAT
+* Bitcoin Diamond - BCD
+* Bytecoin - BCN
+* Blackcoin - BLK
+* Binance Coin - BNB
+* Bitcoin SV - BSV
+* Bitcoin Gold - BTG
+* Cardano - ADA
+* Decred - DCR
+* Digibyte - DGB
+* Eos - EOS
+* Ethereum Classic - ETC
+* Gnosis - GNO
+* Gemini Dollar - GUSD
+* Holochain - HOT
+* Chainlink - LINK
+* Lisk - LSK
+* Iota - MIOTA
+* Maker - MKR
+* Melon - MLN
+* OmiseGO - OMG
+* DeepOnion - ONION
+* Ontology - ONT
+* Potcoin -POT
+* Qtum - QTUM
+* Augur - REP
+* Tron - TRX
+* VeChain - VET
+* Vericoin - VRC
+* Waves - WAVES
+* NEM - XEM
+* Stellar - XLM
+* Tezos - XTZ
+* Zcash - ZEC
+* 0x - ZRX
 
 == Installation ==
 
@@ -75,7 +75,7 @@ We support customer payments with bitcoin, ethereum, litecoin, XRP, bitcoin cash
 
 == Features ==
 
-* 43 supported cryptocurrencies (BTC, ETH, LTC, XRP, BCH and more)
+* 43 supported cryptocurrencies (Accept BTC, ETH, LTC, XRP, BCH and more)
 * Absolute easiest and quickest setup in the industry
 * You control your wallets, you control your keys, you control your crypto
 * No third party punchouts
@@ -98,6 +98,9 @@ We support customer payments with bitcoin, ethereum, litecoin, XRP, bitcoin cash
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.3.7 =
+* Updated customer cancellation message to be in hours and added order cryptoId
 
 = 2.3.6 =
 * Removed settings from top admin bar
