@@ -26,7 +26,7 @@ class NMM_Cryptocurrencies {
             'BCH' => new NMM_Cryptocurrency('BCH', 'Bitcoin Cash', 8, 'bitcoincash_logo_small.png', 60, '', false, true, true, false),
             'EOS' => new NMM_Cryptocurrency('EOS', 'EOS', 4, 'eos_logo_small.png', 60, '', false, true, false, false),
             'BSV' => new NMM_Cryptocurrency('BSV', 'Bitcoin SV', 8, 'bitcoinsv_logo_small.png', 60, '', false, true, false, false),            
-            'XRP' => new NMM_Cryptocurrency('XRP', 'Ripple', 6, 'ripple_logo_small.png', 60, '', false, true, false, false),
+            'XRP' => new NMM_Cryptocurrency('XRP', 'XRP', 6, 'ripple_logo_small.png', 60, '', false, true, false, false),
             'ONION' => new NMM_Cryptocurrency('ONION', 'DeepOnion', 8, 'deeponion_logo_small.png', 60, '', false, true, true, false),
             'BLK' => new NMM_Cryptocurrency('BLK', 'BlackCoin', 8, 'blackcoin_logo_small.png', 60, '', false, true, true, false),
             'ETC' => new NMM_Cryptocurrency('ETC', 'Ethereum Classic', 18, 'ethereumclassic_logo_small.png', 60, '', false, true, true, false),
@@ -240,7 +240,7 @@ class NMM_Cryptocurrencies {
             return preg_match('/^2[0-9a-zA-Z]{91,99}/', $address);
         }
         if ($cryptoId === 'BNB') {
-            return preg_match('/^0x[a-fA-F0-9]{40,42}/', $address);
+            return preg_match('/^bnb[a-zA-Z0-9]{37,48}/', $address);
         }
         if ($cryptoId === 'DCR') {
             return preg_match('/^D[0-9a-zA-Z]{31,35}/', $address);
