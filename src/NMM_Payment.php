@@ -8,7 +8,7 @@ class NMM_Payment {
 		// get a unique list of unpaid "payments" to crypto addresses
 		$addressesToCheck = $paymentRepo->get_distinct_unpaid_addresses();
 
-		$cryptos = NMM_Cryptocurrencies::get();		
+		$cryptos = NMM_Cryptocurrencies::get();
 
 		foreach ($addressesToCheck as $record) {
 			$address = $record['address'];

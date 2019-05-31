@@ -216,7 +216,10 @@ class NMM_Cryptocurrencies {
             return preg_match('/^Q[0-9a-zA-Z]{31,35}/', $address);
         }
         if ($cryptoId === 'ADA') {
-            return preg_match('/^Ddz[0-9a-zA-Z]{80,120}/', $address);
+            $match1 = preg_match('/^Ddz[0-9a-zA-Z]{80,120}/', $address);
+            $match2 = preg_match('/^Ae2tdPwUPE[0-9a-zA-Z]{46,53}/', $address);
+
+            return $match1 || $match2;
         }
         if ($cryptoId === 'XTZ') {
             return preg_match('/^tz1[0-9a-zA-Z]{30,39}/', $address);
@@ -284,9 +287,7 @@ class NMM_Cryptocurrencies {
         
         NMM_Util::log(__FILE__, __LINE__, 'Invalid cryptoId, contact plug-in developer.');        
         throw new Exception('Invalid cryptoId, contact plug-in developer.');
-    }
-
-    
+    }    
 }
 
 ?>
