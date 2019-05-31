@@ -284,6 +284,10 @@ class NMM_Cryptocurrencies {
         if ($cryptoId === 'GUSD') {
             return preg_match('/^0x[a-fA-F0-9]{40,42}/', $address);
         }
+
+        // xrb_195mx9357zhmxsu53qqg3qbm6cqx3wq9h9wpdpj1b98n6mauj46mh9iwz1pg xrb_ 64
+        // 51RguiuQAkVw5V6wQdkQnbpsm59szVrr91 M 4 5 34
+        
         
         NMM_Util::log(__FILE__, __LINE__, 'Invalid cryptoId, contact plug-in developer.');        
         throw new Exception('Invalid cryptoId, contact plug-in developer.');
