@@ -246,6 +246,38 @@ class NMM_Blockchain {
 		return $result;
 	}
 
+	public static function get_blockbook_total_received_for_xmy_address($address) {		
+		$userAgentString = self::get_user_agent_string();
+		
+		$request = 'https://blockbook.myralicious.com/api/address/' . $address;
+
+		$args = array(
+			'user-agent' => $userAgentString
+		);
+
+		$response = wp_remote_get($request, $args);
+		if (is_wp_error($response) || $response['response']['code'] !== 200) {
+			NMM_Util::log(__FILE__, __LINE__, 'FAILED API CALL ( ' . $request . ' ): ' . print_r($response, true));
+			$result = array (
+				'result' => 'error',
+				'total_received' => '',
+			);
+
+			return $result;
+		}
+
+		$totalReceived = (float) json_decode($response['body'])->balance;
+
+		$result = array (
+			'result' => 'success',
+			'total_received' => $totalReceived,
+		);
+
+		return $result;
+	}
+
+
+
 	public static function get_ada_address_transactions($address) {
 		$request = 'https://cardanoexplorer.com/api/addresses/summary/' . $address;
 		$response = wp_remote_get($request);
@@ -1178,6 +1210,68 @@ class NMM_Blockchain {
 												  $rawTransaction->transaction_hash);
 				}
 			}
+		}
+
+		$result = array (
+			'result' => 'success',
+			'transactions' => $transactions,
+		);
+
+		return $result;
+	}
+
+	public static function get_xmy_address_transactions($address) {
+		
+		$request = 'https://blockbook.myralicious.com/api/address/' . $address;
+		
+		$response = wp_remote_get($request);
+
+		if (is_wp_error($response) || $response['response']['code'] !== 200) {
+			NMM_Util::log(__FILE__, __LINE__, 'FAILED API CALL ( ' . $request . ' ): ' . print_r($response, true));
+
+			$result = array(
+				'result' => 'error',
+				'total_received' => '',
+			);
+
+			return $result;
+		}
+
+		$body = json_decode($response['body']);
+
+		$transactionIds = $body->transactions;
+		if (!is_array($transactionIds)) {
+			$result = array(
+				'result' => 'error',
+				'message' => 'No transactions found',
+			);
+
+			return $result;
+		}
+		$transactions = array();
+
+		foreach ($transactionIds as $transactionId) {
+
+				$request2 = 'https://blockbook.myralicious.com/api/tx/' . $transactionId;
+				
+				$response2 = wp_remote_get($request2);
+
+				if (is_wp_error($response2) || $response2['response']['code'] !== 200) {
+					continue;
+				}
+
+				$rawTransaction = json_decode($response2['body']);
+
+				$vouts = $rawTransaction->vout;
+
+			foreach ($rawTransaction->vout as $vout) {
+				if ($vout->scriptPubKey->addresses[0] === $address) {
+					$transactions[] = new NMM_Transaction($vout->value * 100000000, 
+														  $rawTransaction->confirmations, 
+														  $rawTransaction->time,
+														  $rawTransaction->txid);		
+				}
+			}		
 		}
 
 		$result = array (

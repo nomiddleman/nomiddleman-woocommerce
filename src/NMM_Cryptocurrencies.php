@@ -13,6 +13,7 @@ class NMM_Cryptocurrencies {
             'QTUM' => new NMM_Cryptocurrency('QTUM', 'Qtum', 8, 'qtum_logo_small.png', 60, '', true, false, true, false),            
             'DASH' => new NMM_Cryptocurrency('DASH', 'Dash', 8, 'dash_logo_small.png', 60, '', true, true, true, false),            
             'DOGE' => new NMM_Cryptocurrency('DOGE', 'Dogecoin', 8, 'dogecoin_logo_small.png', 60, 'Ð', true, true, true, false),
+            'XMY' => new NMM_Cryptocurrency('XMY', 'Myriad', 8, 'myriadcoin_logo_small.png', 60, '', true, true, true, false),
 
             // auto-pay coins            
             'ETH' => new NMM_Cryptocurrency('ETH', 'Ethereum', 18, 'ethereum_logo_small.png', 60, 'Ξ', false, true, true, false),
@@ -32,8 +33,7 @@ class NMM_Cryptocurrencies {
             'ETC' => new NMM_Cryptocurrency('ETC', 'Ethereum Classic', 18, 'ethereumclassic_logo_small.png', 60, '', false, true, true, false),
             'LSK' => new NMM_Cryptocurrency('LSK', 'Lisk', 8, 'lisk_logo_small.png', 60, '', false, true, true, false),
             'XEM' => new NMM_Cryptocurrency('XEM', 'NEM', 6, 'nem_logo_small.png', 60, '', false, true, true, false),
-            'WAVES' => new NMM_Cryptocurrency('WAVES', 'Waves', 8, 'waves_logo_small.png', 60, '', false, true, true, false),
-            
+            'WAVES' => new NMM_Cryptocurrency('WAVES', 'Waves', 8, 'waves_logo_small.png', 60, '', false, true, true, false),            
 
             // tokens
             'HOT' => new NMM_Cryptocurrency('HOT', 'Holochain', 18, 'holochain_logo_small.png', 60, '', false, true, true, true),
@@ -143,7 +143,7 @@ class NMM_Cryptocurrencies {
 	public static function is_valid_wallet_address($cryptoId, $address) {
             
         if ($cryptoId === 'BTC') {            
-            return preg_match('/^[13][a-km-zA-HJ-NP-Z0-9]{26,42}|bc[a-z0-9]{8,87}/', $address);
+            return preg_match('/^[13][a-km-zA-HJ-NP-Z0-9]{24,42}|bc[a-z0-9]{8,87}/', $address);
         }
         if ($cryptoId === 'ETH') {
             return preg_match('/0x[a-fA-F0-9]{40,42}/', $address);
@@ -283,6 +283,9 @@ class NMM_Cryptocurrencies {
         }
         if ($cryptoId === 'GUSD') {
             return preg_match('/^0x[a-fA-F0-9]{40,42}/', $address);
+        }
+        if ($cryptoId === 'XMY') {
+            return preg_match('/^[M45][a-zA-Z0-9]{31,38}/', $address);   
         }
 
         // xrb_195mx9357zhmxsu53qqg3qbm6cqx3wq9h9wpdpj1b98n6mauj46mh9iwz1pg xrb_ 64
