@@ -25,9 +25,9 @@ function NMM_do_cron_job() {
 			$hdRequiredConfirmations = $nmmSettings->get_hd_required_confirmations($cryptoId);
 			$hdOrderCancellationTimeHr = $nmmSettings->get_hd_cancellation_time($cryptoId);
 			$hdOrderCancellationTimeSec = round($hdOrderCancellationTimeHr * 60 * 60, 0);
-			
-			NMM_Hd::buffer_ready_addresses($cryptoId, $mpk, $hdBufferAddressCount);
+						
 			NMM_Hd::check_all_pending_addresses_for_payment($cryptoId, $mpk, $hdRequiredConfirmations, $hdPercentToVerify);
+			NMM_Hd::buffer_ready_addresses($cryptoId, $mpk, $hdBufferAddressCount);
 			NMM_Hd::cancel_expired_addresses($cryptoId, $mpk, $hdOrderCancellationTimeSec);
 		}		
 	}

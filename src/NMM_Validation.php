@@ -1,10 +1,6 @@
 <?php
 
 class NMM_Validation {
-
-
-	
-
 	public static function validate_redux_options($newValues, $oldValues) {
 		$oldSettings = new NMM_Settings($oldValues);
 		$newSettings = new NMM_Settings($newValues);		
@@ -54,10 +50,10 @@ class NMM_Validation {
 						$invalidCryptoSettings = true;
 						$atLeastOneInvalidCrypto = true;
 						if (NMM_Hd::is_valid_mpk($cryptoId, $mpk)) {
-							$errorMessages[] = 'Nomiddleman has an extension that <a href="https://nmm-crypto.com/extensions/segwit" target="_blank">supports segwit MPKs</a> for ' . $cryptoName . ' Privacy Mode. Without the extension you must use a legacy mpk for ' . $cryptoName . '. Disabling ' . $cryptoName . '.';                    
+							$errorMessages[] = 'Please use an xpub MPK. Disabling ' . $cryptoName . '.';                    
 						}
 						else {
-							$errorMessages[] = $cryptoName . ' has an invalid HD MPK. Disabling ' . $cryptoName . '. If you have a wallet that supports this MPK, please contact us at <a href="mailto:support@nmm-crypto.com">support@nmm-crypto.com</a>.';
+							$errorMessages[] = $cryptoName . ' has an invalid HD MPK. Disabling ' . $cryptoName . '. If you have a wallet that supports this MPK, please contact us at <a href="mailto:support@nomiddlemancrypto.io">support@nomiddlemancrypto.io</a>.';
 						}
 					}
 					else {
