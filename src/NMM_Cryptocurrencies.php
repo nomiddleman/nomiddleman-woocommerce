@@ -13,7 +13,7 @@ class NMM_Cryptocurrencies {
             'QTUM' => new NMM_Cryptocurrency('QTUM', 'Qtum', 8, 'qtum_logo_small.png', 60, '', true, false, true, false),            
             'DASH' => new NMM_Cryptocurrency('DASH', 'Dash', 8, 'dash_logo_small.png', 60, '', true, true, true, false),            
             'DOGE' => new NMM_Cryptocurrency('DOGE', 'Dogecoin', 8, 'dogecoin_logo_small.png', 60, 'Ð', true, true, true, false),
-            'XMY' => new NMM_Cryptocurrency('XMY', 'Myriad', 8, 'myriadcoin_logo_small.png', 60, '', true, true, true, false),
+            'XMY' => new NMM_Cryptocurrency('XMY', 'Myriad', 8, 'myriad_logo_small.png', 60, '', true, true, true, false),
 
             // auto-pay coins            
             'ETH' => new NMM_Cryptocurrency('ETH', 'Ethereum', 18, 'ethereum_logo_small.png', 60, 'Ξ', false, true, true, false),
