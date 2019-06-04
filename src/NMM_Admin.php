@@ -138,8 +138,14 @@ $nmm_section = array(
             'id' => 'payment_label',
             'type' => 'text',            
             'default' => 'Pay with cryptocurrency',
-            'title' => 'Payment Label',            
+            'title' => 'Payment Label',
         ),
+        array(
+            'id' => 'payment_message_html',
+            'type' => 'text',
+            'default' => 'Once you have paid, please check your email for payment confirmation.',
+            'title' => 'Customer Payment Message',
+        ),        
     ),
 );
 

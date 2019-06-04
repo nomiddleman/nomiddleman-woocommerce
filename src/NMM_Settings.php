@@ -76,14 +76,26 @@ class NMM_Settings {
 	}
 
 	public function get_customer_gateway_message() {
-		$customerGatewayKey = 'payment_label';
+		$paymentLabelKey = 'payment_label';
 		if (is_array($this->settings)) {
 			if (array_key_exists($customerGatewayKey, $this->settings)) {
-				return $this->settings[$customerGatewayKey];
+				return $this->settings[$paymentLabelKey];
 			}
 		}
 
 		return 'Pay with cryptocurrency';
+	}
+
+	public function get_customer_payment_message($crypto) {
+		$paymentMessageKey = 'payment_message_html';		
+
+		if (is_array($this->settings)) {
+			if (array_key_exists($paymentMessageKey, $this->settings)) {
+				return $this->settings[$paymentMessageKey];
+			}
+		}
+
+		return 'Once you have paid, please check your email for payment confirmation.';
 	}
 
 	public function get_next_carousel_address($cryptoId) {

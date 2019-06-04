@@ -347,11 +347,15 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
     private function output_thank_you_html($crypto, $orderWalletAddress, $cryptoTotal) {        
         $formattedPrice = NMM_Cryptocurrencies::get_price_string($crypto->get_id(), $cryptoTotal);
+        $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
         
-        $qrCode = $this->get_qr_code($crypto->get_name(), $orderWalletAddress, $formattedPrice);
+        $customerMessage = $nmmSettings->get_customer_payment_message($crypto);
 
+        $qrCode = $this->get_qr_code($crypto->get_name(), $orderWalletAddress, $formattedPrice);        
+        
+        echo $customerMessage;
         ?>
-        <!-- <p>Once you have paid, please check your email for payment confirmation.<br /> We apologize for the inconvienience but to keep this transaction private we choose not to punch out to a third party.</p> -->
+        
         <p>Here are your cryptocurrency payment details.</p>
         <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
             <li class="woocommerce-order-overview__qr-code">
