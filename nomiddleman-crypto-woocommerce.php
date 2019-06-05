@@ -89,6 +89,7 @@ function NMM_init_gateways(){
     require_once(plugin_basename('src/NMM_Carousel.php'));
     require_once(plugin_basename('src/NMM_Hd.php'));    
     require_once(plugin_basename('src/NMM_Payment.php'));
+    require_once(plugin_basename('src/NMM_Lightning.php'));
 
     // Misc
     require_once(plugin_basename('src/NMM_Util.php'));
