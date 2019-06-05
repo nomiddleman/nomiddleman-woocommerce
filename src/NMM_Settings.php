@@ -78,7 +78,7 @@ class NMM_Settings {
 	public function get_customer_gateway_message() {
 		$paymentLabelKey = 'payment_label';
 		if (is_array($this->settings)) {
-			if (array_key_exists($customerGatewayKey, $this->settings)) {
+			if (array_key_exists($paymentLabelKey, $this->settings)) {
 				return $this->settings[$paymentLabelKey];
 			}
 		}
