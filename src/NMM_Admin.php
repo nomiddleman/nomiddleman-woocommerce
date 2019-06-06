@@ -144,7 +144,7 @@ $nmm_section = array(
         array(
             'id' => 'payment_message_html',
             'type' => 'textarea',
-            'default' => 'Once you have paid, please check your email for payment confirmation.',
+            'default' => '',
             'title' => 'Customer Payment Message',
             'desc' => 'This is displayed above the crypto payment details on the payment screen (After the customer clicks "Checkout").'
 

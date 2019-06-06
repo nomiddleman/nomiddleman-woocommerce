@@ -176,7 +176,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             
             $cryptoMarkupPercent = $nmmSettings->get_markup($cryptoId);
 
-            if (!is_numeric($cryptoMarkupPercent)) {                
+            if (!is_numeric($cryptoMarkupPercent)) {
                 $cryptoMarkupPercent = 0.0;
             }
 
