@@ -9,6 +9,7 @@ class NMM_Cryptocurrencies {
             
             // privacy mpk
             'BTC' => new NMM_Cryptocurrency('BTC', 'Bitcoin', 8, 'bitcoin_logo_small.png', 60, '₿', true, true, true, false),
+            'BTX' => new NMM_Cryptocurrency('BTX', 'Bitcore', 8, 'bitcore_logo_small.png', 60, '', true, true, true, false),
             'LTC' => new NMM_Cryptocurrency('LTC', 'Litecoin', 8, 'litecoin_logo_small.png', 60, 'Ł', true, true, true, false),
             'QTUM' => new NMM_Cryptocurrency('QTUM', 'Qtum', 8, 'qtum_logo_small.png', 60, '', true, false, true, false),            
             'DASH' => new NMM_Cryptocurrency('DASH', 'Dash', 8, 'dash_logo_small.png', 60, '', true, true, true, false),            
@@ -286,6 +287,9 @@ class NMM_Cryptocurrencies {
         }
         if ($cryptoId === 'XMY') {
             return preg_match('/^[M45][a-zA-Z0-9]{31,38}/', $address);   
+        }
+        if ($cryptoId === 'BTX') {            
+            return preg_match('/^[2s][a-km-zA-HJ-NP-Z0-9]{24,42}|btx[a-z0-9]{8,87}/', $address);
         }
 
         // xrb_195mx9357zhmxsu53qqg3qbm6cqx3wq9h9wpdpj1b98n6mauj46mh9iwz1pg xrb_ 64

@@ -223,6 +223,9 @@ class NMM_Payment {
 		if ($cryptoId === 'XMY') {
 			$result = NMM_Blockchain::get_xmy_address_transactions($address);	
 		}
+		if ($cryptoId === 'BTX') {
+			$result = NMM_Blockchain::get_btx_address_transactions($address);	
+		}
 
 		if ($result['result'] === 'error') {			
 			NMM_Util::log(__FILE__, __LINE__, 'BAD API CALL');
