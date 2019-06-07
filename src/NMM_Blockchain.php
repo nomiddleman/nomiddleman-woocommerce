@@ -122,7 +122,7 @@ class NMM_Blockchain {
 
 		return $result;
 	}
-	
+
 	public static function get_chainso_total_received_for_ltc_address($address) {
 		$userAgentString = self::get_user_agent_string();
 		
