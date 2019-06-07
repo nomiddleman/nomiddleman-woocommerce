@@ -8,7 +8,7 @@ Description: WooCommerce Bitcoin and Cryptocurrency Payment Gateway
 Author: nomiddleman
 Author URI: https://nomiddlemancrypto.io
 
-Version: 2.4.0
+Version: 2.4.1
 Copyright: © 2019 Nomiddleman Crypto (email : support@nomiddlemancrypto.io)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
