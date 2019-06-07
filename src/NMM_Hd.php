@@ -115,9 +115,6 @@ class NMM_Hd {
 		if ($cryptoId === 'BTC') {
 			return self::get_total_received_for_bitcoin_address($address, $requiredConfirmations);
 		}
-		if ($cryptoId === 'BTX') {
-			return self::get_total_received_for_bitcore_address($address, $requiredConfirmations);
-		}
 		if ($cryptoId === 'LTC') {
 			return self::get_total_received_for_litecoin_address($address, $requiredConfirmations);
 		}
@@ -132,6 +129,9 @@ class NMM_Hd {
 		}
 		if ($cryptoId === 'XMY') {
 			return self::get_total_received_for_xmy_address($address);
+		}
+		if ($cryptoId === 'BTX') {
+			return self::get_total_received_for_bitcore_address($address, $requiredConfirmations);
 		}
 	}
 
@@ -156,16 +156,6 @@ class NMM_Hd {
 		}
 		
 		throw new \Exception("Unable to get BTC HD address information from external sources.");
-	}
-	
-	private static function get_total_received_for_bitcore_address($address) {
-		$result = NMM_Blockchain::get_insight_total_received_for_btx_address($address);
-
-		if ($result['result'] === 'success') {
-			return $result['total_received'];
-		}		
-
-		throw new \Exception("Unable to get XMY HD address information from external sources.");
 	}
 
 	private static function get_total_received_for_litecoin_address($address, $requiredConfirmations) {
@@ -223,6 +213,16 @@ class NMM_Hd {
 
 		throw new \Exception("Unable to get XMY HD address information from external sources.");
 	}
+	
+	private static function get_total_received_for_bitcore_address($address) {
+		$result = NMM_Blockchain::get_insight_total_received_for_btx_address($address);
+
+		if ($result['result'] === 'success') {
+			return $result['total_received'];
+		}		
+
+		throw new \Exception("Unable to get XMY HD address information from external sources.");
+	}
 
 	public static function cancel_expired_addresses($cryptoId, $mpk, $orderCancellationTimeSec) {
 		global $woocommerce;
@@ -265,9 +265,6 @@ class NMM_Hd {
 		if ($cryptoId === 'BTC') {
 			return self::is_dirty_btc_address($address);
 		}
-		if ($cryptoId === 'BTX') {
-			return self::is_dirty_btx_address($address);
-		}
 		if ($cryptoId === 'LTC') {
 			return self::is_dirty_ltc_address($address);
 		}
@@ -282,6 +279,9 @@ class NMM_Hd {
 		}
 		if ($cryptoId === 'XMY') {
 			return self::is_dirty_xmy_address($address);
+		}
+		if ($cryptoId === 'BTX') {
+			return self::is_dirty_btx_address($address);
 		}
 	}
 

@@ -123,37 +123,6 @@ class NMM_Blockchain {
 		return $result;
 	}
 	
-	public static function get_insight_total_received_for_btx_address($address) {		
-		$userAgentString = self::get_user_agent_string();
-		
-		$request = 'https://insight.bitcore.cc/api/addr/' . $address;
-
-		$args = array(
-			'user-agent' => $userAgentString
-		);
-
-		$response = wp_remote_get($request, $args);
-		if (is_wp_error($response) || $response['response']['code'] !== 200) {
-			NMM_Util::log(__FILE__, __LINE__, 'FAILED API CALL ( ' . $request . ' ): ' . print_r($response, true));
-			$result = array (
-				'result' => 'error',
-				'total_received' => '',
-			);
-
-			return $result;
-		}
-
-		$totalReceived = (float) json_decode($response['body'])->balance;
-
-		$result = array (
-			'result' => 'success',
-			'total_received' => $totalReceived,
-		);
-
-		return $result;
-	}
-
-
 	public static function get_chainso_total_received_for_ltc_address($address) {
 		$userAgentString = self::get_user_agent_string();
 		
@@ -307,6 +276,35 @@ class NMM_Blockchain {
 		return $result;
 	}
 
+	public static function get_insight_total_received_for_btx_address($address) {		
+		$userAgentString = self::get_user_agent_string();
+		
+		$request = 'https://insight.bitcore.cc/api/addr/' . $address;
+
+		$args = array(
+			'user-agent' => $userAgentString
+		);
+
+		$response = wp_remote_get($request, $args);
+		if (is_wp_error($response) || $response['response']['code'] !== 200) {
+			NMM_Util::log(__FILE__, __LINE__, 'FAILED API CALL ( ' . $request . ' ): ' . print_r($response, true));
+			$result = array (
+				'result' => 'error',
+				'total_received' => '',
+			);
+
+			return $result;
+		}
+
+		$totalReceived = (float) json_decode($response['body'])->balance;
+
+		$result = array (
+			'result' => 'success',
+			'total_received' => $totalReceived,
+		);
+
+		return $result;
+	}
 
 
 	public static function get_ada_address_transactions($address) {
