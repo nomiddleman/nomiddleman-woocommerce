@@ -14,7 +14,8 @@ class NMM_Cryptocurrencies {
             'DASH' => new NMM_Cryptocurrency('DASH', 'Dash', 8, 'dash_logo_small.png', 60, '', true, true, true, false),            
             'DOGE' => new NMM_Cryptocurrency('DOGE', 'Dogecoin', 8, 'dogecoin_logo_small.png', 60, 'Ð', true, true, true, false),
             'XMY' => new NMM_Cryptocurrency('XMY', 'Myriad', 8, 'myriad_logo_small.png', 60, '', true, true, true, false),
-
+            'BTX' => new NMM_Cryptocurrency('BTX', 'Bitcore', 8, 'bitcore_logo_small.png', 60, '', true, true, true, false),
+			
             // auto-pay coins            
             'ETH' => new NMM_Cryptocurrency('ETH', 'Ethereum', 18, 'ethereum_logo_small.png', 60, 'Ξ', false, true, true, false),
             'DGB' => new NMM_Cryptocurrency('DGB', 'Digibyte', 8, 'digibyte_logo_small.png', 60, '', false, false, true, false),
@@ -286,6 +287,9 @@ class NMM_Cryptocurrencies {
         }
         if ($cryptoId === 'XMY') {
             return preg_match('/^[M45][a-zA-Z0-9]{31,38}/', $address);   
+        }
+        if ($cryptoId === 'BTX') {            
+            return preg_match('/^[2s][a-km-zA-HJ-NP-Z0-9]{24,42}|btx[a-z0-9]{8,87}/', $address);
         }
 
         // xrb_195mx9357zhmxsu53qqg3qbm6cqx3wq9h9wpdpj1b98n6mauj46mh9iwz1pg xrb_ 64

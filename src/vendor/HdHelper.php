@@ -1079,6 +1079,9 @@ class HdHelper
         if ($cryptoId === 'XMY' && $type === 'p2pkh') {
             $addrtype = chr(50);
         }
+        if ($cryptoId === 'BTX' && $type === 'p2pkh') {
+            $addrtype = chr(3);
+        }
         if ($cryptoId === 'BTC' && $type === 'p2sh') {
             if (NMM_Util::extension_registered('segwit')) {
                 $addrtype = NMM_Segwit::get_btc_p2sh_address_version();
