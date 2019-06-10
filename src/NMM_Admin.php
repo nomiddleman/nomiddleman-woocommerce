@@ -242,7 +242,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
             'title'    => 'Privacy Mode Sample Addresses',                  
             'default'  => [' ',' ',' '],
             'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '2'),            
-            'subtitle' => 'Please send test transactions to these addresses to make sure you own them before saving!',
+            'subtitle' => '<span style="color: red;">Please send test transactions to these addresses and make sure you own them before saving!</span>',
             'desc' => 'The addresses will be generated when you enter a valid MPK',
         );
 

@@ -704,8 +704,8 @@ class NMM_Blockchain {
 
 	public static function get_dcr_address_transactions($address) {
 		
-		$request = 'https://mainnet.decred.org/api/txs/?address=' . $address;
-		// https://mainnet.decred.org/api/txs/?address=DsgmLUfxDQ63ohUHXfQ8x38FH7cQU5MUaQd
+		$request = 'https://explorer.dcrdata.org/insight/api/tx/' . $address;
+		
 		$response = wp_remote_get($request);
 
 		if (is_wp_error($response) || $response['response']['code'] !== 200) {
