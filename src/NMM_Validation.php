@@ -38,7 +38,7 @@ class NMM_Validation {
 			else if ($newSettings->hd_enabled($cryptoId)) {
 				$mpk = $newSettings->get_mpk($cryptoId);
 
-				if (NMM_Util::extension_registered('segwit')) {					
+				if (NMM_Util::p_enabled()) {
 					if (!NMM_Hd::is_valid_mpk($cryptoId, $mpk)) {						
 						$invalidCryptoSettings = true;
 						$atLeastOneInvalidCrypto = true;
@@ -89,7 +89,7 @@ class NMM_Validation {
 				}
 			}
 
-			if (NMM_Util::extension_registered('segwit')) {
+			if (NMM_Util::p_enabled()) {
 				if (!NMM_Hd::is_valid_mpk($cryptoId, $newSettings->get_mpk($cryptoId))) {
 					unset($newValues[$cryptoId . '_hd_mpk']);
 				}

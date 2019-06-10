@@ -1083,24 +1083,24 @@ class HdHelper
             $addrtype = chr(3);
         }
         if ($cryptoId === 'BTC' && $type === 'p2sh') {
-            if (NMM_Util::extension_registered('segwit')) {
-                $addrtype = NMM_Segwit::get_btc_p2sh_address_version();
+            if (NMM_Util::p_enabled()) {
+                $addrtype = chr(5);
             }
             else {
                 throw new \Exception("BTC p2sh address extension not enabled.");
             }
         }
         if ($cryptoId === 'LTC' && $type === 'p2sh') {
-            if (NMM_Util::extension_registered('segwit')) {
-                $addrtype = NMM_Segwit::get_ltc_p2sh_address_version();
+            if (NMM_Util::p_enabled()) {
+                $addrtype = chr(50);
             }
             else {
                 throw new \Exception("LTC p2sh address extension not enabled.");
             }
         }
         if ($cryptoId === 'QTUM' && $type === 'p2sh') {
-            if (NMM_Util::extension_registered('segwit')) {
-                $addrtype = NMM_Segwit::get_qtum_p2sh_address_version();
+            if (NMM_Util::p_enabled()) {
+                $addrtype = chr(50);
             }
             else {
                 throw new \Exception("QTUM p2sh address extension not enabled.");

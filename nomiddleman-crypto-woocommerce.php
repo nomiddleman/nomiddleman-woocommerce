@@ -32,7 +32,7 @@ function NMM_init_gateways(){
 
     if (!class_exists('WC_Payment_Gateway')) {
         return;
-    };    
+    };
 
     define('NMM_PLUGIN_DIR', plugins_url(basename(plugin_dir_path(__FILE__)), basename(__FILE__)));    
     define('NMM_PLUGIN_FILE', __FILE__);

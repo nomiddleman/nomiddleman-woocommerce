@@ -20,15 +20,10 @@ class NMM_Lightning {
 			'body' => json_encode($invoice),
 		];
 
-		$response = wp_remote_post($endpoint . '/v1/invoices', $args);
-
-		error_log('ln response: ' . $response);
+		$response = wp_remote_post($endpoint . '/v1/invoices', $args);		
 
 		$body = json_decode($response['body']);
 	}
-
-
-
 }
 
 

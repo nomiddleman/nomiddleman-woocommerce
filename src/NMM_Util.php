@@ -23,6 +23,10 @@ class NMM_Util {
 		}
 	}
 
+	public static function p_enabled() {
+		return function_exists('NMMP_init');
+	}
+
 	public static function extension_registered($extensionName) {
 		$loadedExtensions = get_option(NMM_EXTENSION_KEY, array());
 		

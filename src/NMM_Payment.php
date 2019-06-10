@@ -114,7 +114,7 @@ class NMM_Payment {
 						NMM_Cryptocurrencies::get_price_string($crypto->get_id(), $transactionAmount / (10**$crypto->get_round_precision())),
 						$cryptoId,
 						date('Y-m-d H:i:s', time()),
-						$txHash);
+						apply_filters('nmm_order_txhash', $txHash, $cryptoId));
 				
 				$order->payment_complete();
 				$order->add_order_note($orderNote);				

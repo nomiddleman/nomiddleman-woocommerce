@@ -8,23 +8,23 @@ $nmm_redux_args = array(
     // TYPICAL -> Change these values as you need/desire
     'opt_name'             => NMM_REDUX_ID,
     // This is where your data is stored in the database and also becomes your global variable name.
-    'display_name'         => 'Nomiddleman Crypto Payments for Woocommerce Settings',
+    'display_name'         => apply_filters('nmm_settings_display_name', 'Nomiddleman Crypto Payments for Woocommerce'),
     'display_version'      => NMM_VERSION,
     'hide_reset'           => true,
     'disable_tracking'     => true,
-    'intro_text'           => 'Welcome to the Nomiddleman Settings Page',
+    //'intro_text'           => apply_filters('nmm_settings_intro', 'Welcome to the Nomiddleman Settings Page'),
     'system_info'          => true,
     'hide_expand'          => true,
     'show_options_object'  => false,
     'ajax_save'            => true,
-    'admin_theme' => 'classic',
+    'admin_theme'          => 'classic',
     // Version that appears at the top of your panel
     'menu_type'            => 'menu',
     //Specify if the admin menu should appear or not. Options: menu or submenu (Under appearance only)
     'allow_sub_menu'       => true,
     // Show the sections below the admin menu item or not
-    'menu_title'           => 'Nomiddleman Crypto Payments',
-    'page_title'           => 'Nomiddleman Crypto Settings',
+    'menu_title'           => apply_filters('nmm_settings_menu_title', 'Nomiddleman Crypto Payments'),
+    'page_title'           => apply_filters('nmm_settings_page_title', 'Nomiddleman Crypto Settings'),
     // You will need to generate a Google API key to use this feature.
     // Please visit: https://developers.google.com/fonts/docs/developer_api#Auth
     'google_api_key'       => '',
@@ -48,8 +48,8 @@ $nmm_redux_args = array(
     // If dev_mode is enabled, will notify developer of updated versions available in the GitHub Repo
     'customizer'           => false,
     // Enable basic customizer support
-    'open_expanded'     => false,                    // Allow you to start the panel in an expanded way initially.
-    'disable_save_warn' => true,                    // Disable the save warning when a user changes a field
+    'open_expanded'        => false,                    // Allow you to start the panel in an expanded way initially.
+    'disable_save_warn'    => true,                    // Disable the save warning when a user changes a field
     // OPTIONAL -> Give you extra features
     'page_priority'        => 56,
     // Order where the menu appears in the admin area. If there is any conflict, something will not show. Warning.
@@ -218,11 +218,13 @@ foreach ($nmm_cryptos as $nmm_crypto) {
                 'default'  => [''],
                 'title'    => 'Wallet Addresses',
                 'required' => array($nmm_crypto->get_id() . '_mode', 'not', '2'),
-            ),
+            ),            
         ),
     );
 
     if ($nmm_crypto->has_hd()) {
+
+        $nmm_section['fields'][] = apply_filters('nmm_hd_wallet_settings', $nmm_crypto->get_id());
 
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_hd_mpk',

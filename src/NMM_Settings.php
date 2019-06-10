@@ -217,7 +217,7 @@ class NMM_Settings {
 	public function _get_mode($cryptoId) {
 		$modeKey = $cryptoId . '_mode';
 
-		if (is_array($this->settings)) {		
+		if (is_array($this->settings)) {
 			if (array_key_exists($modeKey, $this->settings)) {
 				return $this->settings[$modeKey];
 			}

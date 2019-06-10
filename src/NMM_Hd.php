@@ -378,11 +378,13 @@ class NMM_Hd {
 	private static function is_dirty_doge_address($address) {
 		return self::get_total_received_for_doge_address($address) >= 0.00000001;
 	}
+
 	private static function is_dirty_xmy_address($address) {
 		return self::get_total_received_for_xmy_address($address) >= 0.00000001;
 	}
+	
 	private static function is_dirty_btx_address($address) {
-	return self::get_total_received_for_bitcore_address($address) >= 0.00000001;
+		return self::get_total_received_for_bitcore_address($address) >= 0.00000001;
 	}
 	
 	public static function force_new_address($cryptoId, $mpk) {
@@ -410,21 +412,24 @@ class NMM_Hd {
 		$hdRepo->insert($address, $startIndex, 'ready');
 	}
 
-	public static function create_hd_address($cryptoId, $mpk, $index) {
+	public static function create_hd_address($cryptoId, $mpk, $index, $hdMode = 0) {
+
 		try {
-			if (self::is_valid_ypub($mpk) || self::is_valid_zpub($mpk)) {
-				if (NMM_Util::extension_registered('segwit'))
-				{
-					return NMM_Segwit::create_hd_address($cryptoId, $mpk, $index);
-				}				
+			if (!NMM_Util::p_enabled()) {
+				$hdMode = 0;
+				if (self::is_valid_xpub($mpk)) {
+					return HdHelper::mpk_to_bc_address($cryptoId, $mpk, $index, 2, false);
+				}
 			}
-			if (self::is_valid_xpub($mpk)) {				
-				return HdHelper::mpk_to_bc_address($cryptoId, $mpk, $index, 2, false);				
+			else {
+				if (self::is_valid_mpk($cryptoId, $mpk)) {
+					return apply_filters('nmm_get_hd_address', $cryptoId, $mpk, $index, $hdMode);
+				}
 			}
 		}
 		catch (\Exception $e) {
 			throw new \Exception('Invalid MPK for ' . $cryptoId . '. ' . $e->getTraceAsString());
-		}		
+		}
 	}
 
 	public static function is_valid_xpub($mpk) {

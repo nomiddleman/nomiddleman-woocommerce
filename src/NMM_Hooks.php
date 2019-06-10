@@ -152,6 +152,7 @@ function NMM_load_redux_css($stuff) {
 }
 
 function NMM_load_js($stuff) {
+
 	if (!is_array($_GET)) {
 		return;
 	}
@@ -163,7 +164,14 @@ function NMM_load_js($stuff) {
 	
 	if ($page === 'nmmpro_options') {
 		$jsPath = NMM_PLUGIN_DIR . '/assets/js/nmm.js';    
-		wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery' ), NMM_VERSION);	
+		if (NMM_Util::p_enabled()) {			
+			wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery', 'nmmp-scripts' ), NMM_VERSION);	            
+        }
+        else {        	
+        	wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery' ), NMM_VERSION);		
+        }
+
+		
 	}
 }
 
@@ -173,12 +181,13 @@ function NMM_first_mpk_address_ajax() {
 		}
 		$mpk = sanitize_text_field($_POST['mpk']);
 		$cryptoId = sanitize_text_field($_POST['cryptoId']);
-
+		$hdMode = sanitize_text_field($_POST['hdMode']);
+		error_log('hook hd mode: ' . $hdMode);
 		if (!NMM_Hd::is_valid_mpk($cryptoId, $mpk)) {
 			return;
 		}
 		
-		if (!NMM_Util::extension_registered('segwit') && (NMM_Hd::is_valid_ypub($mpk) || NMM_Hd::is_valid_zpub($mpk))) {
+		if (!NMM_Util::p_enabled() && (NMM_Hd::is_valid_ypub($mpk) || NMM_Hd::is_valid_zpub($mpk))) {
 			$message = 'You have entered a valid Segwit MPK.';
 			$message2 = '<a href="https://nomiddlemancrypto.io/extensions/segwit" target="_blank">We have an extension that supports Segwit MPKs.</a>';
 
@@ -186,9 +195,9 @@ function NMM_first_mpk_address_ajax() {
 			wp_die();
 		}
 		else {
-			$firstAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 0);
-			$secondAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 1);
-			$thirdAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 2);
+			$firstAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 0, $hdMode);
+			$secondAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 1, $hdMode);
+			$thirdAddress = NMM_Hd::create_hd_address($cryptoId, $mpk, 2, $hdMode);
 
 			echo json_encode([$firstAddress, $secondAddress, $thirdAddress]);
 

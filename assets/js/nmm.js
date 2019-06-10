@@ -41,6 +41,13 @@ var xhr = {};
 var generateMpkAddresses = function (cryptoId, numberOfSamples) {
 	let mpk = getMpk(cryptoId);
 
+	var hdMode = '0';
+
+	if (typeof this.getHdMode === 'function') {
+		console.log('getHdMode exists');
+		hdMode = this.getHdMode(cryptoId);
+	}
+
 	if (xhr[cryptoId] != null) {
 		xhr[cryptoId].abort();
 		xhr[cryptoId] = null;
@@ -50,6 +57,8 @@ var generateMpkAddresses = function (cryptoId, numberOfSamples) {
 		updateSampleText(cryptoId, numberOfSamples, 'Please enter a valid mpk');
 		return;
 	}
+
+	console.log('hdMode: ' + hdMode);
 	
 	xhr[cryptoId] = jQuery.ajax({
 		type: "POST",
@@ -57,7 +66,8 @@ var generateMpkAddresses = function (cryptoId, numberOfSamples) {
 		data: 
 			{ action: 'firstmpkaddress', 							  
 			  mpk: mpk,
-			  cryptoId: cryptoId
+			  cryptoId: cryptoId,
+			  hdMode: hdMode
 			},
 		beforeSend: function () {
 			updateSampleText(cryptoId, numberOfSamples, 'Generating HD Addresses...');			
@@ -118,6 +128,13 @@ jQuery(document).ready(function() {
 		jQuery('#' + cryptoId + '_hd_mpk-textarea').on('keyup', function(){
 			generateMpkAddresses(cryptoId, numberOfSamples);
 		});
+
+		if (typeof this.getHdMode === 'function') {
+			var hdModeKey = 'input[name="nmmpro_redux_options[' + cryptoId + '_hd_mode]"]';
+			jQuery(hdModeKey).on('change', function () {
+				generateMpkAddresses(cryptoId, numberOfSamples);
+			});
+		}
 	});
 	
 });
