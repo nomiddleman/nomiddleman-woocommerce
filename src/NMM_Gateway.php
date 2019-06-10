@@ -151,7 +151,8 @@ class NMM_Gateway extends WC_Payment_Gateway {
                 $this->handle_thank_you_refresh(
                     get_post_meta($order_id, 'crypto_type_id', true),
                     get_post_meta($order_id, 'wallet_address', true),
-                    get_post_meta($order_id, 'crypto_amount', true));
+                    get_post_meta($order_id, 'crypto_amount', true),
+                    $order_id);
                 
                 return;
             }
@@ -268,7 +269,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             $order->update_status('wc-on-hold', $orderNote);
 
             // Output additional thank you page html
-            $this->output_thank_you_html($crypto, $orderWalletAddress, $formattedCryptoTotal);
+            $this->output_thank_you_html($crypto, $orderWalletAddress, $formattedCryptoTotal, $order_id);
         }
         catch ( \Exception $e ) {
             $order = new WC_Order($order_id);
@@ -345,7 +346,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         return $endpoint . $qrData;
     }
 
-    private function output_thank_you_html($crypto, $orderWalletAddress, $cryptoTotal) {        
+    private function output_thank_you_html($crypto, $orderWalletAddress, $cryptoTotal, $orderId) {        
         $formattedPrice = NMM_Cryptocurrencies::get_price_string($crypto->get_id(), $cryptoTotal);
         $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
         
@@ -404,11 +405,12 @@ class NMM_Gateway extends WC_Payment_Gateway {
                 </p>
             </li>
         </ul>
+        <?php echo apply_filters('nmm_refresh', '', $orderId) ?>
         <?php
     }    
 
-    private function handle_thank_you_refresh($chosenCrypto, $orderWalletAddress, $cryptoTotal) {
-        $this->output_thank_you_html($this->cryptos[$chosenCrypto], $orderWalletAddress, $cryptoTotal);
+    private function handle_thank_you_refresh($chosenCrypto, $orderWalletAddress, $cryptoTotal, $orderId) {
+        $this->output_thank_you_html($this->cryptos[$chosenCrypto], $orderWalletAddress, $cryptoTotal, $orderId);
     }
 
     // this function hits all the crypto exchange APIs that the user selected, then averages them and returns a conversion rate for USD
