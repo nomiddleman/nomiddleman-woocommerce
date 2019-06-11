@@ -122,3 +122,48 @@
     50% { background-color: #f44741; }
     100% { background-color: transparent; }
 }
+
+.autopay-disclaimer-title {
+  padding-bottom:0px;
+  margin-bottom:0px;
+  padding-top:8px;
+  font-size:20.8px;
+  color: #555555;
+}
+
+.autopay-disclaimer-adjustments {
+  color: #555555; 
+}
+
+.redux-container .redux-group-tab .autopay-disclaimer-adjustments {
+  margin-top:37px;
+}
+
+.autopay-disclaimer-container {
+  font-size:16px;
+  color: #7e7e7e;;
+}
+
+.autopay-disclaimer-container li {
+  line-height: 21px;
+}
+
+.autopay-disclaimer-container li strong {
+  color: #555555;
+}
+
+.autopay-disclaimer-container li i{
+  padding-top: 7px;
+  font-size:14px;
+  color: #de8541;
+}
+
+#info-BAT_autopayment_disclaimer {
+  border-left: 4px solid #de8541;
+
+}
+
+.autopay-disclaimer-container li:nth-child(n+2) {
+  margin-top:12px;
+  
+}

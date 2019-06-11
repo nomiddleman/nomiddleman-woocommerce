@@ -210,23 +210,39 @@ foreach ($nmm_cryptos as $nmm_crypto) {
                 'type'     => 'radio',
                 'title'    => 'Mode',
                 'ajax_save' => false,
-                'options'  => $nmm_cryptoOptions,
-                'desc'     => 'Please note Autopay Mode is still in beta. There is no guarantee every order will be processes correctly. If you have any questions contact us at support@nomiddlemancrypto.io.', 
-            ),
-            array(
-                'id'       => $nmm_crypto->get_id() . '_addresses',
-                'type'     => 'multi_text',
-                'default'  => [''],
-                'title'    => 'Wallet Addresses',
-                'required' => array($nmm_crypto->get_id() . '_mode', 'not', '2'),
-            ),            
+                'options'  => $nmm_cryptoOptions,                
+            ),                     
         ),
     );
 
+    if ($nmm_crypto->has_autopay()) {
+        $nmm_section['fields'][] = array(
+            'id'       => $nmm_crypto->get_id() . '_autopayment_disclaimer',
+            'type'     => 'info',
+            'style'    => 'warning',            
+            'title'    => '<h3 class="autopay-disclaimer-title">Autopay Disclaimer</h3>',
+            'desc'     => '<div class="autopay-disclaimer-container">Please note Autopay Mode is still in <strong>beta</strong>. There is no guarantee every order will be processed correctly. If you have any questions contact us at support@nomiddlemancrypto.io.
+                            <h3 class="autopay-disclaimer-adjustments">Adjusting the following settings can improve Autopay accuracy</h3>
+                            <ul>
+                                <li><strong>Wallet Addresses: </strong>Adding more addresses greatly increases autopay reliability while increasing privacy.<br /><i>We suggest having as many addresses as orders you get an hour in that cryptocurrency.</i></li>
+                                <li><strong>Order Cancellation Timer: </strong> Reducing this will not only increase autopay reliability but also reduce the effects of volatility.<br /><i>We suggest a value of 1 hour for high throughput stores.</i></li>
+                                <li><strong>Auto-Confirm Percentage: </strong> Do not touch this unless you know what you are doing. It can help if most of your customers enter dollar amounts instead of using the QR code.<br /><i>If you lower this setting you should have one wallet address for each order you get an hour (on average).</i></li>
+                            </ul></div>',
+            'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '1'),            
+        );        
+    }    
+    $nmm_section['fields'][] = array(
+        'id'       => $nmm_crypto->get_id() . '_addresses',
+        'type'     => 'multi_text',
+        'default'  => [''],
+        'title'    => 'Wallet Addresses',
+        'required' => array($nmm_crypto->get_id() . '_mode', 'not', '2'),
+    );
     if ($nmm_crypto->has_hd()) {
-
-        $nmm_section['fields'][] = apply_filters('nmm_hd_wallet_settings', $nmm_crypto->get_id());
-
+        $hdOptions =apply_filters('nmm_hd_wallet_settings', $nmm_crypto->get_id());
+        if ($hdOptions !== $nmm_crypto->get_id()) {
+            $nmm_section['fields'][] = $hdOptions =apply_filters('nmm_hd_wallet_settings', $nmm_crypto->get_id());
+        }
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_hd_mpk',
             'type'     => 'textarea',
@@ -286,7 +302,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         );
     }
 
-    if ($nmm_crypto->has_autopay()) {
+    if ($nmm_crypto->has_autopay()) {        
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_autopayment_percent_to_process',
             'type'     => 'slider',
@@ -316,7 +332,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_autopayment_order_cancellation_time_hr',
             'type'     => 'slider',
-            'default'  => 24,            
+            'default'  => 1,            
             'min'      => 0.01,
             'max'      => 168.00,
             'step'     => 0.01,

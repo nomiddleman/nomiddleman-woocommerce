@@ -8,7 +8,7 @@ Description: WooCommerce Bitcoin and Cryptocurrency Payment Gateway
 Author: nomiddleman
 Author URI: https://nomiddlemancrypto.io
 
-Version: 2.4.0
+Version: 2.4.1
 Copyright: © 2019 Nomiddleman Crypto (email : support@nomiddlemancrypto.io)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -40,7 +40,7 @@ function NMM_init_gateways(){
     define('NMM_PLUGIN_BASENAME', plugin_basename(NMM_PLUGIN_FILE));
 
     define('NMM_CRON_JOB_URL', plugins_url('', __FILE__) . '/src/NMM_Cron.php');
-    define('NMM_VERSION', '2.4.0');
+    define('NMM_VERSION', '2.4.1');
     
     define('NMM_REDUX_SLUG', 'nmmpro_options');
 
@@ -89,7 +89,6 @@ function NMM_init_gateways(){
     require_once(plugin_basename('src/NMM_Carousel.php'));
     require_once(plugin_basename('src/NMM_Hd.php'));    
     require_once(plugin_basename('src/NMM_Payment.php'));
-    require_once(plugin_basename('src/NMM_Lightning.php'));
 
     // Misc
     require_once(plugin_basename('src/NMM_Util.php'));
