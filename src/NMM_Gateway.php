@@ -181,20 +181,20 @@ class NMM_Gateway extends WC_Payment_Gateway {
                 $cryptoMarkupPercent = 0.0;
             }
 
-            // error_log('markup percent is: ' . $cryptoMarkupPercent);
-            $cryptoMarkup = $cryptoMarkupPercent / 100.0;
-            // error_log('markup is: ' . $cryptoMarkup);
-            $cryptoPriceRatio = 1.0 + $cryptoMarkup;
-            // error_log('crypto price ratio is: ' . $cryptoPriceRatio);
-            
-            $cryptoTotalPreMarkup = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);
-            // error_log('crypto total is: ' . $cryptoTotalPreMarkup);
+            $cryptoMarkup = $cryptoMarkupPercent / 100.0;            
+            $cryptoPriceRatio = 1.0 + $cryptoMarkup;            
+            $cryptoTotalPreMarkup = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);            
             $cryptoTotal = $cryptoTotalPreMarkup * $cryptoPriceRatio;
-            // error_log('crypto final amount is: ' . $cryptoTotal);           
-            
-            $updatedOrderTotal = $order->get_total();
-            $updatedUsdTotal = NMM_Exchange::get_order_total_in_usd($updatedOrderTotal, $curr);
-            
+
+            $dustAmount = apply_filters('nmm_dust_amount', 0.000000000000000000, $cryptoId, $cryptoPerUsd, $crypto->get_round_precision(), $usdTotal);
+
+            error_log('dust amount formatted: ' . NMM_Cryptocurrencies::get_price_string($cryptoId, $dustAmount));
+
+            if ($dustAmount !== 0.000000000000000000) {
+                error_log('dust active: ' . $dustAmount);
+                $cryptoTotal += $dustAmount;
+            }
+
             // format the crypto amount based on crypto
             $formattedCryptoTotal = NMM_Cryptocurrencies::get_price_string($cryptoId, $cryptoTotal);
 
@@ -367,6 +367,9 @@ class NMM_Gateway extends WC_Payment_Gateway {
                     </span>
                 </strong>                
             </li>
+            
+            <?php echo apply_filters('nmm_refresh', '', $orderId); ?>
+            
             <li>
                 <p style="word-wrap: break-word;">Wallet Address: 
                     <strong>
@@ -375,15 +378,15 @@ class NMM_Gateway extends WC_Payment_Gateway {
                         </span>
                     </strong>
                 </p>
-            </li>
+            </li>            
             <li>
                 <p>Currency: 
                     <strong>
                         <?php
                             echo '<img style="display:inline;height:23px;width:23px;vertical-align:middle;" src="' . $crypto->get_logo_file_path() . '" />';
                         ?>
-                        <span class="woocommerce-Price-amount amount" style="vertical-align: middle;">
-                            <?php echo '&nbsp' . $crypto->get_name() ?>
+                        <span style="padding-left: 4px; vertical-align: middle;" class="woocommerce-Price-amount amount" style="vertical-align: middle;">
+                            <?php echo $crypto->get_name() ?>
                         </span>
                     </strong>
                 </p>
@@ -405,8 +408,8 @@ class NMM_Gateway extends WC_Payment_Gateway {
                 </p>
             </li>
         </ul>
-        <?php echo apply_filters('nmm_refresh', '', $orderId) ?>
-        <?php
+        
+        <?php        
     }    
 
     private function handle_thank_you_refresh($chosenCrypto, $orderWalletAddress, $cryptoTotal, $orderId) {

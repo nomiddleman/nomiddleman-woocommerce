@@ -73,8 +73,8 @@ class NMM_Payment {
 			foreach ($paymentRecords as $record) {
 				$paymentAmount = $record['order_amount'];
 				$paymentAmountSmallestUnit = $paymentAmount * (10**$crypto->get_round_precision());				
-
-				$autoPaymentPercent = $nmmSettings->get_autopay_processing_percent($cryptoId);
+				
+				$autoPaymentPercent = apply_filters('nmm_autopay_percent', $nmmSettings->get_autopay_processing_percent($cryptoId), $paymentAmount, $cryptoId, $address);
 
 				$percentDifference = abs($transactionAmount - $paymentAmountSmallestUnit) / $transactionAmount;
 

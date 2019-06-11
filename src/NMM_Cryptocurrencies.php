@@ -46,7 +46,7 @@ class NMM_Cryptocurrencies {
             'GNO' => new NMM_Cryptocurrency('GNO', 'Gnosis', 18, 'gnosis_logo_small.png', 60, '', false, true, true, '0x6810e776880c02933d47db1b9fc05908e5386b96'),
             'MLN' => new NMM_Cryptocurrency('MLN', 'Melon', 18, 'melon_logo_small.png', 60, '', false, true, true, '0xbeb9ef514a379b997e0798fdcc901ee474b6d9a1'),
             'ZRX' => new NMM_Cryptocurrency('ZRX', '0x', 18, '0x_logo_small.png', 60, '', false, true, true, '0xe41d2489571d322189246dafa5ebde1f4699f498'),
-            'GUSD' => new NMM_Cryptocurrency('GUSD', 'Gemini Dollar', 2, 'geminidollar_logo_small.png', 60, '', false, true, true, '0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd'),
+            
 
             // no support
             'XMR' => new NMM_Cryptocurrency('XMR', 'Monero', 12, 'monero_logo_small.png', 60, 'ɱ', false, false, true, ''),
@@ -56,6 +56,7 @@ class NMM_Cryptocurrencies {
             'BCD' => new NMM_Cryptocurrency('BCD', 'Bitcoin Diamond', 8, 'bitcoindiamond_logo_small.png', 60, '', false, false, true, ''),
             'BCN' => new NMM_Cryptocurrency('BCN', 'Bytecoin', 8, 'bytecoin_logo_small.png', 60, '', false, false, true, ''),
             'BNB' => new NMM_Cryptocurrency('BNB', 'Binance Coin', 18, 'binancecoin_logo_small.png', 60, '', false, false, true, ''),
+            'GUSD' => new NMM_Cryptocurrency('GUSD', 'Gemini Dollar', 2, 'geminidollar_logo_small.png', 60, '', false, false, true, '0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd'),
             
             
             // More searching required
