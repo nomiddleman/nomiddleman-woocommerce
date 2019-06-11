@@ -226,7 +226,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
                             <ul>
                                 <li><strong>Wallet Addresses: </strong>Adding more addresses greatly increases autopay reliability while increasing privacy.<br /><i>We suggest having as many addresses as orders you get an hour in that cryptocurrency.</i></li>
                                 <li><strong>Order Cancellation Timer: </strong> Reducing this will not only increase autopay reliability but also reduce the effects of volatility.<br /><i>We suggest a value of 1 hour for high throughput stores.</i></li>
-                                <li><strong>Auto-Confirm Percentage: </strong> Do not touch this unless you know what you are doing. It can help if most of your customers enter dollar amounts instead of using the QR code.<br /><i>If you lower this setting you should have one wallet address for each order you get an hour (on average).</i></li>
+                                <li><strong>Auto-Confirm Percentage: </strong> Do not touch this unless you know what you are doing. <br /><i>If you lower this setting you should have one wallet address for the maximum amount of orders you receive in an hour. (If you have a chance to get 30 orders in an hour in this cryptocurrency, we recommend 30 addresses.)</i></li>
                             </ul></div>',
             'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '1'),            
         );        
@@ -332,7 +332,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_autopayment_order_cancellation_time_hr',
             'type'     => 'slider',
-            'default'  => 1,            
+            'default'  => 1,
             'min'      => 0.01,
             'max'      => 168.00,
             'step'     => 0.01,

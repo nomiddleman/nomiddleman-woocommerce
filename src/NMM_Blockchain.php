@@ -652,9 +652,8 @@ class NMM_Blockchain {
 		return $result;
 	}
 	
-	public static function get_dash_address_transactions($address) {
+	public static function get_dash_address_transactions($address) {		
 		
-		//$request = 'https://chain.so/api/v2/get_tx_received/DASH/' . $address;
 		$request = 'https://dashblockexplorer.com/api/txs/?address=' . $address;
 		$response = wp_remote_get($request);
 
@@ -704,7 +703,7 @@ class NMM_Blockchain {
 
 	public static function get_dcr_address_transactions($address) {
 		
-		$request = 'https://explorer.dcrdata.org/insight/api/tx/' . $address;
+		$request = 'https://explorer.dcrdata.org/insight/api/txs/?address=' . $address;
 		
 		$response = wp_remote_get($request);
 

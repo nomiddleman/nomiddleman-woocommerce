@@ -209,7 +209,7 @@ function NMM_create_hd_mpk_address_table() {
 
 function NMM_create_payment_table() {
     global $wpdb;
-    $tableName = $wpdb->prefix . NMM_PAYMENT_TABLE;    
+    $tableName = $wpdb->prefix . NMM_PAYMENT_TABLE;
     
     $query = "CREATE TABLE IF NOT EXISTS `$tableName`
         (
