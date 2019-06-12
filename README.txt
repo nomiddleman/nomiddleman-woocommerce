@@ -24,10 +24,11 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * Ethereum - ETH
 * XRP - XRP
 * Monero - XMR
-* Dogecoin - DOGE
 * Litecoin - LTC
 * Bitcoin Cash - BCH
 * Dash - DASH
+* Dogecoin - DOGE
+* Cardano - ADA
 * Basic Attention Token - BAT
 * Bitcoin Diamond - BCD
 * Bytecoin - BCN
@@ -35,7 +36,7 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * Binance Coin - BNB
 * Bitcoin SV - BSV
 * Bitcoin Gold - BTG
-* Cardano - ADA
+* Bitcore - BTX
 * Decred - DCR
 * Digibyte - DGB
 * Eos - EOS
@@ -51,7 +52,7 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * OmiseGO - OMG
 * DeepOnion - ONION
 * Ontology - ONT
-* Potcoin -POT
+* Potcoin - POT
 * Qtum - QTUM
 * Augur - REP
 * Tron - TRX
@@ -60,11 +61,12 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * Waves - WAVES
 * NEM - XEM
 * Stellar - XLM
+* MyriadCoin - XMY
 * Tezos - XTZ
 * Zcash - ZEC
 * 0x - ZRX
-* MyriadCoin - XMY
-* Bitcore - BTX
+
+
 
 == Installation ==
 

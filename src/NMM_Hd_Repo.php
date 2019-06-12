@@ -6,11 +6,13 @@ class NMM_Hd_Repo {
 	private $mpk;
 	private $tableName;
 	private $cryptoId;
+	private $hdMode;
 
-	public function __construct($cryptoId, $mpk) {
+	public function __construct($cryptoId, $mpk, $hdMode) {
 		global $wpdb;
 		$this->mpk = $mpk;
 		$this->cryptoId = $cryptoId;
+		$this->hdMode = $hdMode;
 		$this->tableName = $wpdb->prefix . NMM_HD_TABLE;
 	}
 
@@ -20,10 +22,10 @@ class NMM_Hd_Repo {
 		$currentTime = time();
 		
 		$query = "INSERT INTO `$this->tableName`
-					(`address`, `cryptocurrency`, `mpk`, `mpk_index`, `status`) VALUES
-					('$address', '$this->cryptoId', '$this->mpk', '$mpk_index', '$status')";
+					(`address`, `cryptocurrency`, `mpk`, `mpk_index`, `status`, `hd_mode`) VALUES
+					('$address', '$this->cryptoId', '$this->mpk', '$mpk_index', '$status', '$this->hdMode')";
 
-		$wpdb->query($query);
+		$wpdb->query($query);		
 	}
 
 	public function count_ready() {
@@ -42,7 +44,8 @@ class NMM_Hd_Repo {
 		$query = "SELECT COUNT(*) FROM `$this->tableName`
 				  WHERE `status` = 'ready'
 				  AND `mpk` = '$this->mpk'
-				  AND `cryptocurrency` = '$this->cryptoId'";
+				  AND `cryptocurrency` = '$this->cryptoId'
+				  AND `hd_mode` = '$this->hdMode'";
 		$count = $wpdb->get_var($query);
 		
 		return $count;
@@ -54,7 +57,8 @@ class NMM_Hd_Repo {
 		
 		$query = "SELECT MAX(`mpk_index`) FROM `$this->tableName` 
 				  WHERE `mpk` = '$this->mpk'
-				  AND `cryptocurrency` = '$this->cryptoId'";
+				  AND `cryptocurrency` = '$this->cryptoId'
+				  AND `hd_mode` = '$this->hdMode'";
 		$largest = $wpdb->get_var($query);
 		
 		// start with third address to avoid messy logic
@@ -72,6 +76,7 @@ class NMM_Hd_Repo {
 				  WHERE `mpk` = '$this->mpk'
 				  AND `status` = 'ready'
 				  AND `cryptocurrency` = '$this->cryptoId'
+				  AND `hd_mode` = '$this->hdMode'
 				  ORDER BY `mpk_index`
 				  LIMIT 1";
 
@@ -86,6 +91,7 @@ class NMM_Hd_Repo {
 		$query = "SELECT `order_id`, `address`, `order_amount`, `status`, `total_received` FROM `$this->tableName` 
 				  WHERE `mpk` = '$this->mpk'
 				  AND `cryptocurrency` = '$this->cryptoId'
+				  AND `hd_mode` = '$this->hdMode'
 				  AND (`status` = 'assigned' OR `status` = 'underpaid')";
 
 		$results = $wpdb->get_results($query, ARRAY_A);
@@ -99,6 +105,7 @@ class NMM_Hd_Repo {
 		$query = "SELECT `order_id`, `address`, `assigned_at`, `total_received` FROM `$this->tableName` 
 				  WHERE `mpk` = '$this->mpk'
 				  AND `cryptocurrency` = '$this->cryptoId'
+				  AND `hd_mode` = '$this->hdMode'
 				  AND `status` = 'assigned'";
 
 		$results = $wpdb->get_results($query, ARRAY_A);
@@ -109,14 +116,14 @@ class NMM_Hd_Repo {
 	public function set_total_received($address, $totalReceived) {
 		global $wpdb;
 		NMM_Util::log(__FILE__, __LINE__, 'Updating total received at ' . $address .' to: ' . $totalReceived);
-		$query = "UPDATE `$this->tableName` SET `total_received` = '$totalReceived' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId'";
+		$query = "UPDATE `$this->tableName` SET `total_received` = '$totalReceived' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId' AND `hd_mode` = '$this->hdMode'";
 		$wpdb->query($query);
 	}
 
 	public function set_order_amount($address, $orderAmount) {
 		global $wpdb;
 		NMM_Util::log(__FILE__, __LINE__, 'Updating order amount at ' . $address . ' to: ' . $orderAmount);
-		$query = "UPDATE `$this->tableName` SET `order_amount` = '$orderAmount' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId'";
+		$query = "UPDATE `$this->tableName` SET `order_amount` = '$orderAmount' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId' AND `hd_mode` = '$this->hdMode'";
 		$wpdb->query($query);
 	}
 
@@ -125,10 +132,10 @@ class NMM_Hd_Repo {
 		NMM_Util::log(__FILE__, __LINE__, 'Updating ' . $address . ' to ' . $status);
 		if ($status === 'assigned') {
 			$currentTime = time();
-			$query = "UPDATE `$this->tableName` SET `status` = '$status', `assigned_at` = '$currentTime' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId'";
+			$query = "UPDATE `$this->tableName` SET `status` = '$status', `assigned_at` = '$currentTime' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId' AND `hd_mode` = '$this->hdMode'";
 		}
 		else {
-			$query = "UPDATE `$this->tableName` SET `status` = '$status' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId'";
+			$query = "UPDATE `$this->tableName` SET `status` = '$status' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId' AND `hd_mode` = '$this->hdMode'";
 		}
 		
 		$wpdb->query($query);
@@ -137,7 +144,7 @@ class NMM_Hd_Repo {
 	public function set_order_id($address, $orderId) {
 		global $wpdb;
 		NMM_Util::log(__FILE__, __LINE__, 'Setting address ' . $address . ' order id to: ' . $orderId);
-		$query = "UPDATE `$this->tableName` SET `order_id` = '$orderId' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId'";
+		$query = "UPDATE `$this->tableName` SET `order_id` = '$orderId' WHERE `address` = '$address' AND `cryptocurrency` = '$this->cryptoId' AND `hd_mode` = '$this->hdMode'";
 		$wpdb->query($query);
 	}
 }

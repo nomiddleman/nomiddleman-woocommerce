@@ -22,6 +22,7 @@ register_uninstall_hook(__FILE__, 'NMM_uninstall');
 define('NMM_HD_TABLE', 'nmmpro_hd_addresses');
 define('NMM_PAYMENT_TABLE', 'nmmpro_payments');  
 define('NMM_CAROUSEL_TABLE', 'nmmpro_carousel');
+define('NMM_HD_TABLE_VERSION', '1.1');
 define('NMM_LOGFILE_NAME', 'nmm.log');
 define('NMM_REDUX_ID', 'nmmpro_redux_options');
 define('NMM_EXTENSION_KEY', 'nmm_registered_extensions');
@@ -105,19 +106,20 @@ function NMM_init_gateways(){
     add_filter ('cron_schedules', 'NMM_add_interval');
 
     add_action('NMM_cron_hook', 'NMM_do_cron_job');
-    add_action( 'woocommerce_process_shop_order_meta', 'NMM_update_database_when_admin_changes_order_status', 10, 2 );     
+    add_action('woocommerce_process_shop_order_meta', 'NMM_update_database_when_admin_changes_order_status', 10, 2);
     
     add_action('redux/page/' . NMM_REDUX_ID . '/load', 'NMM_load_redux_css');
     add_filter('redux/validate/' . NMM_REDUX_ID . '/before_validation', array('NMM_Validation', 'validate_redux_options'), 10, 2);    
     
-    add_action( 'admin_notices', 'NMM_display_flash_notices', 12 );    
+    add_action('admin_notices', 'NMM_display_flash_notices', 12);    
 
     if (is_admin()) {
-        add_action( 'admin_enqueue_scripts', 'NMM_load_js' );
-        add_action( 'wp_ajax_firstmpkaddress', 'NMM_first_mpk_address_ajax');
+        add_action('admin_enqueue_scripts', 'NMM_load_js');
+        add_action('wp_ajax_firstmpkaddress', 'NMM_first_mpk_address_ajax');
     }    
 
     NMM_Register_Extensions();
+    NMM_update_hd_table();
 
     if (!wp_next_scheduled('NMM_cron_hook')) {
         wp_schedule_event(time(), 'seconds_30', 'NMM_cron_hook');
@@ -180,9 +182,9 @@ function NMM_drop_carousel_table() {
 
 function NMM_create_hd_mpk_address_table() {
     global $wpdb;
-    $tableName = $wpdb->prefix . NMM_HD_TABLE;    
+    $tableName = $wpdb->prefix . NMM_HD_TABLE;
     
-    $query = "CREATE TABLE IF NOT EXISTS `$tableName` 
+    $query = "CREATE TABLE IF NOT EXISTS `$tableName`
         (
             `id` bigint(12) unsigned NOT NULL AUTO_INCREMENT,
             `mpk` char(150) NOT NULL,
@@ -205,6 +207,20 @@ function NMM_create_hd_mpk_address_table() {
         );";
 
     $wpdb->query($query);
+}
+
+function NMM_update_hd_table() {
+    global $wpdb;
+    
+    if (get_option('nmm_hd_table_version', '1.0') === '1.0') {
+        update_option('nmm_hd_table_version', '1.1');
+
+        $tableName = $wpdb->prefix . NMM_HD_TABLE;
+        
+        $query = "ALTER TABLE `$tableName` ADD `hd_mode` bigint(10) NOT NULL default '0'";
+        $wpdb->query($query);        
+    }
+
 }
 
 function NMM_create_payment_table() {
@@ -248,10 +264,10 @@ function NMM_create_carousel_table() {
 
     $wpdb->query($query);
 
-    require_once( plugin_basename( 'src/NMM_Cryptocurrency.php' ) );
-    require_once( plugin_basename( 'src/NMM_Carousel_Repo.php' ) );
-    require_once( plugin_basename( 'src/NMM_Util.php' ) );
-    require_once( plugin_basename( 'src/NMM_Cryptocurrencies.php' ) );
+    require_once(plugin_basename('src/NMM_Cryptocurrency.php'));
+    require_once(plugin_basename('src/NMM_Carousel_Repo.php'));
+    require_once(plugin_basename('src/NMM_Util.php'));
+    require_once(plugin_basename('src/NMM_Cryptocurrencies.php'));
     
     NMM_Carousel_Repo::init();
 

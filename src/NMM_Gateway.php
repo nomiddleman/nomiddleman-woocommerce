@@ -74,14 +74,15 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
             if ($nmmSettings->hd_enabled($cryptoId)) {
 
-                $mpk = $nmmSettings->get_mpk($cryptoId);                
-                $hdRepo = new NMM_Hd_Repo($cryptoId, $mpk);                
+                $mpk = $nmmSettings->get_mpk($cryptoId);
+                $hdMode = $nmmSettings->get_hd_mode($cryptoId);
+                $hdRepo = new NMM_Hd_Repo($cryptoId, $mpk, $hdMode);
 
                 $count = $hdRepo->count_ready();
 
                 if ($count < 1) {
                     try {
-                        NMM_Hd::force_new_address($cryptoId, $mpk);                        
+                        NMM_Hd::force_new_address($cryptoId, $mpk, $hdMode);                        
                     }
                     catch ( \Exception $e) {
                         NMM_Util::log(__FILE__, __LINE__, 'UNABLE TO GENERATE HD ADDRESS FOR ' . $crypto->get_name() . ' ADMIN MUST BE NOTIFIED. REMOVING CRYPTO FROM PAYMENT OPTIONS' . $e->getTraceAsString());
@@ -205,8 +206,8 @@ class NMM_Gateway extends WC_Payment_Gateway {
             // if hd is enabled we have stuff to do
             if ($nmmSettings->hd_enabled($cryptoId)) {
                 $mpk = $nmmSettings->get_mpk($cryptoId);
-                
-                $hdRepo = new NMM_Hd_Repo($cryptoId, $mpk);
+                $hdMode = $nmmSettings->get_hd_mode($cryptoId);
+                $hdRepo = new NMM_Hd_Repo($cryptoId, $mpk, $hdMode);
 
                 // get fresh hd wallet
                 $orderWalletAddress = $hdRepo->get_oldest_ready();
@@ -215,7 +216,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
                 if (!$orderWalletAddress) {
                     
                     try {
-                        NMM_Hd::force_new_address($cryptoId, $mpk);
+                        NMM_Hd::force_new_address($cryptoId, $mpk, $hdMode);
                         $orderWalletAddress = $hdRepo->get_oldest_ready();
                     }
                     catch ( \Exception $e) {

@@ -20,15 +20,16 @@ function NMM_do_cron_job() {
 		if ($nmmSettings->hd_enabled($cryptoId)) {
 			NMM_Util::log(__FILE__, __LINE__, 'Starting Hd stuff for: ' . $cryptoId);
 			$mpk = $nmmSettings->get_mpk($cryptoId);
-			
+			$hdMode = $nmmSettings->get_hd_mode($cryptoId);
 			$hdPercentToVerify = $nmmSettings->get_hd_processing_percent($cryptoId);
 			$hdRequiredConfirmations = $nmmSettings->get_hd_required_confirmations($cryptoId);
 			$hdOrderCancellationTimeHr = $nmmSettings->get_hd_cancellation_time($cryptoId);
 			$hdOrderCancellationTimeSec = round($hdOrderCancellationTimeHr * 60 * 60, 0);
 						
-			NMM_Hd::check_all_pending_addresses_for_payment($cryptoId, $mpk, $hdRequiredConfirmations, $hdPercentToVerify);
-			NMM_Hd::buffer_ready_addresses($cryptoId, $mpk, $hdBufferAddressCount);
-			NMM_Hd::cancel_expired_addresses($cryptoId, $mpk, $hdOrderCancellationTimeSec);
+			NMM_Hd::check_all_pending_addresses_for_payment($cryptoId, $mpk, $hdRequiredConfirmations, $hdPercentToVerify, $hdMode);
+
+			NMM_Hd::buffer_ready_addresses($cryptoId, $mpk, $hdBufferAddressCount, $hdMode);
+			NMM_Hd::cancel_expired_addresses($cryptoId, $mpk, $hdOrderCancellationTimeSec, $hdMode);
 		}		
 	}
 

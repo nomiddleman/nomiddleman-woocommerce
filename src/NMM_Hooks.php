@@ -182,7 +182,9 @@ function NMM_first_mpk_address_ajax() {
 		$mpk = sanitize_text_field($_POST['mpk']);
 		$cryptoId = sanitize_text_field($_POST['cryptoId']);
 		$hdMode = sanitize_text_field($_POST['hdMode']);
+
 		error_log('hook hd mode: ' . $hdMode);
+		
 		if (!NMM_Hd::is_valid_mpk($cryptoId, $mpk)) {
 			return;
 		}

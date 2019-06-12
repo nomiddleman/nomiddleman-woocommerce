@@ -2,8 +2,8 @@
 
 class NMM_Hd {
 
-	public static function buffer_ready_addresses($cryptoId, $mpk, $amount) {
-		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk);
+	public static function buffer_ready_addresses($cryptoId, $mpk, $amount, $hdMode) {
+		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk, $hdMode);
 		$readyCount = $hdRepo->count_ready();		
 		
 		$neededAddresses = $amount - $readyCount;
@@ -11,7 +11,7 @@ class NMM_Hd {
 		for ($i = 0; $i < $neededAddresses; $i++) {
 			
 			try {
-				self::force_new_address($cryptoId, $mpk);
+				self::force_new_address($cryptoId, $mpk, $hdMode);
 			}
 			catch ( \Exception $e ) {
 				NMM_Util::log(__FILE__, __LINE__, $e->getMessage());
@@ -19,9 +19,9 @@ class NMM_Hd {
 		}
 	}
 
-	public static function check_all_pending_addresses_for_payment($cryptoId, $mpk, $requiredConfirmations, $percentToVerify) {
+	public static function check_all_pending_addresses_for_payment($cryptoId, $mpk, $requiredConfirmations, $percentToVerify, $hdMode) {
 		global $woocommerce;
-		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk);
+		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk, $hdMode);
 
 		$pendingRecords = $hdRepo->get_pending();
 
@@ -224,9 +224,9 @@ class NMM_Hd {
 		throw new \Exception("Unable to get XMY HD address information from external sources.");
 	}
 
-	public static function cancel_expired_addresses($cryptoId, $mpk, $orderCancellationTimeSec) {
+	public static function cancel_expired_addresses($cryptoId, $mpk, $orderCancellationTimeSec, $hdMode) {
 		global $woocommerce;
-		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk);
+		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk, $hdMode);
 
 		$assignedRecords = $hdRepo->get_assigned();
 
@@ -387,20 +387,20 @@ class NMM_Hd {
 		return self::get_total_received_for_bitcore_address($address) >= 0.00000001;
 	}
 	
-	public static function force_new_address($cryptoId, $mpk) {
+	public static function force_new_address($cryptoId, $mpk, $hdMode) {
 		
-		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk);
+		$hdRepo = new NMM_Hd_Repo($cryptoId, $mpk, $hdMode);
 
-		$startIndex = $hdRepo->get_next_index($mpk);	
+		$startIndex = $hdRepo->get_next_index();	
 
-		$address = self::create_hd_address($cryptoId, $mpk, $startIndex);
+		$address = self::create_hd_address($cryptoId, $mpk, $startIndex, $hdMode);
 
 		try {
 			while (self::is_dirty_address($cryptoId, $address)) {
 				
 				$hdRepo->insert($address, $startIndex, 'dirty');
 				$startIndex = $startIndex + 1;
-				$address = self::create_hd_address($cryptoId, $mpk, $startIndex);
+				$address = self::create_hd_address($cryptoId, $mpk, $startIndex, $hdMode);
 				set_time_limit(30);
 			}
 		}
@@ -412,11 +412,10 @@ class NMM_Hd {
 		$hdRepo->insert($address, $startIndex, 'ready');
 	}
 
-	public static function create_hd_address($cryptoId, $mpk, $index, $hdMode = 0) {
-
+	public static function create_hd_address($cryptoId, $mpk, $index, $hdMode) {
+		
 		try {
 			if (!NMM_Util::p_enabled()) {
-				$hdMode = 0;
 				if (self::is_valid_xpub($mpk)) {
 					return HdHelper::mpk_to_bc_address($cryptoId, $mpk, $index, 2, false);
 				}

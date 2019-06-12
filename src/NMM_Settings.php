@@ -115,6 +115,10 @@ class NMM_Settings {
 		return '';		
 	}
 
+	public function get_hd_mode($cryptoId) {
+		return apply_filters('nmm_hd_mode', '0', $cryptoId);
+	}
+
 	public function get_markup($cryptoId) {
 		$markupKey = $cryptoId . '_markup';
 		if (is_array($this->settings)) {
