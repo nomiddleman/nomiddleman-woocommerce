@@ -11,3 +11,8 @@ span.no-copy {
   -ms-user-select: none;
   user-select: none;
 }
+
+.qr-code-container {
+	background-color: #ffffff;
+	padding:25px;
+}

@@ -71,6 +71,9 @@ function NMM_init_gateways(){
     if (!class_exists('\CashAddress\CashAddress')) {
         require_once(plugin_basename('src/vendor/CashAddress.php'));
     }
+    if (!class_exists('QRinput')) {
+        require_once(plugin_basename('src/vendor/phpqrcode.php'));
+    }
 
     // Http
     require_once(plugin_basename('src/NMM_Exchange.php'));

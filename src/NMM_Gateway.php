@@ -295,7 +295,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $orderCryptoTotal = WC()->session->get($crypto->get_id() . '_amount');
         $orderWalletAddress = get_post_meta($order->get_id(), 'wallet_address', true);
         
-        $qrCode = $this->get_qr_code($crypto->get_name(), $orderWalletAddress, $orderCryptoTotal);
+        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $orderCryptoTotal);
 
         ?>
         <h2>Additional Details</h2>
@@ -338,13 +338,27 @@ class NMM_Gateway extends WC_Payment_Gateway {
         return $selectOptionArray;
     }
 
-    private function get_qr_code($cryptoName, $walletAddress, $cryptoTotal) {
-        $endpoint = 'https://api.qrserver.com/v1/create-qr-code/?data=';
+    private function get_qr_prefix($crypto) {
+        return strtolower(str_replace(' ', '', $crypto->get_name()));
+    }
 
-        $formattedName = strtolower(str_replace(' ', '', $cryptoName));
+    private function get_qr_code($crypto, $walletAddress, $cryptoTotal) {        
+        $dirWrite = NMM_ABS_PATH . '/assets/img/';
+
+        $formattedName = $this->get_qr_prefix($crypto);
+
         $qrData = $formattedName . ':' . $walletAddress . '?amount=' . $cryptoTotal;
 
-        return $endpoint . $qrData;
+        try {
+            QRcode::png($qrData, $dirWrite . 'tmp_qrcode.png', QR_ECLEVEL_H, 5);
+        }
+        catch (\Exception $e) {
+            NMM_Util::log(__FILE__, __LINE__, 'QR code generation failed, falling back...');
+            $endpoint = 'https://api.qrserver.com/v1/create-qr-code/?data=';
+            return $endpoint . $qrData;
+        }
+        $dirRead = NMM_PLUGIN_DIR . '/assets/img/';
+        return $dirRead . 'tmp_qrcode.png';
     }
 
     private function output_thank_you_html($crypto, $orderWalletAddress, $cryptoTotal, $orderId) {        
@@ -353,7 +367,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         
         $customerMessage = $nmmSettings->get_customer_payment_message($crypto);
 
-        $qrCode = $this->get_qr_code($crypto->get_name(), $orderWalletAddress, $formattedPrice);        
+        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $formattedPrice);        
         
         echo $customerMessage;
         ?>
@@ -362,11 +376,10 @@ class NMM_Gateway extends WC_Payment_Gateway {
         <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
             <li class="woocommerce-order-overview__qr-code">
                 <p style="word-wrap: break-word;">QR Code payment:</p>
-                <strong>
-                    <span class="woocommerce-Price-amount amount">
-                        <img style="margin-top:3px;" src=<?php echo $qrCode; ?> />
-                    </span>
-                </strong>                
+                <div class="qr-code-container">                
+                    <img style="margin-top:3px;" src=<?php echo $qrCode; ?> />
+                </div>
+                
             </li>
             
             <?php echo apply_filters('nmm_refresh', '', $orderId); ?>
@@ -474,7 +487,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $count = count($prices);
 
         if ($count === 0) {        
-            throw new \Exception( 'No cryptocurrency exchanges could be reached, please try again.' );
+            throw new \Exception('No cryptocurrency exchanges could be reached, please try again.');
         }
 
         foreach ($prices as $price) {
