@@ -76,19 +76,19 @@ var generateMpkAddresses = function (cryptoId, numberOfSamples) {
 			jQuery('#nmmpro_redux_options-' + cryptoId + '_hd_mpk_sample_addresses input').removeClass('flash-green');
 			jQuery('#nmmpro_redux_options-' + cryptoId + '_hd_mpk_sample_addresses input').addClass('flash-yellow');	 
 		}
-	}).fail(function(stuff) {
+	}).fail(function(response) {
 		jQuery('#nmmpro_redux_options-' + cryptoId + '_hd_mpk_sample_addresses input').removeClass('flash-yellow');
-		if (stuff.status === 0) {
+		if (response.status === 0) {
 			return;
 		}
 		updateSampleText(cryptoId, numberOfSamples, 'Address creation failed, please check your mpk.');
 		
 		jQuery('#nmmpro_redux_options-' + cryptoId + '_hd_mpk_sample_addresses input').addClass('flash-red');
 		
-	}).done(function(ajaxResponse) {		
+	}).done(function(responseJson) {		
 		jQuery('#nmmpro_redux_options-' + cryptoId + '_hd_mpk_sample_addresses input').removeClass('flash-yellow');
 		jQuery('#nmmpro_redux_options-' + cryptoId + '_hd_mpk_sample_addresses input').addClass('flash-green');
-		addresses = JSON.parse(ajaxResponse);
+		addresses = JSON.parse(responseJson);
 
 		if (addresses[0] === 'You have entered a valid Segwit MPK.') {
 			updateSampleText(cryptoId, numberOfSamples, '');
@@ -121,7 +121,7 @@ jQuery(document).ready(function() {
 		existingMpk = getMpk(cryptoId);
 		existingMpkValid = existingMpk.length === 111;
 
-		if (firstAddressEmpty && existingMpkValid) {
+		if (existingMpkValid) {
 			generateMpkAddresses(cryptoId, numberOfSamples);
 		}
 
