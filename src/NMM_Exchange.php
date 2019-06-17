@@ -46,12 +46,12 @@ class NMM_Exchange {
         // if no transient is found we need to hit the api again
         $response = wp_remote_get('https://min-api.cryptocompare.com/data/price?fsym=' . $cryptoId . '&tsyms=USD');
 
-        if ( is_wp_error( $response ) || $response['response']['code'] !== 200) {
-            error_log('ccompare failed once');
+        if ( is_wp_error( $response ) || $response['response']['code'] !== 200) {            
+            
             NMM_Util::log(__FILE__, __LINE__, print_r($response, true));
             $response = wp_remote_get('https://min-api.cryptocompare.com/data/price?fsym=' . $cryptoId . '&tsyms=USD');
             if ( is_wp_error( $response ) || $response['response']['code'] !== 200) {
-                error_log('ccompare failed twice');
+            
                 NMM_Util::log(__FILE__, __LINE__, print_r($response, true));
                 return 0;
             }            

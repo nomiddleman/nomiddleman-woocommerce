@@ -14,5 +14,6 @@ span.no-copy {
 
 .qr-code-container {
 	background-color: #ffffff;
-	padding:25px;
+	padding:8px;
+  display:inline-block;
 }

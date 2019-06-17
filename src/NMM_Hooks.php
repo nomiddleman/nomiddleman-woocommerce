@@ -167,7 +167,7 @@ function NMM_load_js($stuff) {
 		$jsPath = NMM_PLUGIN_DIR . '/assets/js/nmm-redux-mpk.js';
 
 		if (NMM_Util::p_enabled()) {
-			wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery', 'nmmp-scripts' ), NMM_VERSION);	            
+			wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery', 'nmmp-admin-scripts' ), NMM_VERSION);	            
         }
         else {        	
         	wp_enqueue_script('nmm-scripts', $jsPath, array( 'jquery' ), NMM_VERSION);

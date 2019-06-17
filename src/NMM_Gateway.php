@@ -345,7 +345,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $qrData = $formattedName . ':' . $walletAddress . '?amount=' . $cryptoTotal;
 
         try {
-            QRcode::png($qrData, $dirWrite . 'tmp_qrcode.png', QR_ECLEVEL_H, 5);
+            QRcode::png($qrData, $dirWrite . 'tmp_qrcode.png', QR_ECLEVEL_H);            
         }
         catch (\Exception $e) {
             NMM_Util::log(__FILE__, __LINE__, 'QR code generation failed, falling back...');
