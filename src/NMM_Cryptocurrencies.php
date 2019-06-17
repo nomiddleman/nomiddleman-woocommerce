@@ -34,7 +34,8 @@ class NMM_Cryptocurrencies {
             'ETC' => new NMM_Cryptocurrency('ETC', 'Ethereum Classic', 18, 'ethereumclassic_logo_small.png', 60, '', false, true, true, ''),
             'LSK' => new NMM_Cryptocurrency('LSK', 'Lisk', 8, 'lisk_logo_small.png', 60, '', false, true, true, ''),
             'XEM' => new NMM_Cryptocurrency('XEM', 'NEM', 6, 'nem_logo_small.png', 60, '', false, true, true, ''),
-            'WAVES' => new NMM_Cryptocurrency('WAVES', 'Waves', 8, 'waves_logo_small.png', 60, '', false, true, true, ''),            
+            'WAVES' => new NMM_Cryptocurrency('WAVES', 'Waves', 8, 'waves_logo_small.png', 60, '', false, true, true, ''),
+            'GRS' => new NMM_Cryptocurrency('GRS', 'Groestlcoin', 8, 'groestlcoin_logo_small.png', 60, '', false, true, true, false),            
 
             // tokens
             'HOT' => new NMM_Cryptocurrency('HOT', 'Holochain', 18, 'holochain_logo_small.png', 60, '', false, true, true, '0x6c6ee5e31d828de241282b9606c8e98ea48526e2'),
@@ -314,6 +315,10 @@ class NMM_Cryptocurrencies {
         if ($cryptoId === 'BTX') {            
             return preg_match('/^[2s][a-km-zA-HJ-NP-Z0-9]{24,42}|btx[a-z0-9]{8,87}/', $address);
         }
+        if ($cryptoId === 'GRS') {
+            return preg_match('/^[F3][a-km-zA-HJ-NP-Z0-9]{24,42}/', $address);
+        }
+        
 
         // xrb_195mx9357zhmxsu53qqg3qbm6cqx3wq9h9wpdpj1b98n6mauj46mh9iwz1pg xrb_ 64
         // 51RguiuQAkVw5V6wQdkQnbpsm59szVrr91 M 4 5 34

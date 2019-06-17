@@ -189,13 +189,8 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
             $dustAmount = apply_filters('nmm_dust_amount', 0.000000000000000000, $cryptoId, $cryptoPerUsd, $crypto->get_round_precision(), $usdTotal);
 
-            error_log('dust amount formatted: ' . NMM_Cryptocurrencies::get_price_string($cryptoId, $dustAmount));
-
-            if ($dustAmount !== 0.000000000000000000) {
-                error_log('dust active: ' . $dustAmount);
-                $cryptoTotal += $dustAmount;
-            }
-
+            $cryptoTotal += $dustAmount;
+            
             // format the crypto amount based on crypto
             $formattedCryptoTotal = NMM_Cryptocurrencies::get_price_string($cryptoId, $cryptoTotal);
 
@@ -265,7 +260,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             
 
             // Emails are fired once we update status to on-hold, so hook additional email details here
-            add_action('woocommerce_email_order_details', array( $this, 'additional_email_details' ), 10, 4);
+            ///add_action('woocommerce_email_order_details', array( $this, 'additional_email_details' ), 10, 4);
             
             $order->update_status('wc-on-hold', $orderNote);
 
