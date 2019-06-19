@@ -139,18 +139,23 @@ $nmm_section = array(
             'type' => 'text',            
             'default' => 'Pay with cryptocurrency',
             'title' => 'Payment Label',
-            'desc' => 'This will be displayed on the checkout screen when the customer selects their payment option.'
+            'desc' => 'This will be displayed on the checkout screen when the customer selects their payment option.',
         ),
-        array(
-            'id' => 'payment_message_html',
-            'type' => 'textarea',
-            'default' => '',
-            'title' => 'Customer Payment Message',
-            'desc' => 'This is displayed above the crypto payment details on the payment screen (After the customer clicks "Checkout").'
-
-        ),        
+             
     ),
 );
+
+$nmmCustomerMessage = array(
+    array(
+        'id' => 'payment_message_html',
+        'type' => 'textarea',
+        'default' => '',
+        'title' => 'Customer Payment Message',
+        'desc' => 'This is displayed above the crypto payment details on the payment screen (After the customer clicks "Checkout").',
+    ),
+);
+
+$nmm_section['fields'] = array_merge($nmm_section['fields'], apply_filters('nmm_customer_payment_message_settings', $nmmCustomerMessage));
 
 Redux::setSection(NMM_REDUX_ID, $nmm_section);
 

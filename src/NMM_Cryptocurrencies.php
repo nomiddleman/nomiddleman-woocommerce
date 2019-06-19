@@ -223,7 +223,7 @@ class NMM_Cryptocurrencies {
             return preg_match('/^[AG][a-km-zA-HJ-NP-Z0-9]{26,42}|bt[a-z0-9]{8,87}/', $address);
         }
         if ($cryptoId === 'EOS') {
-            return strlen($address) == 12;
+            return strlen($address) >= 1 && strlen($address) <= 12;
         }
         if ($cryptoId === 'BSV') {
             return preg_match('/^[13][a-km-zA-HJ-NP-Z0-9]{26,42}|q[a-z0-9]{9,88}/', $address);

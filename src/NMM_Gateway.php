@@ -260,7 +260,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             
 
             // Emails are fired once we update status to on-hold, so hook additional email details here
-            ///add_action('woocommerce_email_order_details', array( $this, 'additional_email_details' ), 10, 4);
+            add_action('woocommerce_email_order_details', array( $this, 'additional_email_details' ), 10, 4);
             
             $order->update_status('wc-on-hold', $orderNote);
 
@@ -284,7 +284,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         }
     }
 
-    public function additional_email_details( $order, $sent_to_admin, $plain_text, $email ) {
+    public function additional_email_details($order, $sent_to_admin, $plain_text, $email) {
         $chosenCrypto = WC()->session->get('chosen_crypto_id');
         $crypto =  $this->cryptos[$chosenCrypto];
         $orderCryptoTotal = WC()->session->get($crypto->get_id() . '_amount');
@@ -360,7 +360,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $formattedPrice = NMM_Cryptocurrencies::get_price_string($crypto->get_id(), $cryptoTotal);
         $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
         
-        $customerMessage = $nmmSettings->get_customer_payment_message($crypto);
+        $customerMessage = apply_filters('nmm_get_customer_payment_message', $nmmSettings->get_customer_payment_message($crypto), $crypto);
 
         $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $formattedPrice);        
         
