@@ -35,7 +35,8 @@ class NMM_Cryptocurrencies {
             'LSK' => new NMM_Cryptocurrency('LSK', 'Lisk', 8, 'lisk_logo_small.png', 60, '', false, true, true, ''),
             'XEM' => new NMM_Cryptocurrency('XEM', 'NEM', 6, 'nem_logo_small.png', 60, '', false, true, true, ''),
             'WAVES' => new NMM_Cryptocurrency('WAVES', 'Waves', 8, 'waves_logo_small.png', 60, '', false, true, true, ''),
-            'GRS' => new NMM_Cryptocurrency('GRS', 'Groestlcoin', 8, 'groestlcoin_logo_small.png', 60, '', false, true, true, false),            
+            'GRS' => new NMM_Cryptocurrency('GRS', 'Groestlcoin', 8, 'groestlcoin_logo_small.png', 60, '', false, true, true, false),
+            'APL' => new NMM_Cryptocurrency('APL', 'Apollo Currency', 8, 'apollocurrency_logo_small.png', 60, '', false, false, true, false),
 
             // tokens
             'HOT' => new NMM_Cryptocurrency('HOT', 'Holochain', 18, 'holochain_logo_small.png', 60, '', false, true, true, '0x6c6ee5e31d828de241282b9606c8e98ea48526e2'),
@@ -202,7 +203,7 @@ class NMM_Cryptocurrencies {
             return preg_match('/^X[1-9A-HJ-NP-Za-km-z]{33}/', $address);
         }
         if ($cryptoId === 'XRP') {
-            return preg_match('/^r[0-9a-zA-Z]{33}/', $address);
+            return preg_match('/^r[0-9a-zA-Z]{28,37}/', $address);
         }
         if ($cryptoId === 'ONION') {
             return preg_match('/^D[0-9a-zA-Z]{33}/', $address);
@@ -318,11 +319,9 @@ class NMM_Cryptocurrencies {
         if ($cryptoId === 'GRS') {
             return preg_match('/^[F3][a-km-zA-HJ-NP-Z0-9]{24,42}/', $address);
         }
-        
-
-        // xrb_195mx9357zhmxsu53qqg3qbm6cqx3wq9h9wpdpj1b98n6mauj46mh9iwz1pg xrb_ 64
-        // 51RguiuQAkVw5V6wQdkQnbpsm59szVrr91 M 4 5 34
-        
+        if ($cryptoId === 'APL') {
+            return preg_match('/^APL-[a-zA-Z0-9-]{8,42}/', $address);
+        }
         
         NMM_Util::log(__FILE__, __LINE__, 'Invalid cryptoId, contact plug-in developer.');        
         throw new Exception('Invalid cryptoId, contact plug-in developer.');
