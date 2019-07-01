@@ -5,18 +5,18 @@ Requires at least: 3.0.1
 Tested up to: 5.2.1
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.4.2
+Stable Tag: 2.4.3
 
 Absolutely the easiest setup in the industry. No registration. No API keys. No middleman. Accept bitcoin, ethereum, litecoin, and more.
 
 == Description ==
-Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman. Empowering you to accept all major cryptocurrencies directly to your own wallets for free. No middleman fees and open source on <a target="_blank" href="https://github.com/nomiddleman/nomiddleman-woocommerce">github</a>.
+Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman. Empowering you to accept all major cryptocurrencies directly to your own wallets for free. No middleman fees and open source on <a target="_blank" href="https://github.com/nomiddleman/nomiddleman-woocommerce" alt="Wordpress Cryptocurrency Payment Gateway">github</a>.
 
 Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 41 other top cryptocurrencies.
 
 <blockquote>
 = Information =
-<a target="_blank" href="https://nomiddlemancrypto.io/">Getting Started</a>
+<a target="_blank" href="https://nomiddlemancrypto.io/" alt="Wordpress Cryptocurrency Payment Gateway">Accept Bitcoin Payments on Wordpress</a>
 </blockquote>
 
 == Supported Cryptocurrencies ==
@@ -146,7 +146,7 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * MPK Validation is more strict
 
 = 2.2.1 =
-* Improved the way we handle enabling/disabling of Woocommerce gateway
+* Improved the way we handle enabling/disabling of WooCommerce gateway
 
 = 2.2.0 =
 * Added Privacy Mode support for DASH

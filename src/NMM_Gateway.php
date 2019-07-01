@@ -187,9 +187,11 @@ class NMM_Gateway extends WC_Payment_Gateway {
             $cryptoTotalPreMarkup = round($usdTotal / $cryptoPerUsd, $crypto->get_round_precision(), PHP_ROUND_HALF_UP);            
             $cryptoTotal = $cryptoTotalPreMarkup * $cryptoPriceRatio;
 
-            $dustAmount = apply_filters('nmm_dust_amount', 0.000000000000000000, $cryptoId, $cryptoPerUsd, $crypto->get_round_precision(), $usdTotal);
-
+            $dustAmount = apply_filters('nmm_dust_amount', 0.000000000000000000, $cryptoId, $cryptoPerUsd, $crypto->get_round_precision(), $usdTotal, $cryptoTotal);
+            //error_log('filter dust amount: ' . $dustAmount);
+            //error_log('cryptoTotal pre-dust: ' . $cryptoTotal);
             $cryptoTotal += $dustAmount;
+            //error_log('cryptoTotal post-dust: ' . $cryptoTotal);
             
             // format the crypto amount based on crypto
             $formattedCryptoTotal = NMM_Cryptocurrencies::get_price_string($cryptoId, $cryptoTotal);
@@ -360,25 +362,21 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $formattedPrice = NMM_Cryptocurrencies::get_price_string($crypto->get_id(), $cryptoTotal);
         $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
         
-        $customerMessage = apply_filters('nmm_get_customer_payment_message', $nmmSettings->get_customer_payment_message($crypto), $crypto);
+        $customerMessage = apply_filters('nmm_customer_message', $nmmSettings->get_customer_payment_message($crypto), $crypto, $orderId, $formattedPrice, $orderWalletAddress);
 
-        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $formattedPrice);        
+        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $cryptoTotal);        
         
         echo $customerMessage;
         ?>
         
-        <p>Here are your cryptocurrency payment details.</p>
+        <h2>Cryptocurrency payment details</h2>
         <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
             <li class="woocommerce-order-overview__qr-code">
                 <p style="word-wrap: break-word;">QR Code payment:</p>
                 <div class="qr-code-container">                
                     <img style="margin-top:3px;" src=<?php echo $qrCode; ?> />
-                </div>
-                
-            </li>
-            
-            <?php echo apply_filters('nmm_refresh', '', $orderId); ?>
-            
+                </div>                
+            </li>            
             <li>
                 <p style="word-wrap: break-word;">Wallet Address: 
                     <strong>

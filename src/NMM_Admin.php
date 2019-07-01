@@ -10,7 +10,7 @@ $nmm_redux_args = array(
     // This is where your data is stored in the database and also becomes your global variable name.
     'display_name'         => apply_filters('nmm_settings_display_name', 'Nomiddleman Crypto Payments for Woocommerce'),
     'display_version'      => NMM_VERSION,
-    'hide_reset'           => true,
+    'hide_reset'           => false,
     'disable_tracking'     => true,
     //'intro_text'           => apply_filters('nmm_settings_intro', 'Welcome to the Nomiddleman Settings Page'),
     'system_info'          => true,
@@ -155,7 +155,7 @@ $nmmCustomerMessage = array(
     ),
 );
 
-$nmm_section['fields'] = array_merge($nmm_section['fields'], apply_filters('nmm_customer_payment_message_settings', $nmmCustomerMessage));
+$nmm_section['fields'] = array_merge($nmm_section['fields'], apply_filters('nmm_admin_customer_message', $nmmCustomerMessage));
 
 Redux::setSection(NMM_REDUX_ID, $nmm_section);
 

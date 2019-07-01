@@ -12,14 +12,35 @@ class NMM_Exchange {
         $transientKey = $fromCurr . '_to_USD';
         $conversionRate = get_transient( $transientKey );
 
-        if ($conversionRate !== false) {
+        if ($conversionRate !== false && is_numeric($conversionRate)) {
             return $total * $conversionRate;
         }
 
         $response = wp_remote_get('https://free.currencyconverterapi.com/api/v5/convert?q=' . $fromCurr . '_' . 'USD&apiKey=102d2815703663a36de6');
 
         if ( is_wp_error( $response ) || $response['response']['code'] !== 200) {
-            throw new \Exception( 'Could not reach the currency conversion service. Please try again.' );      
+            
+            
+
+            $response = wp_remote_get('http://data.fixer.io/api/latest?access_key=5ca32bf985bb43ce3705262f6134c5c3');
+            if ( is_wp_error( $response ) || $response['response']['code'] !== 200) {
+                throw new \Exception( 'Could not reach the currency conversion service. Please try again.' );
+            }
+
+            $body = json_decode($response['body']);
+
+            $rate = $body->{'rates'}->{$fromCurr};
+            //error_log('rate for ' . $fromCurr . ' is ' . $rate);
+            
+            $conversionRate = 1 / $rate;
+            //error_log('per usd ' . $conversionRate);
+            
+            set_transient($transientKey, $conversionRate, 600);
+            
+            $priceInUsd = $total * $conversionRate;            
+            //error_log('usd price: ' . $priceInUsd);
+            
+            return $priceInUsd;
         }
 
         $body = json_decode($response['body']);
