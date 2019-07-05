@@ -248,6 +248,17 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         if ($hdOptions !== $nmm_crypto->get_id()) {
             $nmm_section['fields'][] = $hdOptions =apply_filters('nmm_hd_wallet_settings', $nmm_crypto->get_id());
         }
+
+        $nmm_section['fields'][] = array(
+            'id'       => $nmm_crypto->get_id() . '_hd_mpk_sample_addresses',
+            'type'     => 'multi_text',
+            'title'    => 'Privacy Mode Sample Addresses',                  
+            'default'  => [' ',' ',' '],
+            'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '2'),            
+            'subtitle' => '<span style="color: red;">PLEASE VERIFY YOU CONTROL THESE ADDRESSES BEFORE SAVING OR ELSE LOSS OF FUNDS WILL OCCUR!!!!</span><br /> Addresses will be generated when a valid MPK is input.',
+            'desc' => '<span style="color: red;">PLEASE VERIFY YOU OWN THESE ADDRESSES BEFORE SAVING OR ELSE LOSS OF FUNDS WILL OCCUR!!!!</span><br /><br />Once you have entered a valid MPK we will generate these addresses.<br /><br />Due to lack of convention around MPK xpub prefixes, it is not possible to guess which address format an xpub should generate. We currently ONLY GENERATE LEGACY ADDRESSES starting with a "1".',
+        );
+
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_hd_mpk',
             'type'     => 'textarea',
@@ -257,15 +268,7 @@ foreach ($nmm_cryptos as $nmm_crypto) {
             'desc' => 'Your HD Wallet Master Public Key. We highly recommend using a brand new MPK for each store you run. You run the risk of address reuse and incorrectly processed orders if you use your MPK for multiple stores and/or purposes (such as donations on another platform).',
         );
         
-        $nmm_section['fields'][] = array(
-            'id'       => $nmm_crypto->get_id() . '_hd_mpk_sample_addresses',
-            'type'     => 'multi_text',
-            'title'    => 'Privacy Mode Sample Addresses',                  
-            'default'  => [' ',' ',' '],
-            'required' => array($nmm_crypto->get_id() . '_mode', 'equals', '2'),            
-            'subtitle' => '<span style="color: red;">Please send test transactions to these addresses and make sure you own them before saving!</span>',
-            'desc' => 'The addresses will be generated when you enter a valid MPK',
-        );
+        
 
         $nmm_section['fields'][] = array(
             'id'       => $nmm_crypto->get_id() . '_hd_percent_to_process',

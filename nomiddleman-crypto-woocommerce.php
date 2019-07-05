@@ -1,14 +1,14 @@
 <?php
 /*
 WC requires at least: 3.0.0
-WC tested up to: 3.6.4
+WC tested up to: 3.6.5
 Plugin Name: Nomiddleman Bitcoin and Crypto Payments for WooCommerce
 Plugin URI:  https://wordpress.org/plugins/nomiddleman-crypto-payments-for-woocommerce/
 Description: WooCommerce Bitcoin and Cryptocurrency Payment Gateway
 Author: nomiddleman
 Author URI: https://nomiddlemancrypto.io
 
-Version: 2.4.3
+Version: 2.4.4
 Copyright: © 2019 Nomiddleman Crypto (email : support@nomiddlemancrypto.io)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -41,7 +41,7 @@ function NMM_init_gateways(){
     define('NMM_PLUGIN_BASENAME', plugin_basename(NMM_PLUGIN_FILE));
 
     define('NMM_CRON_JOB_URL', plugins_url('', __FILE__) . '/src/NMM_Cron.php');
-    define('NMM_VERSION', '2.4.3');
+    define('NMM_VERSION', '2.4.4');
     
     define('NMM_REDUX_SLUG', 'nmmpro_options');
 
@@ -109,7 +109,7 @@ function NMM_init_gateways(){
     add_filter ('cron_schedules', 'NMM_add_interval');
 
     add_action('NMM_cron_hook', 'NMM_do_cron_job');
-    add_action('woocommerce_process_shop_order_meta', 'NMM_update_database_when_admin_changes_order_status', 10, 2);
+    add_action('woocommerce_order_status_changed', 'NMM_update_database_when_admin_changes_order_status', 10, 3);
     
     add_action('redux/page/' . NMM_REDUX_ID . '/load', 'NMM_load_redux_css');
     add_filter('redux/validate/' . NMM_REDUX_ID . '/before_validation', array('NMM_Validation', 'validate_redux_options'), 10, 2);    

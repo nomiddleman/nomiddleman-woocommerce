@@ -25,85 +25,144 @@ function NMM_change_partial_email_heading($heading, $order) {
 	return $heading;
 }
 
-function NMM_update_database_when_admin_changes_order_status( $orderId, $postData ) {	
-	$oldOrderStatus = sanitize_text_field($postData->post_status);
-
-	if (!isset($_POST)) {
-		return;
-	}
-
-	$newOrderStatus = sanitize_text_field($_POST['order_status']);
-
+function NMM_update_database_when_admin_changes_order_status( $orderId, $oldOrderStatus, $newOrderStatus ) {	
+  
 	$paymentAmount = 0.0;
 	
 	$paymentAmount = get_post_meta($orderId, 'crypto_amount', true);
 
 	// this order was not made by us
-	if (!$paymentAmount) {		
+	if ($paymentAmount === 0.0 || !$paymentAmount) {
+    error_log('ending early');
 		return;
-	}
+  }
+	
 
 	$paymentRepo = new NMM_Payment_Repo();
 
 	// If admin updates from needs-payment to has-payment, stop looking for matching transactions
-	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-processing') {
+	if ($oldOrderStatus === 'pending' && $newOrderStatus === 'processing') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
 	}
-	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-completed') {
+	if ($oldOrderStatus === 'pending' && $newOrderStatus === 'completed') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
 	}
-	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-processing') {
+	if ($oldOrderStatus === 'on-hold' && $newOrderStatus === 'processing') {
+    error_log('updating order '. $orderId . ' to paid');
 		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
 	}
-	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-completed') {
+	if ($oldOrderStatus === 'on-hold' && $newOrderStatus === 'completed') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'paid');
 	}
 
 	// If admin updates from has-payment to needs-payment, start looking for matching transactions
-	if ($oldOrderStatus === 'wc-processing' && $newOrderStatus === 'wc-pending') {
+	if ($oldOrderStatus === 'processing' && $newOrderStatus === 'pending') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 	}
-	if ($oldOrderStatus === 'wc-processing' && $newOrderStatus === 'wc-on-hold') {
+	if ($oldOrderStatus === 'processing' && $newOrderStatus === 'on-hold') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 	}
-	if ($oldOrderStatus === 'wc-completed' && $newOrderStatus === 'wc-pending') {
+	if ($oldOrderStatus === 'completed' && $newOrderStatus === 'pending') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 	}
-	if ($oldOrderStatus === 'wc-completed' && $newOrderStatus === 'wc-on-hold') {
+	if ($oldOrderStatus === 'completed' && $newOrderStatus === 'on-hold') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 	}
 
 	// If admin updates from needs-payment to cancelled, stop looking for matching transactions
-	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-cancelled') {
+	if ($oldOrderStatus === 'pending' && $newOrderStatus === 'cancelled') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
 	}
-	if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-failed') {
+	if ($oldOrderStatus === 'pending' && $newOrderStatus === 'failed') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
 	}
-	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-cancelled') {
+	if ($oldOrderStatus === 'on-hold' && $newOrderStatus === 'cancelled') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
 	}
-	if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-failed') {
+	if ($oldOrderStatus === 'on-hold' && $newOrderStatus === 'failed') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
 	}
 
 	// If admin updates from cancelled to needs-payment, start looking for matching transactions
-	if ($oldOrderStatus === 'wc-cancelled' && $newOrderStatus === 'wc-on-hold') {
+	if ($oldOrderStatus === 'cancelled' && $newOrderStatus === 'on-hold') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
 	}
-	if ($oldOrderStatus === 'wc-cancelled' && $newOrderStatus === 'wc-pending') {
+	if ($oldOrderStatus === 'cancelled' && $newOrderStatus === 'pending') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
 	}
-	if ($oldOrderStatus === 'wc-failed' && $newOrderStatus === 'wc-on-hold') {
+	if ($oldOrderStatus === 'failed' && $newOrderStatus === 'on-hold') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
 	}
-	if ($oldOrderStatus === 'wc-failed' && $newOrderStatus === 'wc-pending') {
+	if ($oldOrderStatus === 'failed' && $newOrderStatus === 'pending') {
 		$paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
 		$paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
 	}
+
+  // WC PREFIX
+  // If admin updates from needs-payment to has-payment, stop looking for matching transactions
+  if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-processing') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+  }
+  if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-completed') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+  }
+  if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-processing') {
+    error_log('updating order '. $orderId . ' to paid');
+    $paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+  }
+  if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-completed') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'paid');
+  }
+  
+
+  // If admin updates from has-payment to needs-payment, start looking for matching transactions
+  if ($oldOrderStatus === 'wc-processing' && $newOrderStatus === 'wc-pending') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+  }
+  if ($oldOrderStatus === 'wc-processing' && $newOrderStatus === 'wc-on-hold') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+  }
+  if ($oldOrderStatus === 'wc-completed' && $newOrderStatus === 'wc-pending') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+  }
+  if ($oldOrderStatus === 'wc-completed' && $newOrderStatus === 'wc-on-hold') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+  }
+
+  // If admin updates from needs-payment to cancelled, stop looking for matching transactions
+  if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-cancelled') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+  }
+  if ($oldOrderStatus === 'wc-pending' && $newOrderStatus === 'wc-failed') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+  }
+  if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-cancelled') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+  }
+  if ($oldOrderStatus === 'wc-on-hold' && $newOrderStatus === 'wc-failed') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'cancelled');
+  }
+
+  // If admin updates from cancelled to needs-payment, start looking for matching transactions
+  if ($oldOrderStatus === 'wc-cancelled' && $newOrderStatus === 'wc-on-hold') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+    $paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+  }
+  if ($oldOrderStatus === 'wc-cancelled' && $newOrderStatus === 'wc-pending') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+    $paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+  }
+  if ($oldOrderStatus === 'wc-failed' && $newOrderStatus === 'wc-on-hold') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+    $paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+  }
+  if ($oldOrderStatus === 'wc-failed' && $newOrderStatus === 'wc-pending') {
+    $paymentRepo->set_status($orderId, $paymentAmount, 'unpaid');
+    $paymentRepo->set_ordered_at($orderId, $paymentAmount, time());
+  }
 }
 
 function NMM_add_flash_notice($notice = "", $type = "error", $dismissible = true) {
@@ -146,7 +205,7 @@ function NMM_display_flash_notices() {
     }
 }
 
-function NMM_load_redux_css($stuff) {    
+function NMM_load_redux_css($stuff) {
     $cssPath = NMM_PLUGIN_DIR . '/assets/css/nmm-redux-settings.css';    
     wp_enqueue_style('nmm-styles', $cssPath, array(), NMM_VERSION);
 }

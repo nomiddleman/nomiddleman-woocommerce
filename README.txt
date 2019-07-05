@@ -2,15 +2,15 @@
 Contributors: nomiddleman
 Tags: bitcoin, cryptocurrency, woocommerce, bitcoin payment, crypto, btc, payments, ethereum, ether, ethereum token, token, gas, e-commerce, ecommerce, monero, dogecoin, pay with crypto, pay with bitcoin, bitcoin payments, bitcoin payment gateway, crypto woo, accept, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress, electrum, mpk, master public key, hd wallet, address, zcash, bitcore, bitcoin cash, bitcoin gold, blackcoin, dash, deeponion, ethereum classic, ripple, vericoin, eos, bitcoin sv, vechain, tron, stellar, rep, bch, btg, blk, dash, onion, doge, eth, etc, ltc, xmr, xrp, vrc, zec, eos, bsv, vet, trx, xlm, no fees, no middleman, freedom, nomiddleman, no fees, free, for free, free crypto plugin, plugin, plug-in, no middleman, binance coin, bnb, iota, miota, maker, mkr, nem, xem, waves, ontology, ont, omisego, omg, holo, hot, chainlink, link, decred, dcr, basic attention token, bat, 0x, zrx, lisk, lsk, bytecoin, bcn, bitcoin diamond, bcd, digibyte, dgb, gemini dollar, gusd, potcoin, pot, risk, high-risk, coin, mineable, erc20 token, erc20, KYC, No KYC, No registration, No login, processing, processor, groestlcoin, bitcore
 Requires at least: 3.0.1
-Tested up to: 5.2.1
+Tested up to: 5.2.2
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.4.3
+Stable Tag: 2.4.4
 
 Absolutely the easiest setup in the industry. No registration. No API keys. No middleman. Accept bitcoin, ethereum, litecoin, and more.
 
 == Description ==
-Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman. Empowering you to accept all major cryptocurrencies directly to your own wallets for free. No middleman fees and open source on <a target="_blank" href="https://github.com/nomiddleman/nomiddleman-woocommerce" alt="Wordpress Cryptocurrency Payment Gateway">github</a>.
+Utilizing the power of blockchain, we provide the only WooCommerce Cryptocurrency Gateway that truly takes out the middleman. Empowering you to accept all major cryptocurrencies directly to your own wallets for free. No middleman fees and open source on <a target="_blank" href="https://github.com/nomiddleman/nomiddleman-woocommerce" alt="Wordpress Cryptocurrency Payment Gateway">Nomiddleman Crypto's Github</a>.
 
 Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 41 other top cryptocurrencies.
 
@@ -20,6 +20,7 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 </blockquote>
 
 == Supported Cryptocurrencies ==
+
 * Bitcoin - BTC
 * Ethereum - ETH
 * XRP - XRP
@@ -67,8 +68,6 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * Zcash - ZEC
 * 0x - ZRX
 
-
-
 == Installation ==
 
 * Install and activate
@@ -93,7 +92,7 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * Customer QR code on checkout - Amount Included
 * Markup/Markdown customer orders when paying with crypto
 * Customizable customer messages
-* Supports all Woocommerce fiat currencies
+* Supports all WooCommerce fiat currencies
 
 \* varies by cryptocurrency
 
@@ -104,6 +103,13 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.4.4 =
+* Order status now correctly synced when updated manually
+* Updated Privacy Mode warning for address generation to be more detailed and visible
+
+= 2.4.3 =
+* Added fallback fiat conversion
 
 = 2.4.2 =
 * Added Groestlcoin (GRS)
