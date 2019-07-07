@@ -244,9 +244,9 @@ foreach ($nmm_cryptos as $nmm_crypto) {
         'required' => array($nmm_crypto->get_id() . '_mode', 'not', '2'),
     );
     if ($nmm_crypto->has_hd()) {
-        $hdOptions =apply_filters('nmm_hd_wallet_settings', $nmm_crypto->get_id());
+        $hdOptions = apply_filters('nmm_admin_hd_wallet', $nmm_crypto->get_id());
         if ($hdOptions !== $nmm_crypto->get_id()) {
-            $nmm_section['fields'][] = $hdOptions =apply_filters('nmm_hd_wallet_settings', $nmm_crypto->get_id());
+            $nmm_section['fields'][] = apply_filters('nmm_admin_hd_wallet', $nmm_crypto->get_id());
         }
 
         $nmm_section['fields'][] = array(
