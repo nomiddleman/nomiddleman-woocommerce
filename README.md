@@ -8,7 +8,7 @@ Classic mode includes the basic functionality for a cryptocurrency. It will cycl
 
 Autopay Mode
 ============
-### Autopay Mode builds on Classic Mode with the following additions
+### Autopay Mode builds on Classic Mode with the following additions:
 
 - Scans blockchain APIs for transactions that match your orders
 - Updates orders to processing once a matching transaction is found
