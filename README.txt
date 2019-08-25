@@ -5,7 +5,7 @@ Requires at least: 3.0.1
 Tested up to: 5.2.2
 Requires PHP: 5.2.4
 License: GPL v3
-Stable Tag: 2.4.4
+Stable Tag: 2.4.5
 
 Absolutely the easiest setup in the industry. No registration. No API keys. No middleman. Accept bitcoin, ethereum, litecoin, and more.
 
@@ -103,6 +103,9 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.4.5 =
+* Updated Autopay endpoints for BTC and LTC
 
 = 2.4.4 =
 * Order status now correctly synced when updated manually
