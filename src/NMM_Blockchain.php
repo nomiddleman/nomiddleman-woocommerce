@@ -545,25 +545,61 @@ class NMM_Blockchain {
 	}
 
 	public static function get_btc_address_transactions($address) {
-		
-		$request = 'https://chain.so/api/v2/get_tx_received/BTC/' . $address;
+		$userAgentString = self::get_user_agent_string();
 
-		$response = wp_remote_get($request);
+        $request = 'https://blockexplorer.com/api/txs/?address=' . $address;
+
+        $args = array(
+			'user-agent' => $userAgentString
+		);
+
+		$response = wp_remote_get($request, $args);
 
 		if (is_wp_error($response) || $response['response']['code'] !== 200) {
 			NMM_Util::log(__FILE__, __LINE__, 'FAILED API CALL ( ' . $request . ' ): ' . print_r($response, true));
+            $request2 = 'https://api.blockcypher.com/v1/btc/main/addrs/' . $address;
+            $response2 = wp_remote_get($request2, $args);
+            if (is_wp_error($response2) || $response2['response']['code'] !== 200) {
+                $result = array(
+                    'result' => 'error',
+                    'total_received' => '',
+                );
 
-			$result = array(
-				'result' => 'error',
-				'total_received' => '',
-			);
+                return $result;
+            }
 
-			return $result;
+            $body = json_decode($response2['body']);
+
+            $rawTransactions = $body->txrefs;
+            if (!is_array($rawTransactions)) {
+                $result = array(
+                    'result' => 'error',
+                    'message' => 'No transactions found',
+                );
+
+                return $result;
+            }
+            $transactions = array();
+            foreach ($rawTransactions as $rawTransaction) {
+                if ($rawTransaction->tx_input_n == -1) {
+                    $transactions[] = new NMM_Transaction(
+                        $rawTransaction->value,
+                        $rawTransaction->confirmations,
+                        $rawTransaction->confirmed,
+                        $rawTransaction->tx_hash);
+                }
+            }
+            $result = array (
+                'result' => 'success',
+                'transactions' => $transactions,
+            );
+
+            return $result;
 		}
 
 		$body = json_decode($response['body']);
 
-		$rawTransactions = $body->data->txs;
+		$rawTransactions = $body->txs;
 		if (!is_array($rawTransactions)) {
 			$result = array(
 				'result' => 'error',
@@ -573,13 +609,17 @@ class NMM_Blockchain {
 			return $result;
 		}
 		$transactions = array();
-		foreach ($rawTransactions as $rawTransaction) {			
-				
-			$transactions[] = new NMM_Transaction($rawTransaction->value * 100000000,
-												  $rawTransaction->confirmations,
-												  $rawTransaction->time,
-												  $rawTransaction->txid);
-			
+		foreach ($rawTransactions as $rawTransaction) {
+			foreach ($rawTransaction->vout as $vout) {
+				if ($vout->scriptPubKey->addresses[0] === $address) {
+					$transactions[] = new NMM_Transaction($vout->value * 100000000,
+														  $rawTransaction->confirmations,
+														  $rawTransaction->time,
+														  $rawTransaction->txid);
+				}
+			}
+
+
 		}
 
 		$result = array (
@@ -1045,49 +1085,52 @@ class NMM_Blockchain {
 	}
 
 	public static function get_ltc_address_transactions($address) {
-		
-		$request = 'https://chain.so/api/v2/get_tx_received/LTC/' . $address;
+		$userAgentString = self::get_user_agent_string();
 
-		$response = wp_remote_get($request);
+        $request = 'https://api.blockcypher.com/v1/ltc/main/addrs/' . $address;
+
+        $args = array(
+			'user-agent' => $userAgentString
+		);
+
+		$response = wp_remote_get($request, $args);
 
 		if (is_wp_error($response) || $response['response']['code'] !== 200) {
-			NMM_Util::log(__FILE__, __LINE__, 'FAILED API CALL ( ' . $request . ' ): ' . print_r($response, true));
+            $result = array(
+                'result' => 'error',
+                'total_received' => '',
+            );
 
-			$result = array(
-				'result' => 'error',
-				'total_received' => '',
-			);
-
-			return $result;
-		}
+            return $result;
+        }
 
 		$body = json_decode($response['body']);
 
-		$rawTransactions = $body->data->txs;
-		if (!is_array($rawTransactions)) {
-			$result = array(
-				'result' => 'error',
-				'message' => 'No transactions found',
-			);
+        $rawTransactions = $body->txrefs;
+        if (!is_array($rawTransactions)) {
+            $result = array(
+                'result' => 'error',
+                'message' => 'No transactions found',
+            );
 
-			return $result;
-		}
-		$transactions = array();
-		foreach ($rawTransactions as $rawTransaction) {			
-				
-			$transactions[] = new NMM_Transaction($rawTransaction->value * 100000000,
-												  $rawTransaction->confirmations,
-												  $rawTransaction->time,
-												  $rawTransaction->txid);
-			
-		}
+            return $result;
+        }
+        $transactions = array();
+        foreach ($rawTransactions as $rawTransaction) {
+            if ($rawTransaction->tx_input_n == -1) {
+                $transactions[] = new NMM_Transaction(
+                    $rawTransaction->value,
+                    $rawTransaction->confirmations,
+                    $rawTransaction->confirmed,
+                    $rawTransaction->tx_hash);
+            }
+        }
+        $result = array (
+            'result' => 'success',
+            'transactions' => $transactions,
+        );
 
-		$result = array (
-			'result' => 'success',
-			'transactions' => $transactions,
-		);
-
-		return $result;
+        return $result;
 	}
 
 	public static function get_onion_address_transactions($address) {
@@ -1618,7 +1661,7 @@ class NMM_Blockchain {
 	}
 
 	private static function get_user_agent_string() {
-		return 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.12 (KHTML, like Gecko) Chrome/9.0.576.0 Safari/534.12';
+		return 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.12 (KHTML, like Gecko) Chrome/9.0.576.1 Safari/534.12';
 	}
 }
 

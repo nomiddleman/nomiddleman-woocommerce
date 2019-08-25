@@ -22,6 +22,10 @@ class NMM_Transaction {
 	}
 
 	public function get_time_stamp() {
+        $time = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $this->timeStamp);
+	    if ($time) {
+	        return $time->getTimestamp();
+        }
 		return $this->timeStamp;
 	}
 
