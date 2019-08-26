@@ -837,6 +837,57 @@ class NMM_Blockchain {
 		return $result;
 	}
 
+    public static function get_dgb_address_transactions($address) {
+        $args = array('timeout' => 25);
+        $request = 'https://explorer-1.us.digibyteservers.io/api/txs/?address=' . $address;
+
+        $response = wp_remote_get($request, $args);
+
+        if (is_wp_error($response) || $response['response']['code'] !== 200) {
+            NMM_Util::log(__FILE__, __LINE__, 'FAILED API CALL ( ' . $request . ' ): ' . print_r($response, true));
+
+            //TODO: https://digiexplorer.info/
+            $result = array(
+                'result' => 'error',
+                'total_received' => '',
+            );
+
+            return $result;
+        }
+
+        $body = json_decode($response['body']);
+
+        $rawTransactions = $body->txs;
+        if (!is_array($rawTransactions)) {
+            $result = array(
+                'result' => 'error',
+                'message' => 'No transactions found',
+            );
+
+            return $result;
+        }
+        $transactions = array();
+        foreach ($rawTransactions as $rawTransaction) {
+            foreach ($rawTransaction->vout as $vout) {
+                if ($vout->scriptPubKey->addresses[0] === $address) {
+                    $transactions[] = new NMM_Transaction($vout->value * 100000000,
+                        $rawTransaction->confirmations,
+                        $rawTransaction->time,
+                        $rawTransaction->txid);
+                }
+            }
+
+
+        }
+
+        $result = array (
+            'result' => 'success',
+            'transactions' => $transactions,
+        );
+
+        return $result;
+    }
+
 	public static function get_eos_address_transactions($address) {
 		
 		$request = 'https://api.eospark.com/api?module=account&action=get_account_related_trx_info&account=' . $address . '&apikey=a9564ebc3289b7a14551baf8ad5ec60a';
@@ -1033,11 +1084,6 @@ class NMM_Blockchain {
 
 		return $result;
 	}
-
-	//https://groestlsight.groestlcoin.org/api/txs?address=
-	//32QrhXp8cTmKj4VUDPe334Eq7uFcsR2rYz
-	//FYoKoGrSXGpTavNFVbvW18UYxo6JVbUDDa
-	// /grs1 
 
 	public static function get_lsk_address_transactions($address) {
 		

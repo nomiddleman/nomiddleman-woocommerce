@@ -1,14 +1,14 @@
 <?php
 /*
 WC requires at least: 3.0.0
-WC tested up to: 3.6.5
+WC tested up to: 3.7.0
 Plugin Name: Nomiddleman Bitcoin and Crypto Payments for WooCommerce
 Plugin URI:  https://wordpress.org/plugins/nomiddleman-crypto-payments-for-woocommerce/
 Description: WooCommerce Bitcoin and Cryptocurrency Payment Gateway
 Author: nomiddleman
 Author URI: https://nomiddlemancrypto.io
 
-Version: 2.4.5
+Version: 2.4.6
 Copyright: © 2019 Nomiddleman Crypto (email : support@nomiddlemancrypto.io)
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -41,7 +41,7 @@ function NMM_init_gateways(){
     define('NMM_PLUGIN_BASENAME', plugin_basename(NMM_PLUGIN_FILE));
 
     define('NMM_CRON_JOB_URL', plugins_url('', __FILE__) . '/src/NMM_Cron.php');
-    define('NMM_VERSION', '2.4.5');
+    define('NMM_VERSION', '2.4.6');
     
     define('NMM_REDUX_SLUG', 'nmmpro_options');
 
