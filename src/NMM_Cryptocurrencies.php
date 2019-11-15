@@ -37,7 +37,7 @@ class NMM_Cryptocurrencies {
             'WAVES' => new NMM_Cryptocurrency('WAVES', 'Waves', 8, 'waves_logo_small.png', 60, '', false, true, true, ''),
             'GRS' => new NMM_Cryptocurrency('GRS', 'Groestlcoin', 8, 'groestlcoin_logo_small.png', 60, '', false, true, true, false),
             'APL' => new NMM_Cryptocurrency('APL', 'Apollo Currency', 8, 'apollocurrency_logo_small.png', 60, '', false, false, true, false),
-            'SAFE' => new NMM_Cryptocurrency('SAFE', 'SafeCoin', 8, 'safecoin_logo_small.png', 60, '', false, true, true, ''),
+            'SAFE' => new NMM_Cryptocurrency('SAFE', 'SafeCoin', 8, 'safe_logo_small.png', 60, '', false, true, true, ''),
 
             // tokens
             'HOT' => new NMM_Cryptocurrency('HOT', 'Holochain', 18, 'holochain_logo_small.png', 60, '', false, true, true, '0x6c6ee5e31d828de241282b9606c8e98ea48526e2'),
