@@ -15,8 +15,8 @@ class NMM_Cryptocurrencies {
             'DOGE' => new NMM_Cryptocurrency('DOGE', 'Dogecoin', 8, 'dogecoin_logo_small.png', 60, 'Ð', true, true, true, ''),
             'XMY' => new NMM_Cryptocurrency('XMY', 'Myriad', 8, 'myriad_logo_small.png', 60, '', true, true, true, ''),
             'BTX' => new NMM_Cryptocurrency('BTX', 'Bitcore', 8, 'bitcore_logo_small.png', 60, '', true, true, true, ''),
-			
-            // auto-pay coins            
+
+            // auto-pay coins
             'ETH' => new NMM_Cryptocurrency('ETH', 'Ethereum', 18, 'ethereum_logo_small.png', 60, 'Ξ', false, true, true, ''),
             'DGB' => new NMM_Cryptocurrency('DGB', 'Digibyte', 8, 'digibyte_logo_small.png', 60, '', false, true, true, ''),
             'ZEC' => new NMM_Cryptocurrency('ZEC', 'Zcash', 8, 'zcash_logo_small.png', 60, 'ⓩ', false, true, true, ''),
@@ -37,6 +37,7 @@ class NMM_Cryptocurrencies {
             'WAVES' => new NMM_Cryptocurrency('WAVES', 'Waves', 8, 'waves_logo_small.png', 60, '', false, true, true, ''),
             'GRS' => new NMM_Cryptocurrency('GRS', 'Groestlcoin', 8, 'groestlcoin_logo_small.png', 60, '', false, true, true, false),
             'APL' => new NMM_Cryptocurrency('APL', 'Apollo Currency', 8, 'apollocurrency_logo_small.png', 60, '', false, false, true, false),
+            'SAFE' => new NMM_Cryptocurrency('SAFE', 'SafeCoin', 8, 'safecoin_logo_small.png', 60, '', false, true, true, ''),
 
             // tokens
             'HOT' => new NMM_Cryptocurrency('HOT', 'Holochain', 18, 'holochain_logo_small.png', 60, '', false, true, true, '0x6c6ee5e31d828de241282b9606c8e98ea48526e2'),
@@ -313,8 +314,11 @@ class NMM_Cryptocurrencies {
         if ($cryptoId === 'XMY') {
             return preg_match('/^[M45][a-zA-Z0-9]{31,38}/', $address);   
         }
-        if ($cryptoId === 'BTX') {            
+        if ($cryptoId === 'BTX') {
             return preg_match('/^[2s][a-km-zA-HJ-NP-Z0-9]{24,42}|btx[a-z0-9]{8,87}/', $address);
+        }
+        if ($cryptoId === 'SAFE') {
+            return preg_match('/^R[a-zA-Z0-9]{33,36}/', $address);
         }
         if ($cryptoId === 'GRS') {
             return preg_match('/^[F3][a-km-zA-HJ-NP-Z0-9]{24,42}/', $address);
