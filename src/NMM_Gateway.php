@@ -292,7 +292,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $orderCryptoTotal = WC()->session->get($crypto->get_id() . '_amount');
         $orderWalletAddress = get_post_meta($order->get_id(), 'wallet_address', true);
         
-        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $orderCryptoTotal);
+        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $orderCryptoTotal, $orderId);
 
         ?>
         <h2>Additional Details</h2>
@@ -339,7 +339,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         return strtolower(str_replace(' ', '', $crypto->get_name()));
     }
 
-    private function get_qr_code($crypto, $walletAddress, $cryptoTotal) {        
+    private function get_qr_code($crypto, $walletAddress, $cryptoTotal, $orderId) {        
         $dirWrite = NMM_ABS_PATH . '/assets/img/';
 
         $formattedName = $this->get_qr_prefix($crypto);
@@ -347,7 +347,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $qrData = $formattedName . ':' . $walletAddress . '?amount=' . $cryptoTotal;
 
         try {
-            QRcode::png($qrData, $dirWrite . 'tmp_qrcode.png', QR_ECLEVEL_H);            
+            QRcode::png($qrData, $dirWrite . 'tmp' . $orderId . '_qrcode.png', QR_ECLEVEL_H);            
         }
         catch (\Exception $e) {
             NMM_Util::log(__FILE__, __LINE__, 'QR code generation failed, falling back...');
@@ -355,7 +355,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             return $endpoint . $qrData;
         }
         $dirRead = NMM_PLUGIN_DIR . '/assets/img/';
-        return $dirRead . 'tmp_qrcode.png';
+        return $dirRead . 'tmp' . $orderId . '_qrcode.png';
     }
 
     private function output_thank_you_html($crypto, $orderWalletAddress, $cryptoTotal, $orderId) {        
@@ -364,7 +364,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         
         $customerMessage = apply_filters('nmm_customer_message', $nmmSettings->get_customer_payment_message($crypto), $crypto, $orderId, $formattedPrice, $orderWalletAddress);
 
-        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $cryptoTotal);        
+        $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $cryptoTotal, $orderId);        
         
         echo $customerMessage;
         ?>
