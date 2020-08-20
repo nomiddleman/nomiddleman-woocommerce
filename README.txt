@@ -1,7 +1,7 @@
 ﻿=== Nomiddleman Bitcoin and Crypto Payments for WooCommerce ===
 Contributors: nomiddleman
 Donate link: https://nomiddlemancrypto.io/donate/
-Tags: bitcoin, cryptocurrency, woocommerce, bitcoin payment, crypto, btc, payments, ethereum, ether, ethereum token, token, gas, e-commerce, ecommerce, monero, dogecoin, pay with crypto, pay with bitcoin, bitcoin payments, bitcoin payment gateway, crypto woo, accept, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress, electrum, mpk, master public key, hd wallet, address, zcash, bitcore, bitcoin cash, bitcoin gold, blackcoin, dash, deeponion, ethereum classic, ripple, vericoin, eos, bitcoin sv, vechain, tron, stellar, rep, bch, btg, blk, dash, onion, doge, eth, etc, ltc, xmr, xrp, vrc, zec, eos, bsv, vet, trx, xlm, no fees, no middleman, freedom, nomiddleman, no fees, free, for free, free crypto plugin, plugin, plug-in, no middleman, binance coin, bnb, iota, miota, maker, mkr, nem, xem, waves, ontology, ont, omisego, omg, holo, hot, chainlink, link, decred, dcr, basic attention token, bat, 0x, zrx, lisk, lsk, bytecoin, bcn, bitcoin diamond, bcd, digibyte, dgb, gemini dollar, gusd, potcoin, pot, risk, high-risk, coin, mineable, erc20 token, erc20, KYC, No KYC, No registration, No login, processing, processor, groestlcoin, bitcore
+Tags: bitcoin, cryptocurrency, woocommerce, bitcoin payment, crypto, btc, payments, ethereum, ether, ethereum token, token, gas, e-commerce, ecommerce, monero, dogecoin, pay with crypto, pay with bitcoin, bitcoin payments, bitcoin payment gateway, crypto woo, accept, dash, litecoin, cash, gateway, payment gateway, woocommerce gateway, wordpress, electrum, mpk, master public key, hd wallet, address, zcash, bitcore, bitcoin cash, bitcoin gold, blackcoin, dash, deeponion, ethereum classic, ripple, smartcash, vericoin, eos, bitcoin sv, vechain, tron, stellar, rep, bch, btg, blk, dash, onion, doge, eth, etc, ltc, xmr, xrp, vrc, zec, eos, bsv, vet, trx, xlm, no fees, no middleman, freedom, nomiddleman, no fees, free, for free, free crypto plugin, plugin, plug-in, no middleman, binance coin, bnb, iota, miota, maker, mkr, nem, xem, waves, ontology, ont, omisego, omg, holo, hot, chainlink, link, decred, dcr, basic attention token, bat, 0x, zrx, lisk, lsk, bytecoin, bcn, bitcoin diamond, bcd, digibyte, dgb, gemini dollar, gusd, potcoin, pot, risk, high-risk, coin, mineable, erc20 token, erc20, KYC, No KYC, No registration, No login, processing, processor, groestlcoin, bitcore
 Requires at least: 3.0.1
 Tested up to: 5.2.2
 Requires PHP: 5.2.4
@@ -57,6 +57,7 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 * Ontology - ONT
 * Potcoin - POT
 * Qtum - QTUM
+* Smartcash - SMART
 * Augur - REP
 * Tron - TRX
 * VeChain - VET
@@ -80,7 +81,7 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 
 == Features ==
 
-* 46 supported cryptocurrencies (Accept BTC, ETH, LTC, XRP, BCH and more)
+* 47 supported cryptocurrencies (Accept BTC, ETH, LTC, XRP, BCH and more)
 * Absolute easiest and quickest setup in the industry
 * You control your wallets, you control your keys, you control your crypto
 * No third party punchouts
@@ -104,6 +105,9 @@ Accept customer payments in bitcoin, ethereum, litecoin, XRP, bitcoin cash and 4
 3. Customer Thank-You Page
 
 == Changelog ==
+
+= 2.4.6 =
+* Added SMART Autopay
 
 = 2.4.5 =
 * Added USDC Classic/Autopay
