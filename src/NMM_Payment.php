@@ -233,13 +233,15 @@ class NMM_Payment {
             $result = NMM_Blockchain::get_dgb_address_transactions($address);
         }
         if ($cryptoId === 'USDC') {
-			$result = NMM_Blockchain::get_erc20_address_transactions('USDC', $address);
-		}
-		
-		if ($result['result'] === 'error') {			
-			NMM_Util::log(__FILE__, __LINE__, 'BAD API CALL');
-			throw new \Exception('Could not reach external service to do auto payment processing.');
-		}		
+	    $result = NMM_Blockchain::get_erc20_address_transactions('USDC', $address);
+	}
+	if ($cryptoId === 'USDT') {
+	    $result = NMM_Blockchain::get_erc20_address_transactions('USDT', $address);
+	}	
+	if ($result['result'] === 'error') {			
+	    NMM_Util::log(__FILE__, __LINE__, 'BAD API CALL');
+	    throw new \Exception('Could not reach external service to do auto payment processing.');
+	}		
 
 		return $result['transactions'];
 	}
