@@ -49,6 +49,7 @@ class NMM_Cryptocurrencies {
             'MLN' => new NMM_Cryptocurrency('MLN', 'Melon', 18, 'melon_logo_small.png', 60, '', false, true, true, '0xbeb9ef514a379b997e0798fdcc901ee474b6d9a1'),
             'ZRX' => new NMM_Cryptocurrency('ZRX', '0x', 18, '0x_logo_small.png', 60, '', false, true, true, '0xe41d2489571d322189246dafa5ebde1f4699f498'),
             'USDC' => new NMM_Cryptocurrency('USDC', 'USDC', 6, 'usdc_logo_small.png', 60, '', false, true, true, '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
+            'USDT' => new NMM_Cryptocurrency('USDT', 'USDT', 6, 'usdt_logo_small.png', 60, '', false, true, true, '0xdac17f958d2ee523a2206206994597c13d831ec7'),
 
             // no support
             'XMR' => new NMM_Cryptocurrency('XMR', 'Monero', 12, 'monero_logo_small.png', 60, 'ɱ', false, false, true, ''),
