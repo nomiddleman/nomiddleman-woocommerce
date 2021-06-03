@@ -4,7 +4,7 @@
 class NMM_Cryptocurrencies {
 
 	public static function get() {
-        // id, name, round_precision, icon_filename, refresh_time, symbol, has_hd, has_autopay, needs_confirmations, erc20contract
+        // id, name, round_precision, icon_filename, refresh_time, symbol, has_hd (Privacy Mode), has_autopay, needs_confirmations, erc20contract
 		$cryptoArray = array(
             
             // privacy mpk
@@ -50,7 +50,7 @@ class NMM_Cryptocurrencies {
             'ZRX' => new NMM_Cryptocurrency('ZRX', '0x', 18, '0x_logo_small.png', 60, '', false, true, true, '0xe41d2489571d322189246dafa5ebde1f4699f498'),
             'USDC' => new NMM_Cryptocurrency('USDC', 'USDC', 6, 'usdc_logo_small.png', 60, '', false, true, true, '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'),
 
-            // no support
+            // no auto-pay support
             'XMR' => new NMM_Cryptocurrency('XMR', 'Monero', 12, 'monero_logo_small.png', 60, 'ɱ', false, false, true, ''),
             'VRC' => new NMM_Cryptocurrency('VRC', 'Vericoin', 8, 'vericoin_logo_small.png', 60, '', false, false, true, ''),
             'BTG' => new NMM_Cryptocurrency('BTG', 'Bitcoin Gold', 8, 'bitcoingold_logo_small.png', 60, '', false, false, true, ''),
@@ -59,6 +59,7 @@ class NMM_Cryptocurrencies {
             'BCN' => new NMM_Cryptocurrency('BCN', 'Bytecoin', 8, 'bytecoin_logo_small.png', 60, '', false, false, true, ''),
             'BNB' => new NMM_Cryptocurrency('BNB', 'Binance Coin', 18, 'binancecoin_logo_small.png', 60, '', false, false, true, ''),
             'GUSD' => new NMM_Cryptocurrency('GUSD', 'Gemini Dollar', 2, 'geminidollar_logo_small.png', 60, '', false, false, true, '0x056Fd409E1d7A124BD7017459dFEa2F387b6d5Cd'),
+            'NANO' => new NMM_Cryptocurrency('NANO', 'Nano', 8, 'nano_logo_small.png', 60, 'Ñ', false, false, true, ''),
             
             
             // More searching required
@@ -324,6 +325,9 @@ class NMM_Cryptocurrencies {
         }
         if ($cryptoId === 'USDC') {
             return preg_match('/^0x[a-fA-F0-9]{40,42}/', $address);
+        }
+        if ($cryptoId === 'NANO') {
+            return preg_match('/^nano_[13][13456789abcdefghijkmnopqrstuwxyz]{59}/', $address);
         }
         
         NMM_Util::log(__FILE__, __LINE__, 'Invalid cryptoId, contact plug-in developer.');        
