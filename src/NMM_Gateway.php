@@ -344,6 +344,15 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
         $formattedName = $this->get_qr_prefix($crypto);
 
+        // Nano amount has to be given in raw
+        if ($crypto->get_id() === 'NANO') {
+            // since raw amount is 128bit it needs special care,
+            // format 14 decimals (double precision) and pad with zeros
+            $decimals = 14 - floor(log10($cryptoTotal));
+            $cryptoTotal = number_format($cryptoTotal * pow(10, $decimals), 0, '.', '')
+                           . str_repeat('0', 30 - $decimals);
+        }
+
         $qrData = $formattedName . ':' . $walletAddress . '?amount=' . $cryptoTotal;
 
         try {
