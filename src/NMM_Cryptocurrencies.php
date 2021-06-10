@@ -326,6 +326,9 @@ class NMM_Cryptocurrencies {
         if ($cryptoId === 'USDC') {
             return preg_match('/^0x[a-fA-F0-9]{40,42}/', $address);
         }
+        if ($cryptoId === 'SMART') {
+            return preg_match('/^S[a-fA-F0-9]{31,35}/', $address);
+        }
         
         NMM_Util::log(__FILE__, __LINE__, 'Invalid cryptoId, contact plug-in developer.');        
         throw new Exception('Invalid cryptoId, contact plug-in developer.');
