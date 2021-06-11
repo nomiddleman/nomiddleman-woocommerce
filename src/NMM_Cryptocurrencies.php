@@ -18,7 +18,7 @@ class NMM_Cryptocurrencies {
 			
             // auto-pay coins            
             'ETH' => new NMM_Cryptocurrency('ETH', 'Ethereum', 18, 'ethereum_logo_small.png', 60, 'Ξ', false, true, true, ''),
-            'SMART' => new NMM_Cryptocurrency('SMART', 'Smartcash', 8, 'smartcash_logo_2019_s.png', 60, '', true, true, true, ''),
+            'SMART' => new NMM_Cryptocurrency('SMART', 'Smartcash', 8, 'smartcash_logo_2019_s.png', 60, '∑', true, true, true, ''),
             'DGB' => new NMM_Cryptocurrency('DGB', 'Digibyte', 8, 'digibyte_logo_small.png', 60, '', false, true, true, ''),
             'ZEC' => new NMM_Cryptocurrency('ZEC', 'Zcash', 8, 'zcash_logo_small.png', 60, 'ⓩ', false, true, true, ''),
             'DCR' => new NMM_Cryptocurrency('DCR', 'Decred', 8, 'decred_logo_small.png', 60, '', false, true, true, ''),            
