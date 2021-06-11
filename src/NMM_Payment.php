@@ -236,7 +236,6 @@ class NMM_Payment {
         if ($cryptoId === 'SMART') {
             $result = NMM_Blockchain::get_smart_address_transactions($address);
         }
-		}
 
         if ($cryptoId === 'USDC') {
 			$result = NMM_Blockchain::get_erc20_address_transactions('USDC', $address);
