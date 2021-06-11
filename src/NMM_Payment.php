@@ -232,11 +232,9 @@ class NMM_Payment {
         if ($cryptoId === 'DGB') {
             $result = NMM_Blockchain::get_dgb_address_transactions($address);
 		}
-		
         if ($cryptoId === 'SMART') {
-            $result = NMM_Blockchain::get_smart_address_transactions($address);
+            $result = NMM_Blockchain::get_smart_address_transactions('SMART', $address);
         }
-
         if ($cryptoId === 'USDC') {
 			$result = NMM_Blockchain::get_erc20_address_transactions('USDC', $address);
 		}
