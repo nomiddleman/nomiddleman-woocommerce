@@ -380,6 +380,7 @@ $nmm_section = array(
                 '2' => 'GateIO',
                 '3' => 'Bittrex',
                 '4' => 'Poloniex',
+                '5' => 'Coingecko',
             ),
         ),
     ),
