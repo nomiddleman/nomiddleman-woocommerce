@@ -321,7 +321,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
     }
 
     // convert array of cryptos to option array
-    private function get_select_options_for_valid_cryptos() {
+    public function get_select_options_for_valid_cryptos() {
         $selectOptionArray = array();
 
         $nmmSettings = new NMM_Settings(get_option(NMM_REDUX_ID));
@@ -369,7 +369,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         echo $customerMessage;
         ?>
         
-        <h2>Cryptocurrency payment details</h2>
+        <h2>Carteira para transferência:</h2>
         <ul class="woocommerce-order-overview woocommerce-thankyou-order-details order_details">
             <li class="woocommerce-order-overview__qr-code">
                 <p style="word-wrap: break-word;">QR Code payment:</p>
@@ -425,7 +425,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
 
     // this function hits all the crypto exchange APIs that the user selected, then averages them and returns a conversion rate for USD
     // if the user has selected no exchanges to fetch data from it instead takes the average from all of them
-    private function get_crypto_value_in_usd($cryptoId, $updateInterval) {
+    public function get_crypto_value_in_usd($cryptoId, $updateInterval) {
 
         $prices = array();
         $reduxSettings = get_option(NMM_REDUX_ID);
@@ -474,6 +474,13 @@ class NMM_Gateway extends WC_Payment_Gateway {
             if ($poloniexPrice > 0) {
                 $prices[] = $poloniexPrice;
             }        
+        }
+
+        if (in_array('5', $selectedPriceApis)) {
+            $coingeckoPrice = NMM_Exchange::get_coingecko_price($cryptoId, $updateInterval);
+            if ($coingeckoPrice > 0) {
+                $prices[] = $coingeckoPrice;
+            } 
         }
 
         $sum = 0;

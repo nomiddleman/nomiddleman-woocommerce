@@ -91,6 +91,63 @@ class NMM_Exchange {
     }
 
     // gets crypto to USD conversion from an API
+    public static function get_coingecko_price($cryptoId, $updateInterval) {
+        $transientKey = 'coingecko_' . $cryptoId . '_price';
+        $coingeckoPrice = get_transient($transientKey);
+
+        
+        if ($coingeckoPrice !== false) {
+            return $coingeckoPrice;
+        }
+   
+        switch ($cryptoId) {
+            case 'SMART':
+                $coingeckoCrytoKey = 'smartcash';
+                break;
+            case 'BTC':
+                $coingeckoCrytoKey = 'bitcoin';
+                break;
+            case 'ETH':
+                $coingeckoCrytoKey = 'ethereum';
+                break;   
+            case 'BCH':
+                $coingeckoCrytoKey = 'bitcoin-cash';
+                break;   
+            case 'BTG':
+                $coingeckoCrytoKey = 'bitcoin-gold';
+                break;   
+            case 'DOGE':
+                $coingeckoCrytoKey = 'dogecoin';
+                break;   
+            case 'APL':
+                $coingeckoCrytoKey = 'apollo';
+                break;   
+            case 'ETC':
+                $coingeckoCrytoKey = 'ethereum-classic';
+                break;   
+            case 'BCD':
+                $coingeckoCrytoKey = 'bitcoin-diamond';
+                break;   
+            default:
+                return 0;
+                break;
+        }
+        
+        $response = wp_remote_get('https://api.coingecko.com/api/v3/simple/price?ids=' . $coingeckoCrytoKey . '&vs_currencies=usd');
+        
+        if ( is_wp_error( $response ) || $response['response']['code'] !== 200) {
+            return 0;
+        }
+        
+        $responseBody = json_decode( $response['body']);
+        $coingeckoPrice = (float) $responseBody->{$coingeckoCrytoKey}->{'usd'};
+
+        set_transient($transientKey, $coingeckoPrice, $updateInterval);
+        return $coingeckoPrice;
+
+    }
+
+    // gets crypto to USD conversion from an API
     public static function get_hitbtc_price($cryptoId, $updateInterval) {
         $transientKey = 'hitbtc_' . $cryptoId . '_price';
         $hitbtcPrice = get_transient($transientKey);

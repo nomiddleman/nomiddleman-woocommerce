@@ -471,6 +471,9 @@ class NMM_Hd {
 		if ($cryptoId === 'BTX') {
 			return self::is_valid_xpub($mpk);	
 		}
+		if ($cryptoId == 'SMART') {
+			return self::is_valid_xpub($mpk) || self::is_valid_ypub($mpk) || self::is_valid_zpub($mpk);
+		}
 	}
 }
 
