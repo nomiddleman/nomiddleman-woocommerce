@@ -31,8 +31,8 @@ class NMM_Exchange {
 
             $rate = $body->{'rates'}->{$fromCurr};
             //error_log('rate for ' . $fromCurr . ' is ' . $rate);
-            
-            $conversionRate = 1 / $rate;
+            $usdrate = $body->{'rates'}->{'USD'};
+            $conversionRate = $usdrate / $rate;
             //error_log('per usd ' . $conversionRate);
             
             set_transient($transientKey, $conversionRate, 600);
