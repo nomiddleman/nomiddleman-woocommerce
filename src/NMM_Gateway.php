@@ -302,7 +302,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
             <img  src=<?php echo $qrCode; ?> />
         </div>
         <p>
-            Wallet Address: <?php echo $orderWalletAddress ?>
+            Address: <?php echo $orderWalletAddress ?>
         </p>
         <p>
             Currency: <?php echo '<img src="' . $crypto->get_logo_file_path() . '" alt="" />' . $crypto->get_name(); ?>
