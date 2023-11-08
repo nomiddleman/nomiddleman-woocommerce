@@ -291,6 +291,7 @@ class NMM_Gateway extends WC_Payment_Gateway {
         $crypto =  $this->cryptos[$chosenCrypto];
         $orderCryptoTotal = WC()->session->get($crypto->get_id() . '_amount');
         $orderWalletAddress = get_post_meta($order->get_id(), 'wallet_address', true);
+        $orderId = $order->get_id();
         
         $qrCode = $this->get_qr_code($crypto, $orderWalletAddress, $orderCryptoTotal, $orderId);
 
